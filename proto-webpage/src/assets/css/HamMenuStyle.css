@@ -1,0 +1,35 @@
+
+/***** Ham Menu Css *****/ 
+
+.bm-menu-wrap {
+    border: 2px solid red;
+    position: absolute;
+}
+
+/* General sidebar styles */
+.bm-menu {
+    border:2px solid rgb(0, 255, 42);
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #ffffff;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+    border: 2px solid rgb(54, 52, 52);
+}
+
+/* Individual item */
+.bm-item {
+  border: 2px solid rgb(0, 183, 255);
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  border: 2px solid rgb(255, 0, 64);
+}
+
+
+/***** End Ham Menu Css *****/

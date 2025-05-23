@@ -1,42 +1,306 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+/***** WebPage Style CSS *****/ 
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+    :root{
+      --poppins-font: "Poppins", sans-serif;
+      --pacifico-font: "Pacifico", cursive;
+      --gabarito-font: "Gabarito", sans-serif;
+      --lexend-font:  "Lexend", sans-serif;
+      --montserrant-font: "Montserrat", sans-serif;
+    }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
 
-.card {
-  padding: 2em;
-}
+    body { 
+      font-family: 'Outfit', sans-serif; 
+      color: #111; 
+      background: #fff; 
+    }
 
-.read-the-docs {
-  color: #888;
-}
+    header {
+      background: #000; 
+      color: white; 
+      padding: 1rem 2rem; 
+      display: flex;
+      justify-content: space-between; 
+      align-items: center;
+      font-family: var(--pacifico-font);
+    }
+
+    header nav a { 
+      color: white; 
+      text-decoration: none; 
+      margin: 0 1rem; 
+      font-weight: 600; 
+    }
+
+    .logo { 
+      font-size: 1.5rem; 
+      font-weight: 700; 
+      color: #FFD700; 
+    }
+
+    .hero {
+      background: url('https://images.unsplash.com/photo-1541099649105-f69ad21f3246') center/cover;
+      color: white; 
+      text-align: center; 
+      padding: 8rem 2rem;
+      font-family: var(--montserrant-font);
+    }
+
+    .hero h1 {
+      font-size: 3rem; 
+      margin-bottom: 1rem; 
+    }
+
+    .hero p { 
+      font-size: 1.25rem; 
+      margin-bottom: 2rem; 
+    }
+
+    .hero button {
+      background: #FFD700; 
+      border: none; 
+      padding: 0.75rem 2rem;
+      font-size: 1rem; 
+      font-weight: 600; 
+      cursor: pointer;
+    }
+
+    .categories {
+      display: flex; 
+      justify-content: space-around; 
+      padding: 4rem 2rem;
+      background: #f9f9f9; 
+      text-align: center;
+      font-family: var(--montserrant-font);
+    }
+    .category {
+      flex: 1;
+       margin: 0 1rem;
+    }
+
+    .category img {
+      width: 100%; 
+      height: 200px; 
+      object-fit: cover; 
+      border-radius: 1rem;
+    }
+    
+    .category h3 { 
+      margin-top: 1rem; 
+      font-size: 1.2rem; 
+    }
+
+    .promo {
+      display: flex; 
+      padding: 3rem 2rem; 
+      gap: 2rem;
+      font-family: var(--montserrant-font);
+    }
+
+    .promo .box {
+      flex: 1; 
+      padding: 2rem; 
+      background: #000; 
+      color: white;
+      border-radius: 1rem; 
+      text-align: center;
+    }
+
+    .promo .box h2 { 
+      margin-bottom: 1rem; 
+      font-size: 1.8rem; 
+    }
+
+    .benefits {
+      display: flex; 
+      justify-content: space-around; 
+      padding: 2rem 2rem;
+      background: #eee; 
+      text-align: center;
+      font-family: var(--montserrant-font);
+    }
+
+    .benefit { 
+      flex: 1; 
+      margin: 0 1rem; 
+    }
+
+    .benefit h4 { 
+      margin-top: 0.5rem; 
+      font-size: 1rem; 
+    }
+
+    .products {
+      padding: 3rem 2rem;
+      font-family: var(--montserrant-font);
+    }
+
+    .products h2 { 
+      text-align: center; 
+      margin-bottom: 2rem; 
+      font-size: 2rem; 
+    }
+
+    .product-grid {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+      gap: 1.5rem;
+    }
+
+    .product {
+      border: 1px solid #ddd; 
+      border-radius: 0.5rem; 
+      overflow: hidden; 
+      text-align: center;
+      font-family: var(--montserrant-font);
+    }
+
+    .product img { 
+      width: 100%; 
+      height: 250px; 
+      object-fit: cover; 
+    }
+
+    .product h3 { 
+      padding: 1rem 0.5rem 0.5rem; 
+      font-size: 1.1rem; 
+    }
+
+    .product span { 
+      display: block; 
+      margin-bottom: 1rem; 
+      color: #888; 
+    }
+
+    footer {
+      background: #000; 
+      color: white; 
+      text-align: center;
+      padding: 2rem; 
+      font-size: 0.9rem;
+      font-family: var(--montserrant-font);
+    }
+
+    @media (min-width: 400px) and (max-width: 700px) {
+      .categories, .promo{
+        flex-direction: column;
+      }
+    }
+
+/***** End WebPage Style CSS *****/
+
+/***** Another Animating Webpage *****/ 
+
+    header {
+      animation: slideDown 1s ease forwards;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 1rem;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff4081;
+      cursor: pointer;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff4081;
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      animation: fadeIn 1.5s ease-in;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      background: rgba(0,0,0,0.5);
+      padding: 1rem;
+    }
+
+    .categories {
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .category {
+      padding: 10px;
+      border-radius: 20px;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .category:hover {
+      transform: scale(1.05);
+      cursor: pointer;
+      background-color: #ffecf0;
+    }
+
+    .promotions {
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    .promo {
+      transition: all 0.3s;
+    }
+
+    .promo:hover {
+      border-color: #ff4081;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .products {
+      animation: fadeInUp 2s ease forwards;
+    }
+
+    .product {
+      transition: transform 0.3s;
+      animation: fadeInScale 1s ease forwards;
+    }
+
+    .product:hover {
+      transform: scale(1.05);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+/***** End Another Animating Webpage *****/
+
