@@ -29,7 +29,7 @@ const show = (req, res) => {
   })
 }
 
-const store = (req, res) => {
+const customereStore = (req, res) => {
   const { name, surname, email, billing_address, shipping_address, phone, country, amount } = req.body;
   const sql = "INSERT INTO customers (`name`, `surname`, `email`, `billing_address`, `shipping_address`, `phone`, `country`) VALUES (?, ?, ?, ?, ?, ?, ?);"
 
@@ -69,6 +69,10 @@ const store = (req, res) => {
   })
 }
 
+const orderPatch = (req, res) => {
+
+}
+
 const update = (req, res) => {
   const { id } = req.params;
   const { amount, order_date, order_status } = req.body;
@@ -89,6 +93,7 @@ const update = (req, res) => {
 module.exports = {
   index,
   show,
-  store,
+  customereStore,
+  orderPatch,
   update
 }
