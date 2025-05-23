@@ -1,3 +1,4 @@
+
 const express = require("express");
 const app = express();
 const port = process.env.PORT;
@@ -27,8 +28,12 @@ app.use(errorHandler);
 // 404 Handler 
 app.use(pageNotFound);
 
+app.get("/", (req, res) => {
+    return res.status(200).json({msg: "Benvenuto nella mia Api!!", code: 200});
+})
+
 
 // Listening server 
 app.listen(port, () => {
-    console.log("Server attivo nella porta 3000")
+    console.log(`Attivazione del server locale in http://localhost:${port}`)
 })
