@@ -2,7 +2,8 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT;
-const router = require("./routers/router")
+const productRouter = require("./routers/productsRouter");
+const orderRouter = require("./routers/orderRouter");
 const errorHandler = require("./middlewares/errorHandler");
 const pageNotFound = require("./middlewares/pageNotFound");
 const cors = require("cors");
@@ -19,8 +20,9 @@ app.use(express.static("./public"));
 // JSON body parser 
 app.use(express.json());
 
-// ROUTERS used in 127.0.0.1:3000/movies 
-app.use("/products", router);
+// ROUTERS used in 127.0.0.1:3000/products
+app.use("/products", productRouter);
+app.use("/orders", orderRouter);
 
 // 500 Handler 
 app.use(errorHandler);

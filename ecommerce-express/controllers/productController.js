@@ -2,7 +2,7 @@
 const connection = require("../data/db");
 
 const index = (req, res) => {
-    return res.status(200).json({msg: "Benvenuto nell API", code: 200});
+    return res.status(200).json({msg: "Benvenuto nell' API", code: 200});
 }
 
 
