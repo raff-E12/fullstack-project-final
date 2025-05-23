@@ -1,5 +1,6 @@
 
 const connection = require("../data/db");
+const { connect } = require("../routers/orderRouter");
 
 const index = (req, res) => {
   const sql = "SELECT * FROM orders";
@@ -17,7 +18,7 @@ const index = (req, res) => {
 
 const show = (req, res) => {
   const { id } = req.params;
-  const sql = "SELECT * FROM orders WHERE id = ?";
+  const sql = `SELECT *  FROM orders INNER JOIN customers ON orders.customer_id = customers.id WHERE orders.id = ?`;
   connection.query(sql, [id], (error, result) => {
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });
@@ -68,8 +69,41 @@ const customerStore = (req, res) => {
   })
 }
 
+const customerPatch = (req, res) => {
+  const customer = req.body;
+
+  if (customer) {
+
+    const { name, surname, email, billing_address, shipping_address, phone, country, id } = customer;
+    sql = "SELECT * FROM customers WHERE id = ?";
+    connection.query(sql, [id], (error, result) => {
+      if (error) {
+        return res.status(500).json({ msg: "Errore del database", code: 500 });
+      }
+      if (result.length === 0) {
+        return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
+      }
+      return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, orders: result });
+    })
+
+  }
+
+  const sql = "";
+  connection.query(sql, [id], (error, result) => {
+    if (error) {
+      return res.status(500).json({ msg: "Errore del database", code: 500 });
+    }
+    if (result.length === 0) {
+      return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
+    }
+    return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, orders: result });
+  })
+}
+
+
 module.exports = {
   index,
   show,
   customerStore,
+  customerPatch
 }
