@@ -5,10 +5,6 @@ const router = express.Router();
 
 router.get("/", index);
 router.get("/:id", show);
-router.post("/", customereStore)
-router.post("/", orderPatch)
-router.patch("/:id", update)
-
-
+router.post("/", customereStore);
 
 module.exports = router;
