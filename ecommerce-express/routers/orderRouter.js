@@ -1,5 +1,5 @@
 
-const { index, show, customereStore, orderPatch, update } = require("../controllers/orderController");
+const { index, show, customerStore } = require("../controllers/orderController");
 const express = require("express");
 const router = express.Router();
 

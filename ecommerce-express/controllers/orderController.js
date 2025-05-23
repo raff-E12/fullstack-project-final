@@ -29,7 +29,7 @@ const show = (req, res) => {
   })
 }
 
-const customereStore = (req, res) => {
+const customerStore = (req, res) => {
   const { name, surname, email, billing_address, shipping_address, phone, country, amount } = req.body;
   const sql = "INSERT INTO customers (`name`, `surname`, `email`, `billing_address`, `shipping_address`, `phone`, `country`) VALUES (?, ?, ?, ?, ?, ?, ?);"
 
@@ -71,5 +71,5 @@ const customereStore = (req, res) => {
 module.exports = {
   index,
   show,
-  customereStore,
+  customerStore,
 }
