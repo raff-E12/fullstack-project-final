@@ -29,6 +29,21 @@ const show = (req, res) => {
   })
 }
 
+const store = (req, res) => {
+  const { name, surname, email, billing_address, shipping_address, phone, country } = req.body;
+  const sql = "INSERT INTO customers (`name`, `surname`, `email`, `billing_address`, `shipping_address`, `phone`, `country`) VALUES (?, ?, ?, ?, ?, ?, ?);"
+
+  connection.query(sql, [name, surname, email, billing_address, shipping_address, phone, country], (error, result) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json({ msg: "Errore del database", code: 500 });
+    }
+    if (result.length === 0) {
+      return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
+    }
+    return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, orders: result });
+  })
+}
 
 const update = (req, res) => {
   const { id } = req.params;
@@ -50,5 +65,6 @@ const update = (req, res) => {
 module.exports = {
   index,
   show,
+  store,
   update
 }
