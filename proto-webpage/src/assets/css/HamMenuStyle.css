@@ -2,33 +2,81 @@
 /***** Ham Menu Css *****/ 
 
 .bm-menu-wrap {
-    border: 2px solid red;
     position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
 }
 
-/* General sidebar styles */
 .bm-menu {
-    border:2px solid rgb(0, 255, 42);
+    background-color: #ffffff;
+    padding: 10px;
 }
 
-/* Morph shape necessary with bubble or elastic */
 .bm-morph-shape {
   fill: #ffffff;
 }
 
-/* Wrapper for item list */
 .bm-item-list {
-    border: 2px solid rgb(54, 52, 52);
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
 }
 
-/* Individual item */
+   .bm-item a:hover {
+      color: #ff4081;
+      cursor: pointer;
+    }
+
+    .bm-item a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #ff4081;
+      transition: width 0.3s;
+    }
+
+    .bm-item a:hover::after {
+      width: 100%;
+    }
+
 .bm-item {
-  border: 2px solid rgb(0, 183, 255);
+  width: 90%;
+  font-family: "Lexend", sans-serif;
+  font-weight: 800;
+  color: #000000;
 }
 
-/* Styling of overlay */
 .bm-overlay {
-  border: 2px solid rgb(255, 0, 64);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.bm-burger-bars, .hamburger-react, #react-burger-menu-btn{
+   display: none;
+   opacity: 0;
+}
+
+@media (min-width:400px) and (max-width:900px) {
+  .bm-burger-bars, .hamburger-react, #react-burger-menu-btn{
+   display: block;
+   opacity: 100%;
+  }
+  
+  nav{
+    display: none;
+  }
 }
 
 
