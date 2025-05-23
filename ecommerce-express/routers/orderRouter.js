@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get("/", index);
 router.get("/:id", show);
-router.post("/", customereStore);
+router.post("/", customerStore);
 
 module.exports = router;
