@@ -1,0 +1,289 @@
+[
+  {
+    "id": 1,
+    "product_id": "Pantaloncini Estivi",
+    "deposit_id": "DEP-246",
+    "size": "M",
+    "color": "Blu"
+  },
+  {
+    "id": 2,
+    "product_id": "T-shirt Streetwear",
+    "deposit_id": "DEP-157",
+    "size": "S",
+    "color": "Nero"
+  },
+  {
+    "id": 3,
+    "product_id": "T-shirt Streetwear",
+    "deposit_id": "DEP-669",
+    "size": "S",
+    "color": "Bianco"
+  },
+  {
+    "id": 4,
+    "product_id": "T-shirt Streetwear",
+    "deposit_id": "DEP-301",
+    "size": "L",
+    "color": "Bianco"
+  },
+  {
+    "id": 5,
+    "product_id": "Sneakers Sportive",
+    "deposit_id": "DEP-401",
+    "size": "XXL",
+    "color": "Grigio"
+  },
+  {
+    "id": 6,
+    "product_id": "Sneakers Sportive",
+    "deposit_id": "DEP-205",
+    "size": "M",
+    "color": "Blu"
+  },
+  {
+    "id": 7,
+    "product_id": "T-shirt Basic",
+    "deposit_id": "DEP-360",
+    "size": "L",
+    "color": "Rosso"
+  },
+  {
+    "id": 8,
+    "product_id": "Gilet Oversize",
+    "deposit_id": "DEP-871",
+    "size": "S",
+    "color": "Blu"
+  },
+  {
+    "id": 9,
+    "product_id": "Gilet Oversize",
+    "deposit_id": "DEP-201",
+    "size": "S",
+    "color": "Grigio"
+  },
+  {
+    "id": 10,
+    "product_id": "Gilet Oversize",
+    "deposit_id": "DEP-316",
+    "size": "XL",
+    "color": "Bianco"
+  },
+  {
+    "id": 11,
+    "product_id": "Scarpe Eleganti",
+    "deposit_id": "DEP-498",
+    "size": "XXL",
+    "color": "Grigio"
+  },
+  {
+    "id": 12,
+    "product_id": "Scarpe Eleganti",
+    "deposit_id": "DEP-656",
+    "size": "XL",
+    "color": "Bianco"
+  },
+  {
+    "id": 13,
+    "product_id": "Felpa Oversize",
+    "deposit_id": "DEP-748",
+    "size": "M",
+    "color": "Bianco"
+  },
+  {
+    "id": 14,
+    "product_id": "Felpa Oversize",
+    "deposit_id": "DEP-311",
+    "size": "XS",
+    "color": "Blu"
+  },
+  {
+    "id": 15,
+    "product_id": "Blazer Casual",
+    "deposit_id": "DEP-920",
+    "size": "L",
+    "color": "Blu"
+  },
+  {
+    "id": 16,
+    "product_id": "Blazer Casual",
+    "deposit_id": "DEP-783",
+    "size": "XS",
+    "color": "Bianco"
+  },
+  {
+    "id": 17,
+    "product_id": "Polo Classica",
+    "deposit_id": "DEP-806",
+    "size": "XS",
+    "color": "Verde"
+  },
+  {
+    "id": 18,
+    "product_id": "Gilet Oversize",
+    "deposit_id": "DEP-392",
+    "size": "M",
+    "color": "Grigio"
+  },
+  {
+    "id": 19,
+    "product_id": "Gilet Oversize",
+    "deposit_id": "DEP-327",
+    "size": "S",
+    "color": "Bianco"
+  },
+  {
+    "id": 20,
+    "product_id": "Gilet Oversize",
+    "deposit_id": "DEP-307",
+    "size": "S",
+    "color": "Grigio"
+  },
+  {
+    "id": 21,
+    "product_id": "Felpa Urban",
+    "deposit_id": "DEP-742",
+    "size": "M",
+    "color": "Marrone"
+  },
+  {
+    "id": 22,
+    "product_id": "Felpa Urban",
+    "deposit_id": "DEP-309",
+    "size": "XL",
+    "color": "Grigio"
+  },
+  {
+    "id": 23,
+    "product_id": "Felpa Urban",
+    "deposit_id": "DEP-782",
+    "size": "S",
+    "color": "Beige"
+  },
+  {
+    "id": 24,
+    "product_id": "Pantaloni Cargo",
+    "deposit_id": "DEP-298",
+    "size": "M",
+    "color": "Blu"
+  },
+  {
+    "id": 25,
+    "product_id": "Felpa Zip",
+    "deposit_id": "DEP-622",
+    "size": "S",
+    "color": "Beige"
+  },
+  {
+    "id": 26,
+    "product_id": "Felpa Urban",
+    "deposit_id": "DEP-285",
+    "size": "S",
+    "color": "Beige"
+  },
+  {
+    "id": 27,
+    "product_id": "Felpa Urban",
+    "deposit_id": "DEP-149",
+    "size": "M",
+    "color": "Marrone"
+  },
+  {
+    "id": 28,
+    "product_id": "Felpa Urban",
+    "deposit_id": "DEP-279",
+    "size": "XL",
+    "color": "Marrone"
+  },
+  {
+    "id": 29,
+    "product_id": "Scarpe da Ginnastica",
+    "deposit_id": "DEP-983",
+    "size": "XXL",
+    "color": "Verde"
+  },
+  {
+    "id": 30,
+    "product_id": "Scarpe da Ginnastica",
+    "deposit_id": "DEP-394",
+    "size": "XS",
+    "color": "Verde"
+  },
+  {
+    "id": 31,
+    "product_id": "Scarpe da Ginnastica",
+    "deposit_id": "DEP-260",
+    "size": "XS",
+    "color": "Bianco"
+  },
+  {
+    "id": 32,
+    "product_id": "T-shirt Basic",
+    "deposit_id": "DEP-849",
+    "size": "S",
+    "color": "Bianco"
+  },
+  {
+    "id": 33,
+    "product_id": "Felpa Zip",
+    "deposit_id": "DEP-751",
+    "size": "L",
+    "color": "Marrone"
+  },
+  {
+    "id": 34,
+    "product_id": "Felpa Zip",
+    "deposit_id": "DEP-762",
+    "size": "XL",
+    "color": "Verde"
+  },
+  {
+    "id": 35,
+    "product_id": "Felpa Zip",
+    "deposit_id": "DEP-294",
+    "size": "XS",
+    "color": "Verde"
+  },
+  {
+    "id": 36,
+    "product_id": "T-shirt Oversize",
+    "deposit_id": "DEP-272",
+    "size": "S",
+    "color": "Grigio"
+  },
+  {
+    "id": 37,
+    "product_id": "T-shirt Oversize",
+    "deposit_id": "DEP-378",
+    "size": "M",
+    "color": "Blu"
+  },
+  {
+    "id": 38,
+    "product_id": "Pantaloncini Estivi",
+    "deposit_id": "DEP-294",
+    "size": "L",
+    "color": "Bianco"
+  },
+  {
+    "id": 39,
+    "product_id": "Pantaloncini Estivi",
+    "deposit_id": "DEP-977",
+    "size": "S",
+    "color": "Grigio"
+  },
+  {
+    "id": 40,
+    "product_id": "Pantaloncini Estivi",
+    "deposit_id": "DEP-839",
+    "size": "M",
+    "color": "Rosso"
+  },
+  {
+    "id": 41,
+    "product_id": "Gilet Oversize",
+    "deposit_id": "DEP-315",
+    "size": "L",
+    "color": "Grigio"
+  }
+]

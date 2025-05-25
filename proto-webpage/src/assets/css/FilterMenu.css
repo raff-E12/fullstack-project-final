@@ -1,0 +1,77 @@
+
+/***** Filter Style *****/ 
+
+#filter-menu {
+    height: 100vh;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px;
+    background: #f9f9f9;
+    overflow: hidden;
+    transition: all 0.5s ease-in;
+}
+
+#filter-menu.close{
+    animation-name: close-Menu;
+    animation-timing-function: ease-in;
+    animation-duration: 2s;
+    animation-delay: none;
+    transition: all 0.5s ease-in;
+    padding: 0;
+    width: 0;
+}
+
+#filter-menu.open{
+    animation-name: open-Menu;
+    animation-timing-function: ease-in;
+    animation-duration: 30ms;
+    animation-delay: none;
+    transition: all 1ms linear;
+    padding: 10px;
+    width: 300px;
+}
+
+
+ #filter-menu .categories{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    background-color: transparent;
+    padding: 10px;
+    text-align: center;
+}
+
+#filter-menu  h2{
+    color: #e73370;
+}
+
+.category-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #fff;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-btn:hover {
+    background-color: #ff4081;
+    color: #fff;
+}
+
+@keyframes close-Menu {
+    0%{  transform: translateX(0);}
+    100% { transform: translateX(-9999px);}
+}
+
+@keyframes open-Menu {
+    0%{  transform: translateX(-9999px);}
+    100% { transform: translateX(0);}
+}
+
+/***** End Filter Style *****/

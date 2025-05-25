@@ -1,23 +1,23 @@
 
 /***** Ham Menu Css *****/ 
 
-.bm-menu-wrap {
+#ham-menu {
     position: absolute;
     left: 0;
     top: 0;
     height: 100vh;
 }
 
-.bm-menu {
+#ham-menu .bm-menu {
     background-color: #ffffff;
     padding: 10px;
 }
 
-.bm-morph-shape {
+#ham-menu .bm-morph-shape {
   fill: #ffffff;
 }
 
-.bm-item-list {
+header #ham-menu .bm-menu .bm-item-list {
     padding: 10px;
     display: flex;
     gap: 10px;
@@ -26,12 +26,12 @@
     flex-direction: column;
 }
 
-   .bm-item a:hover {
+   #ham-menu .bm-menu .bm-item:hover {
       color: #ff4081;
       cursor: pointer;
     }
 
-    .bm-item a::after {
+    #ham-menu .bm-menu .bm-item a::after {
       content: '';
       position: absolute;
       bottom: -5px;
@@ -42,11 +42,11 @@
       transition: width 0.3s;
     }
 
-    .bm-item a:hover::after {
+    #ham-menu .bm-menu .bm-item:hover::after {
       width: 100%;
     }
 
-.bm-item {
+#ham-menu .bm-menu .bm-item {
   width: 90%;
   font-family: "Lexend", sans-serif;
   font-weight: 800;
@@ -63,6 +63,14 @@
   justify-content: center;
 }
 
+.bm-burger-button{
+  width: 40px;
+  height: 10px;
+  display: none;
+  opacity: 100;
+  z-index: -999 !important;
+}
+
 .bm-burger-bars, .hamburger-react, #react-burger-menu-btn{
    display: none;
    opacity: 0;
@@ -74,7 +82,7 @@
    opacity: 100%;
   }
   
-  nav{
+  header nav{
     display: none;
   }
 }
