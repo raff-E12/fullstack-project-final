@@ -20,7 +20,7 @@ export default function ProductsPage() {
         if (element.id === id_products) {
             return(
               <>
-            <div class="container">
+            <div class="container-prod">
                 <div class="image-gallery">
                 <img id="mainImage" src={element.image_url} class="main-image" alt="Prodotto principale" />
                     <div className='thumbnails'>
