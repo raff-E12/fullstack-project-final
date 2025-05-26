@@ -61,7 +61,15 @@ const parsedPhone = parseInt(phone)
 
    if (!billing_address || typeof billing_address !== 'string' || validator.isEmpty(billing_address.trim())) {
         return res.status(400).json({ msg: "Billing Address: Insert a Valid Address", code: 400 }); // L'indirizzo non deve essere vuoto o solo spazi bianchi
+    }if (!shipping_address || typeof shipping_address !== 'string' || validator.isEmpty(shipping_address.trim())) {
+        res.status(400).json({ msg: "Shipping Address: Insert a Valid Address", code: 400 });
     }
+
+  // Lunghezza minima e massima ragionevole
+    if (!validator.isLength(shipping_address, { min: 10, max: 200 })) { // Esempio: 10 a 200 caratteri
+        res.status(400).json({ msg: "Shipping Address: Insert a Valid Address", code: 400 });
+    }
+
 
   // Lunghezza minima e massima ragionevole
     if (!validator.isLength(billing_address, { min: 10, max: 200 })) { // Esempio: 10 a 200 caratteri
