@@ -546,10 +546,16 @@
       font-size: 1rem;
     }
 
+    .product-discount-promo{
+      text-decoration: line-through;
+      color: #000;
+    }
+
     .product-discount {
       color: #f44336;
       font-size: 0.9rem;
       margin-top: 0.25rem;
+      font-weight: 800;
     }
 
     @keyframes fadeIn {
@@ -733,9 +739,9 @@
 
     .thumbnails {
       display: flex;
-      gap: 12px;
-      width: 100%;
-      justify-content: center;
+      gap: 20px;
+      width: 99%;
+      justify-content: flex-start;
       align-items: center;
       flex-wrap: wrap;
       padding: 10px;
@@ -817,6 +823,22 @@
        text-decoration: line-through; 
        color: #999; 
        font-size: 1rem;
+    }
+    
+    .sale-icon{
+      position: absolute;
+      width: 60px;
+      height: 40px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e60023;
+      font-family: var(--lexend-font);
+      color: #ffff;
+      font-weight: 900;
+      border-radius: 30px;
+      margin: 10px;
     }
 
 /***** End Products Page Style *****/

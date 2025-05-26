@@ -3,17 +3,15 @@ import Header from '../components/Header'
 import FooterSections from '../components/FooterSections'
 import SearchBar from '../components/SearchBar'
 import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 import "../css/FilterMenu.css"
 import ConatinersCards from '../contents/ConatinersCards';
 import { Api_Context_Prod, Use_ContextProd } from '../context/Prod_Context';
-import { use } from 'react';
 
 export default function ShopPage() {
     const [isOpen, setOpen] = useState(false);
     const { isValue, setValue, isCategory, 
     setCategory, isBrand, setBrand, Filter_Selection, Reset_Check, isDress,
-    setDress } = Use_ContextProd();
+    setDress, isDisabled } = Use_ContextProd();
     
   return (
     <>
@@ -23,16 +21,17 @@ export default function ShopPage() {
     <div id='filter-menu' className={`${!isOpen ? "close" : "open"}`}>
         <h2>Capi</h2>
         <div class="categories">
-            <button class="category-btn" value="Polo & T-Shirt" onChange={(e) => setDress(e.target.value)}>Polo & T-Shirt</button>
-            <button class="category-btn" value="Capispalla" onChange={(e) => setDress(e.target.value)}>Capispalla</button>
-            <button class="category-btn" value="Felpe" onChange={(e) => setDress(e.target.value)}>Felpe</button>
-            <button class="category-btn" value="Pantaloni" onChange={(e) => setDress(e.target.value)}>Pantaloni</button>
-            <button class="category-btn" value="Scarpe" onChange={(e) => setDress(e.target.value)}>Scarpe</button>
-            <button class="category-btn" value="Streetwear" onChange={(e) => setDress(e.target.value)}>Streetwear</button>
+            <input class="category-btn" type="button" value="Polo & T-Shirt" name="Polo & T-Shirt" onClick={(e) => setDress(e.target.value)} disabled={!isDisabled ? "" : "disabled"}/>
+            <input class="category-btn" type="button" value="Capispalla" name="Capispalla" onClick={(e) => setDress(e.target.value)} disabled={!isDisabled ? "" : "disabled"}/>
+            <input class="category-btn" type="button" value="Felpe" name="Felpe" onClick={(e) => setDress(e.target.value)} disabled={!isDisabled ? "" : "disabled"}/>
+            <input class="category-btn" type="button" value="Pantaloni" name="Pantaloni" onClick={(e) => setDress(e.target.value)} disabled={!isDisabled ? "" : "disabled"}/>
+            <input class="category-btn" type="button" value="Scarpe" name="Scarpe" onClick={(e) => setDress(e.target.value)} disabled={!isDisabled ? "" : "disabled"}/>
+            <input class="category-btn" type="button" value="Streetwear" name="Streetwear" onClick={(e) => setDress(e.target.value)} disabled={!isDisabled ? "" : "disabled"}/>
         </div>
         <h2>Extra</h2>
         <div class="categories">
-           <button class="category-btn">Saldi</button>
+           <input class="category-btn" type="button" value="Saldi" name='Saldi' onClick={(e) => setDress(e.target.value)} disabled={!isDisabled ? "" : "disabled"}/>
+           <input class="category-btn" type="button" value="Reset" name='Reset' onClick={(e) => setDress(e.target.value)}/>
         </div>
     </div>
 

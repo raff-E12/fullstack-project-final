@@ -13,11 +13,13 @@ export default function ConatinersCards() {
             return(
             <>
             <div class="product-card" key={index}>
+              {element.sku_order_code !== null ? <p className='sale-icon'>Sale</p> : <p></p>}
               <img src={element.image_url} alt="Felpa Oversize" />
                 <div class="product-info">
                     <div class="product-title">{element.name}</div>
                     <div class="product-description">{element.description}</div>
-                    <div class="product-price">{`€${element.price}`}</div>
+                    {element.discount_price !== null ? <div class="product-price">{`€${element.discount_price}`}</div> : <div class="product-price">{`€${element.price}`}</div>}
+                    {element.discount_price !== null ? <div class="product-discount-promo">{`€${element.price}`}</div> : <div class="product-discount"></div>}
                 </div>
                 <div className='product-info btns'>
                   <button className='btn-prod'>Add Card</button>

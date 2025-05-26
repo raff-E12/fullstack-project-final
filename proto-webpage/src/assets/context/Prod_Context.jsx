@@ -12,6 +12,7 @@ function Api_Context_Prod({children}) {
   const [isBrand, setBrand] = useState("");
   const [isValue, setValue] = useState(0);
   const [isDress, setDress] = useState("");
+  const [isDisabled, setDisabled] = useState(true);
   
     function Filter_Selection() {
       const data_fill = {
@@ -30,15 +31,127 @@ function Api_Context_Prod({children}) {
       return setList(() => condition_list);
     }
 
+    function setDress_fun(){
+      if (isDress === "Polo & T-Shirt" || isDress === "Capispalla" || 
+        isDress === "Felpe" ||  isDress === "Pantaloni" || 
+        isDress === "Scarpe" || isDress === "Streetwear") {
+
+      let filter_category = [];
+      let condition_cat = "";
+
+    switch (isDress) {
+      case "Polo & T-Shirt":
+      
+      setDisabled(true);
+
+      filter_category = isList.filter(element => {
+        return element.category === "Polo & T-Shirt";
+      })
+          
+      condition_cat = filter_category.length === 0 ? Products : filter_category;
+      setList(() => condition_cat);
+
+      break;
+
+      case "Capispalla":
+
+      setDisabled(true);
+
+      filter_category = isList.filter(element => {
+        return element.category === "Capispalla";
+      })
+          
+      condition_cat = filter_category.length === 0 ? Products : filter_category;
+      setList(() => condition_cat);
+
+      break;
+
+      case "Felpe":
+
+      setDisabled(true);
+
+      filter_category = isList.filter(element => {
+        return element.category === "Felpe";
+      })
+          
+      condition_cat = filter_category.length === 0 ? Products : filter_category;
+      setList(() => condition_cat);
+
+      break;
+
+      case "Pantaloni":
+
+      setDisabled(true);
+
+      filter_category = isList.filter(element => {
+        return element.category === "Pantaloni";
+      })
+          
+      condition_cat = filter_category.length === 0 ? Products : filter_category;
+      setList(() => condition_cat);
+
+      break;
+
+      case "Scarpe":
+
+      setDisabled(true);
+
+      filter_category = isList.filter(element => {
+        return element.category === "Scarpe";
+      })
+          
+      condition_cat = filter_category.length === 0 ? Products : filter_category;
+      setList(() => condition_cat);
+
+      break;
+
+      case "Streetwear":
+
+      setDisabled(true);
+
+      filter_category = isList.filter(element => {
+        return element.category === "Streetwear";
+      })
+          
+      condition_cat = filter_category.length === 0 ? Products : filter_category;
+      setList(() => condition_cat);
+
+      break;
+
+      default:
+      filter_category = [];
+      condition_cat = Products;
+      setList(() => condition_cat);
+
+      break;
+
+      }
+
+      } else if (isDress === "Saldi") {
+
+      setDisabled(true);
+        
+      const filter_sale = isList.filter(element => element.sku_order_code);
+      const condition_sale = filter_sale.length === 0 ? Products : filter_sale;
+
+      return setList(() => condition_sale);
+
+      } else if (isDress === "Reset"){
+
+        setDisabled(false);
+
+        return setList(Products);
+        
+      } else{
+        return setDress("");
+      }
+    }
+
     function Reset_Check() {
       setCategory("");
       setValue("");
       setBrand("");
       setList(Products);
-    }
-
-    function setDress_fun(){
-      console.log(isDress);
     }
 
     useEffect(() => { setDress_fun() },[isDress]);
@@ -55,7 +168,8 @@ function Api_Context_Prod({children}) {
     Filter_Selection,
     Reset_Check,
     isDress,
-    setDress
+    setDress,
+    isDisabled
   };
 
   return(

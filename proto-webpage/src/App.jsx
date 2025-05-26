@@ -1,7 +1,6 @@
 import './App.css'
 import { Routes, Route } from "react-router"
 import HomePage from './assets/pages/HomePage'
-import ProfilePage from './assets/pages/ProfilePage'
 import NotFoundPage from './assets/pages/NotFoundPage'
 import ShopPage from './assets/pages/ShopPage'
 import ProductsPage from './assets/pages/ProductsPage'
