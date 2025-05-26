@@ -51,8 +51,8 @@ function Api_Context_Prod({children}) {
 
       if (data_fill.price !== "") {
         filter_price = isList.filter(element => 
-          (element.discount_price !== null && parseFloat(element.discount_price) <= Number(data_fill.price)) ||
-          parseFloat(element.price) <= Number(data_fill.price)
+          (element.discount_price !== null && Number(parseFloat(element.discount_price).toFixed()) <= Number(data_fill.price)) ||
+         Number(parseFloat(element.discount_price).toFixed()) <= Number(data_fill.price)
         );
       }
 
