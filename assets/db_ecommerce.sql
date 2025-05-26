@@ -57,7 +57,7 @@ CREATE TABLE `category_product` (
   KEY `category_id` (`category_id`),
   CONSTRAINT `category_product_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   CONSTRAINT `category_product_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +66,7 @@ CREATE TABLE `category_product` (
 
 LOCK TABLES `category_product` WRITE;
 /*!40000 ALTER TABLE `category_product` DISABLE KEYS */;
+INSERT INTO `category_product` VALUES (1,1,1),(4,2,2),(12,2,6),(6,3,3),(13,3,6),(5,4,2),(10,5,4),(11,6,5),(7,7,3),(14,7,6),(2,8,1),(3,9,1),(8,10,3),(15,10,6),(9,11,3);
 /*!40000 ALTER TABLE `category_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +88,7 @@ CREATE TABLE `customers` (
   `country` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,6 +97,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
+INSERT INTO `customers` VALUES (1,'Mario','Rossi','mario.rossi@example.com','Via Roma 10, 00100 Roma','Via Roma 10, 00100 Roma','3331234567','Italy'),(2,'Laura','Bianchi','laura.bianchi@example.com','Piazza Duomo 1, 20100 Milano','Piazza Duomo 1, 20100 Milano','3457654321','Italy'),(3,'Giovanni','Verdi','giovanni.verdi@example.com','Corso Francia 5, 10100 Torino','Via Garibaldi 20, 10100 Torino','3209876543','Italy'),(4,'Anna','Neri','anna.neri@example.com','Viale Colombo 8, 80100 Napoli','Viale Colombo 8, 80100 Napoli','3381122334','Italy');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +177,7 @@ CREATE TABLE `order_product` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `order_product_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `order_product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,6 +186,7 @@ CREATE TABLE `order_product` (
 
 LOCK TABLES `order_product` WRITE;
 /*!40000 ALTER TABLE `order_product` DISABLE KEYS */;
+INSERT INTO `order_product` VALUES (1,1,1,89.99,1,'FP001',0),(2,1,8,89.99,1,'RL008',0),(3,2,3,129.99,1,'D5003',0),(4,3,5,149.99,1,'DD005',0),(5,4,4,299.99,1,'HN004',0),(6,5,8,99.99,1,'RL008',0);
 /*!40000 ALTER TABLE `order_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +206,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`),
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,6 +215,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,1,179.98,'2025-05-20 10:30:00','Completed'),(2,2,129.99,'2025-05-21 14:00:00','Pending'),(3,1,149.99,'2025-05-21 16:45:00','Processing'),(4,3,299.99,'2025-05-22 09:00:00','Shipped'),(5,4,99.99,'2025-05-22 11:15:00','Completed');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,6 +232,7 @@ CREATE TABLE `products` (
   `description` text,
   `price` decimal(10,2) NOT NULL,
   `image_url` text,
+  `image_still_life_url` text,
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `brand` varchar(255) DEFAULT NULL,
   `sku_order_code` varchar(255) DEFAULT NULL,
@@ -235,7 +240,7 @@ CREATE TABLE `products` (
   `discount_price` decimal(10,2) DEFAULT NULL,
   `start_discount` datetime DEFAULT NULL,
   `end_discount` datetime DEFAULT NULL,
-  `is_active_product` tinyint(1) DEFAULT '1',
+  `on_sale` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `sku_order_code` (`sku_order_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -247,7 +252,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Polo Classic','Polo classica Fred Perry',89.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','FRED PERRY','FP001','Cotton 100%',10.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(2,'Giubbotto Invernale','Giubbotto sportivo Barrow',159.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','BARROW','BR002','Polyester/Nylon',15.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(3,'Felpa Logo','Felpa con logo Department Five',129.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','DEPARTMENT FIVE','D5003','Cotton/Polyester',20.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(4,'Piumino Premium','Piumino elegante Herno',299.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','HERNO','HN004','Nylon/Down',12.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(5,'Pantalone Chino','Pantalone chino Dondup',149.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','DONDUP','DD005','Cotton/Elastane',15.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(6,'Sneaker Tropez','Sneaker Philippe Model Tropez',189.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','PHILIPPE MODEL','PM006','Leather/Suede',10.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(7,'Felpa Goggle','Felpa con lenti C.P. Company',179.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','C.P. COMPANY','CP007','Cotton/Polyester',12.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(8,'Polo Big Pony','Polo Ralph Lauren Big Pony',99.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','POLO RALPH LAUREN','RL008','Cotton Pique',10.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(9,'T-shirt Logo','T-shirt Saint Barth',69.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','SAINT BARTH','SB009','Cotton 100%',15.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(10,'Felpa Oversize','Felpa oversize GCDS',139.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','GCDS','GC010','Cotton/Polyester',18.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(11,'Maglione Badge','Maglione con badge Stone Island',219.99,'URL_DA_MODIFICARE','2025-05-22 14:50:37','STONE ISLAND','SI011','Wool/Cotton',8.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1);
+INSERT INTO `products` VALUES (1,'Polo Classic','Polo classica Fred Perry',89.99,NULL,NULL,'2025-05-22 14:50:37','FRED PERRY','FP001','Cotton 100%',10.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(2,'Giubbotto Invernale','Giubbotto sportivo Barrow',159.99,NULL,NULL,'2025-05-22 14:50:37','BARROW','BR002','Polyester/Nylon',15.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(3,'Felpa Logo','Felpa con logo Department Five',129.99,NULL,NULL,'2025-05-22 14:50:37','DEPARTMENT FIVE','D5003','Cotton/Polyester',20.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(4,'Piumino Premium','Piumino elegante Herno',299.99,NULL,NULL,'2025-05-22 14:50:37','HERNO','HN004','Nylon/Down',12.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(5,'Pantalone Chino','Pantalone chino Dondup',149.99,NULL,NULL,'2025-05-22 14:50:37','DONDUP','DD005','Cotton/Elastane',15.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(6,'Sneaker Tropez','Sneaker Philippe Model Tropez',189.99,NULL,NULL,'2025-05-22 14:50:37','PHILIPPE MODEL','PM006','Leather/Suede',10.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(7,'Felpa Goggle','Felpa con lenti C.P. Company',179.99,NULL,NULL,'2025-05-22 14:50:37','C.P. COMPANY','CP007','Cotton/Polyester',12.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(8,'Polo Big Pony','Polo Ralph Lauren Big Pony',99.99,NULL,NULL,'2025-05-22 14:50:37','POLO RALPH LAUREN','RL008','Cotton Pique',10.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(9,'T-shirt Logo','T-shirt Saint Barth',69.99,NULL,NULL,'2025-05-22 14:50:37','SAINT BARTH','SB009','Cotton 100%',15.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(10,'Felpa Oversize','Felpa oversize GCDS',139.99,NULL,NULL,'2025-05-22 14:50:37','GCDS','GC010','Cotton/Polyester',18.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1),(11,'Maglione Badge','Maglione con badge Stone Island',219.99,NULL,NULL,'2025-05-22 14:50:37','STONE ISLAND','SI011','Wool/Cotton',8.00,'2024-01-01 00:00:00','2024-01-31 00:00:00',1);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -260,6 +265,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-22 15:10:21
-
-
+-- Dump completed on 2025-05-26 11:33:21
