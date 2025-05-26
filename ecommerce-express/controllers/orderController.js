@@ -1,4 +1,4 @@
-import countries from "../data/countries"
+const countries = require("../data/countries")
 const validator = require("validator")
 const connection = require("../data/db");
 

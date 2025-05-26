@@ -195,4 +195,4 @@ const countries = [
   "zimbabwe"
 ];
 
-export default countries;
+module.exports = countries;
