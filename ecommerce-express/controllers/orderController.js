@@ -53,7 +53,7 @@ const parsedPhone = parseInt(phone)
 
   // Amount control
   const parsedAmount = parseFloat(amount);
-  if (isNaN(parsedAmount) || parsedAmount < 0) {
+  if (isNaN(parsedAmount) || parsedAmount <= 0) {
     return res.status(400).json({ msg: "Amount Error: You have to provide a valid positive price", code: 400 });
   }
 
@@ -144,7 +144,7 @@ const parsedPhone = parseInt(phone)
 
   // Amount control
   const parsedAmount = parseFloat(amount);
-  if (isNaN(parsedAmount) || parsedAmount < 0) {
+  if (isNaN(parsedAmount) || parsedAmount <= 0) {
     return res.status(400).json({ msg: "Amount Error: You have to provide a valid positive price", code: 400 });
   }
 
@@ -172,7 +172,7 @@ const parsedPhone = parseInt(phone)
 
   // Country control (array con countries importato from data)
   if (!country || !countries.includes(country.toLowerCase())) {
-    return res.status(400).json({ msg: `Country Error: "${country}" is not a valid country`, code: 400 });
+    return res.status(400).json({ msg: `Country Error: ${country} is not a valid country`, code: 400 });
   }
   
     connection.query(sql, [name, surname, email, billing_address, shipping_address, phone, country, id], (error, result) => {
