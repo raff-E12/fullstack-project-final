@@ -63,7 +63,7 @@ const checkoutProcess = (req, res) => {
         if (result.length === 0) {
           return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
         }
-        return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, orders: result });
+        return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, checkout: result });
       })
     })
   })
@@ -93,6 +93,12 @@ const customerPatch = (req, res) => {
 
 }
 
+
+const checkoutComplete = ()=> {
+  // update dell'ordine: cambio status ordine, prezzo, metodo di pagamento
+  // post order_product: tutti i prodotti ordinati
+  // Invio email
+}
 
 module.exports = {
   // index,
