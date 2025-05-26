@@ -36,18 +36,18 @@ const checkoutProcess = (req, res) => {
 
  //Validazioni
 //NOme e Cognome
-  if (!name || !surname) {
+  if (!name || !surname || name.length < 3 || surname.length < 3) {
     return res.status(400).json({ msg: "Insert a valid name and surname", code: 400 });
   }
 
  //Email controllo con validator
   if (!email || !validator.isEmail(email)) {
-    return res.status(400).json({ msg: "Mail Error: Formato email non valido.", code: 400 });
+    return res.status(400).json({ msg: "Mail Error: Format Not Valid", code: 400 });
   }
 
 //Telefono: controllo lunghezza e esistenza
 const parsedPhone = parseInt(phone)
-  if (!phone || phone.length < 7 || phone.length > 20 || isNaN(parsedPhone)) {
+  if (isNaN(parsedPhone) || phone.length < 7 || phone.length > 20 ) {
     return res.status(400).json({ msg: "Number Error: Phone number must be valid and respect standard format (7-20 digits).", code: 400 });
   }
 
