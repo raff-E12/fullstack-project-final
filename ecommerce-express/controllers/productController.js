@@ -30,10 +30,22 @@ const show = (req, res) => {
 }
 
 
-const showProductCategory = (req, res) => {
-  const { id } = req.params;
-  const sql = "SELECT * FROM products WHERE id = ?";
-  connection.query(sql, [id], (error, result) => {
+const indexProductCategory = (req, res) => {
+  const { categoryId } = req.params;
+  const sql = `SELECT
+    products.*,
+    category_product.product_id,
+    category_product.category_id,
+    categories.name AS category_name
+FROM
+    products
+JOIN
+    category_product ON category_product.product_id = products.id
+JOIN
+    categories ON categories.id = category_product.category_id
+WHERE
+    categories.id = ?;`
+  connection.query(sql, [categoryId], (error, result) => {
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });
     }
@@ -47,5 +59,5 @@ const showProductCategory = (req, res) => {
 module.exports = {
   index,
   show,
-  showProductCategory
+  indexProductCategory
 }
