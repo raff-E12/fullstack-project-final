@@ -1,18 +1,18 @@
 
 const connection = require("../data/db");
 
-const index = (req, res) => {
-  const sql = "SELECT * FROM orders";
-  connection.query(sql, (error, result) => {
-    if (error) {
-      return res.status(500).json({ msg: "Errore del database", code: 500 });
-    }
-    if (result.length === 0) {
-      return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
-    }
-    return res.status(200).json({ msg: "Benvenuto nell' API di Orders", code: 200, orders: result });
-  })
-}
+// const index = (req, res) => {
+//   const sql = "SELECT * FROM orders";
+//   connection.query(sql, (error, result) => {
+//     if (error) {
+//       return res.status(500).json({ msg: "Errore del database", code: 500 });
+//     }
+//     if (result.length === 0) {
+//       return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
+//     }
+//     return res.status(200).json({ msg: "Benvenuto nell' API di Orders", code: 200, orders: result });
+//   })
+// }
 
 
 const show = (req, res) => {
@@ -29,7 +29,7 @@ const show = (req, res) => {
   })
 }
 
-const customerStore = (req, res) => {
+const checkoutProcess = (req, res) => {
   const { name, surname, email, billing_address, shipping_address, phone, country, amount } = req.body;
   const sql = "INSERT INTO customers (`name`, `surname`, `email`, `billing_address`, `shipping_address`, `phone`, `country`) VALUES (?, ?, ?, ?, ?, ?, ?);"
 
@@ -92,8 +92,8 @@ const customerPatch = (req, res) => {
 
 
 module.exports = {
-  index,
+  // index,
   show,
-  customerStore,
+  checkoutProcess,
   customerPatch
 }

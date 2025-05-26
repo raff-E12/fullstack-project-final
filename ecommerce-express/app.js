@@ -4,6 +4,8 @@ const app = express();
 const port = process.env.PORT;
 const productRouter = require("./routers/productsRouter");
 const orderRouter = require("./routers/orderRouter");
+const categoryRouter = require("./routers/categoryRouter");
+const checkoutRouter = require("./routers/checkoutRouter");
 const errorHandler = require("./middlewares/errorHandler");
 const pageNotFound = require("./middlewares/pageNotFound");
 const cors = require("cors");
@@ -23,6 +25,8 @@ app.use(express.json());
 // ROUTERS used in 127.0.0.1:3000/products
 app.use("/products", productRouter);
 app.use("/orders", orderRouter);
+app.use("/categories", categoryRouter);
+app.use("/checkout", checkoutRouter);
 
 // 500 Handler 
 app.use(errorHandler);
