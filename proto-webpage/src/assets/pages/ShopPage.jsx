@@ -12,7 +12,8 @@ import { use } from 'react';
 export default function ShopPage() {
     const [isOpen, setOpen] = useState(false);
     const { isValue, setValue, isCategory, 
-    setCategory, isBrand, setBrand, Filter_Selection, Reset_Check } = Use_ContextProd();
+    setCategory, isBrand, setBrand, Filter_Selection, Reset_Check, isDress,
+    setDress } = Use_ContextProd();
     
   return (
     <>
@@ -22,12 +23,12 @@ export default function ShopPage() {
     <div id='filter-menu' className={`${!isOpen ? "close" : "open"}`}>
         <h2>Capi</h2>
         <div class="categories">
-            <button class="category-btn">Polo & T-Shirt</button>
-            <button class="category-btn">Capispalla</button>
-            <button class="category-btn">Felpe</button>
-            <button class="category-btn">Pantaloni</button>
-            <button class="category-btn">Scarpe</button>
-            <button class="category-btn">Streetwear</button>
+            <button class="category-btn" value="Polo & T-Shirt" onChange={(e) => setDress(e.target.value)}>Polo & T-Shirt</button>
+            <button class="category-btn" value="Capispalla" onChange={(e) => setDress(e.target.value)}>Capispalla</button>
+            <button class="category-btn" value="Felpe" onChange={(e) => setDress(e.target.value)}>Felpe</button>
+            <button class="category-btn" value="Pantaloni" onChange={(e) => setDress(e.target.value)}>Pantaloni</button>
+            <button class="category-btn" value="Scarpe" onChange={(e) => setDress(e.target.value)}>Scarpe</button>
+            <button class="category-btn" value="Streetwear" onChange={(e) => setDress(e.target.value)}>Streetwear</button>
         </div>
         <h2>Extra</h2>
         <div class="categories">
