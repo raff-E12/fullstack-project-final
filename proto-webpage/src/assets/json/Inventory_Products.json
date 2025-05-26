@@ -1,0 +1,289 @@
+[
+  {
+    "id": 1,
+    "product_id": 1,
+    "deposit_id": "DEP-246",
+    "size": "M",
+    "color": "#084DA6"
+  },
+  {
+    "id": 2,
+    "product_id":  2,
+    "deposit_id": "DEP-157",
+    "size": "S",
+    "color": "#261B1A"
+  },
+  {
+    "id": 3,
+    "product_id": 3,
+    "deposit_id": "DEP-669",
+    "size": "S",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 4,
+    "product_id": 4,
+    "deposit_id": "DEP-301",
+    "size": "L",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 5,
+    "product_id": 5,
+    "deposit_id": "DEP-401",
+    "size": "XXL",
+    "color": "#6F7372"
+  },
+  {
+    "id": 6,
+    "product_id": 6,
+    "deposit_id": "DEP-205",
+    "size": "M",
+    "color": "#084DA6"
+  },
+  {
+    "id": 7,
+    "product_id": 7,
+    "deposit_id": "DEP-360",
+    "size": "L",
+    "color": "Rosso"
+  },
+  {
+    "id": 8,
+    "product_id": 8,
+    "deposit_id": "DEP-871",
+    "size": "S",
+    "color": "#084DA6"
+  },
+  {
+    "id": 9,
+    "product_id": 9,
+    "deposit_id": "DEP-201",
+    "size": "S",
+    "color": "#6F7372"
+  },
+  {
+    "id": 10,
+    "product_id": 10,
+    "deposit_id": "DEP-316",
+    "size": "XL",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 11,
+    "product_id": 11,
+    "deposit_id": "DEP-498",
+    "size": "XXL",
+    "color": "#6F7372"
+  },
+  {
+    "id": 12,
+    "product_id": 11,
+    "deposit_id": "DEP-656",
+    "size": "XL",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 13,
+    "product_id": 11,
+    "deposit_id": "DEP-748",
+    "size": "M",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 14,
+    "product_id": 12,
+    "deposit_id": "DEP-311",
+    "size": "XS",
+    "color": "#084DA6"
+  },
+  {
+    "id": 15,
+    "product_id": 13,
+    "deposit_id": "DEP-920",
+    "size": "L",
+    "color": "#084DA6"
+  },
+  {
+    "id": 16,
+    "product_id": 14,
+    "deposit_id": "DEP-783",
+    "size": "XS",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 17,
+    "product_id": 15,
+    "deposit_id": "DEP-806",
+    "size": "XS",
+    "color": "#668C4A"
+  },
+  {
+    "id": 18,
+    "product_id": 16,
+    "deposit_id": "DEP-392",
+    "size": "M",
+    "color": "#6F7372"
+  },
+  {
+    "id": 19,
+    "product_id": 17,
+    "deposit_id": "DEP-327",
+    "size": "S",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 20,
+    "product_id": 18,
+    "deposit_id": "DEP-307",
+    "size": "S",
+    "color": "#6F7372"
+  },
+  {
+    "id": 21,
+    "product_id": 19,
+    "deposit_id": "DEP-742",
+    "size": "M",
+    "color": "#592B02"
+  },
+  {
+    "id": 22,
+    "product_id": 20,
+    "deposit_id": "DEP-309",
+    "size": "XL",
+    "color": "#6F7372"
+  },
+  {
+    "id": 23,
+    "product_id": 15,
+    "deposit_id": "DEP-782",
+    "size": "S",
+    "color": "#617322"
+  },
+  {
+    "id": 24,
+    "product_id": 14,
+    "deposit_id": "DEP-298",
+    "size": "M",
+    "color": "#084DA6"
+  },
+  {
+    "id": 25,
+    "product_id": 16,
+    "deposit_id": "DEP-622",
+    "size": "S",
+    "color": "#617322"
+  },
+  {
+    "id": 26,
+    "product_id": 12,
+    "deposit_id": "DEP-285",
+    "size": "S",
+    "color": "#617322"
+  },
+  {
+    "id": 27,
+    "product_id": 1,
+    "deposit_id": "DEP-149",
+    "size": "M",
+    "color": "#592B02"
+  },
+  {
+    "id": 28,
+    "product_id": 10,
+    "deposit_id": "DEP-279",
+    "size": "XL",
+    "color": "#592B02"
+  },
+  {
+    "id": 29,
+    "product_id": 10,
+    "deposit_id": "DEP-983",
+    "size": "XXL",
+    "color": "#668C4A"
+  },
+  {
+    "id": 30,
+    "product_id": 10,
+    "deposit_id": "DEP-394",
+    "size": "XS",
+    "color": "#668C4A"
+  },
+  {
+    "id": 31,
+    "product_id": 17,
+    "deposit_id": "DEP-260",
+    "size": "XS",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 32,
+    "product_id": 3,
+    "deposit_id": "DEP-849",
+    "size": "S",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 33,
+    "product_id": 3,
+    "deposit_id": "DEP-751",
+    "size": "L",
+    "color": "#592B02"
+  },
+  {
+    "id": 34,
+    "product_id": 5,
+    "deposit_id": "DEP-762",
+    "size": "XL",
+    "color": "#668C4A"
+  },
+  {
+    "id": 35,
+    "product_id": 7,
+    "deposit_id": "DEP-294",
+    "size": "XS",
+    "color": "#668C4A"
+  },
+  {
+    "id": 36,
+    "product_id": 8,
+    "deposit_id": "DEP-272",
+    "size": "S",
+    "color": "#6F7372"
+  },
+  {
+    "id": 37,
+    "product_id": 9,
+    "deposit_id": "DEP-378",
+    "size": "M",
+    "color": "#084DA6"
+  },
+  {
+    "id": 38,
+    "product_id": 18,
+    "deposit_id": "DEP-294",
+    "size": "L",
+    "color": "#F2F2F2"
+  },
+  {
+    "id": 39,
+    "product_id": 16,
+    "deposit_id": "DEP-977",
+    "size": "S",
+    "color": "#6F7372"
+  },
+  {
+    "id": 40,
+    "product_id": 14,
+    "deposit_id": "DEP-839",
+    "size": "M",
+    "color": "Rosso"
+  },
+  {
+    "id": 41,
+    "product_id": 4,
+    "deposit_id": "DEP-315",
+    "size": "L",
+    "color": "#6F7372"
+  }
+]

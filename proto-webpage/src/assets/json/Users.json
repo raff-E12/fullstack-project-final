@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "name": "Luca",
+    "surname": "Rossi",
+    "email": "luca.rossi@example.com",
+    "billing_address": "Via Roma 12, 00100 Roma, Italia",
+    "shipping_address": "Via Milano 45, 20100 Milano, Italia",
+    "phone": "+39 06 12345678",
+    "country": "Italia"
+  },
+  {
+    "id": 2,
+    "name": "Maria",
+    "surname": "Bianchi",
+    "email": "maria.bianchi@example.com",
+    "billing_address": "Corso Venezia 8, 20121 Milano, Italia",
+    "shipping_address": "Via Torino 33, 10100 Torino, Italia",
+    "phone": "+39 011 9876543",
+    "country": "Italia"
+  },
+  {
+    "id": 3,
+    "name": "Giovanni",
+    "surname": "Verdi",
+    "email": "giovanni.verdi@example.com",
+    "billing_address": "Piazza Dante 5, 80100 Napoli, Italia",
+    "shipping_address": "Via Firenze 22, 50100 Firenze, Italia",
+    "phone": "+39 081 3344556",
+    "country": "Italia"
+  },
+  {
+    "id": 4,
+    "name": "Sara",
+    "surname": "Neri",
+    "email": "sara.neri@example.com",
+    "billing_address": "Via Garibaldi 17, 16100 Genova, Italia",
+    "shipping_address": "Via Bologna 14, 40100 Bologna, Italia",
+    "phone": "+39 010 5566778",
+    "country": "Italia"
+  },
+  {
+    "id": 5,
+    "name": "Alessandro",
+    "surname": "Ferrari",
+    "email": "alessandro.ferrari@example.com",
+    "billing_address": "Via Napoli 27, 35100 Padova, Italia",
+    "shipping_address": "Via Venezia 3, 30100 Venezia, Italia",
+    "phone": "+39 049 2233445",
+    "country": "Italia"
+  }
+]
