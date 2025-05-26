@@ -2,7 +2,7 @@
 const connection = require("../data/db");
 
 const index = (req, res) => {
-  const sql = "SELECT * FROM products";
+  const sql = "SELECT tb1.*, (SELECT name FROM categories WHERE id = tb2.category_id) AS category FROM products AS tb1 INNER JOIN category_product AS tb2 ON tb1.id = tb2.product_id";
   connection.query(sql, (error, result) => {
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });

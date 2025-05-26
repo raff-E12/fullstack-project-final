@@ -13,7 +13,7 @@ export default function ConatinersCards() {
             return(
             <>
             <div class="product-card" key={index}>
-              {element.sku_order_code !== null ? <p className='sale-icon'>Sale</p> : <p></p>}
+              {element.sku_order_code === null ? <p></p> : <p className='sale-icon'>Sale</p>}
               <img src={element.image_url} alt="Felpa Oversize" />
                 <div class="product-info">
                     <div class="product-title">{element.name}</div>
