@@ -11,6 +11,7 @@ import SingleCategoryPage from './pages/SingleCategoryPage';
 import SingleCategoryProductPage from './pages/SingleCategoryProductPage';
 import SingleOrderPage from './pages/SingleCategoryPage'
 import SingleProductPage from './pages/SingleProductPage';
+import SearcPage from './pages/SearchPage';
 
 export default function App() {
   return <div>
@@ -30,6 +31,8 @@ export default function App() {
 
           <Route path='/checkout' element={<CheckOutPage />} />
           <Route path='/cart' element={<CartPage />} />
+
+          <Route path='/search' element={<SearcPage />} />
 
         </Route>
       </Routes>

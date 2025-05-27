@@ -90,12 +90,15 @@ export default function Header() {
             <NavLink to="/products" className="nav-link fw-bold me-3">
               Product
             </NavLink>
-            <NavLink to="/cart" className="nav-link fw-bold">
+            <NavLink to="/cart" className="nav-link fw-bold me-3">
               Carrello
+            </NavLink>
+            <NavLink to="/search" className="nav-link fw-bold">
+              Search
             </NavLink>
           </div>
         </div>
       </div>
-    </header>
+    </header >
   );
 }
