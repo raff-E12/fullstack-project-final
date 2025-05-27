@@ -33,40 +33,40 @@ const show = (req, res) => {
 
 const checkoutProcess = (req, res) => {
   
-  const { name, surname, email, billing_address, shipping_address, phone, country, amount } = req.body;
-  console.log(req.body);
-  const sql = "INSERT INTO customers (`name`, `surname`, `email`, `billing_address`, `shipping_address`, `phone`, `country`) VALUES (?, ?, ?, ?, ?, ?, ?);"
+  // const { name, surname, email, billing_address, shipping_address, phone, country, amount } = req.body;
+  // console.log(req.body);
+  // const sql = "INSERT INTO customers (`name`, `surname`, `email`, `billing_address`, `shipping_address`, `phone`, `country`) VALUES (?, ?, ?, ?, ?, ?, ?);"
   
-  connection.query(sql, [name, surname, email, billing_address, shipping_address, phone, country], (error, result) => {
-    if (error) {
-      console.log(error);
-      return res.status(500).json({ msg: "Errore del database", code: 500 });
-    }
+  // connection.query(sql, [name, surname, email, billing_address, shipping_address, phone, country], (error, result) => {
+  //   if (error) {
+  //     console.log(error);
+  //     return res.status(500).json({ msg: "Errore del database", code: 500 });
+  //   }
 
-    const sql2 = `SELECT * FROM customers WHERE customers.name = ? AND customers.surname = ? AND customers.email = ?`
-    connection.query(sql2, [name, surname, email], (error, result) => {
-      if (error) {
-        console.log(error);
-        return res.status(500).json({ msg: "Errore del database", code: 500 });
-      }
-      if (result.length === 0) {
-        return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
-      }
-      const customerId = result[0].id;
-      const order_status = "Pending";
-      const sql3 = "INSERT INTO orders (`amount`, `order_status`, `customer_id`) VALUES ( ?, ?, ?);"
-      connection.query(sql3, [amount, order_status, customerId], (error, result) => {
-        if (error) {
-          console.log(error);
-          return res.status(500).json({ msg: "Errore del database", code: 500 });
-        }
-        if (result.length === 0) {
-          return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
-        }
-        return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, checkout: result });
-      })
-    })
-  })
+  //   const sql2 = `SELECT * FROM customers WHERE customers.name = ? AND customers.surname = ? AND customers.email = ?`
+  //   connection.query(sql2, [name, surname, email], (error, result) => {
+  //     if (error) {
+  //       console.log(error);
+  //       return res.status(500).json({ msg: "Errore del database", code: 500 });
+  //     }
+  //     if (result.length === 0) {
+  //       return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
+  //     }
+  //     const customerId = result[0].id;
+  //     const order_status = "Processing";
+  //     const sql3 = "INSERT INTO orders (`amount`, `order_status`, `customer_id`) VALUES ( ?, ?, ?);"
+  //     connection.query(sql3, [amount, order_status, customerId], (error, result) => {
+  //       if (error) {
+  //         console.log(error);
+  //         return res.status(500).json({ msg: "Errore del database", code: 500 });
+  //       }
+  //       if (result.length === 0) {
+  //         return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
+  //       }
+  //       return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, checkout: result });
+  //     })
+  //   })
+  // })
   
 }
 
@@ -79,5 +79,6 @@ const checkoutComplete = ()=> {
 module.exports = {
   // index,
   show,
-  checkoutProcess
+  checkoutProcess,
+  checkoutComplete
 }
