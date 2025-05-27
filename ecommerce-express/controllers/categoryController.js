@@ -16,9 +16,9 @@ const index = (req, res) => {
 
 
 const show = (req, res) => {
-  const { id } = req.params;
-  const sql = "SELECT * FROM categories WHERE id = ?";
-  connection.query(sql, [id], (error, result) => {
+  const { slug } = req.params;
+  const sql = "SELECT * FROM categories WHERE slug = ?";
+  connection.query(sql, [slug], (error, result) => {
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });
     }
