@@ -11,6 +11,8 @@
     --color-gray: #8f8f8f6c;
 }
 
+/***** Slider Style *****/ 
+
 .swiper{
     width: 100%;
     height: 500px;
@@ -140,5 +142,24 @@
 .slider-container{
     position: relative;
 }
+
+/***** End Slider Style *****/
+
+
+/***** Header Style Css *****/ 
+
+.header-sc{
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    top: 0;
+}
+
+.text-hd{
+    font-size: 2em;
+}
+
+/***** End Header Style Css *****/
+
 
 /***** End WebPage Css Application *****/

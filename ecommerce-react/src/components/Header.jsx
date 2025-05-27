@@ -5,7 +5,7 @@ export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    <header className="bg-light py-3">
+    <header className="bg-light py-3 header-sc">
       <div className="container">
         <div className="d-flex justify-content-between align-items-center">
           <div className="d-flex">
@@ -84,7 +84,7 @@ export default function Header() {
             </div>
           </div>
 
-          <h1 className="m-0">Nome</h1>
+          <h1 className="m-0" id="text-hd">Nome</h1>
 
           <div className="d-flex">
             <NavLink to="/products" className="nav-link fw-bold me-3">

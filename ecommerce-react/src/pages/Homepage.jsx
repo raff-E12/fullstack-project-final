@@ -3,7 +3,7 @@ import Sliders from '../components/Sliders'
 
 export default function Homepage() {
   return (
-    <div>
+    <div className='container-xxl p-0'>
         <Sliders />
     </div>
   )

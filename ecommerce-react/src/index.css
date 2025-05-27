@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 
-**** Css Reset Style WebPage *****/ 
+/**** Css Reset Style WebPage *****/ 
 
 /* RESET BASE */
 *,
@@ -167,14 +166,39 @@ img {
   background-color: #5c636a;
 }
 
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
 
-/***** End Css Reset Style WebPage ****
-=======
-h1,
-h2,
-h3,
-h4,
-h5 {
-    font-family: Parkinsans;
+p { font-size: 1rem; }
+
+ul, ol {
+  font-size: 1rem;
 }
->>>>>>> b04c6fefb55be4a079acb0014c66f38b6eb5cb3e
+
+li {
+  font-size: 1rem;
+}
+
+a {
+  font-size: 1rem;
+}
+
+blockquote {
+  font-size: 1.1rem;
+}
+
+code, pre {
+  font-size: 0.95rem;
+}
+
+strong, em {
+  font-size: 1rem;
+}
+
+
+/***** End Css Reset Style WebPage ****/
+
