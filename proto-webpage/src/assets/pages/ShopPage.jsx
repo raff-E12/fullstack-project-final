@@ -12,7 +12,7 @@ export default function ShopPage() {
     const [isOpen, setOpen] = useState(false);
     const { isValue, setValue, isCategory, 
     setCategory, isBrand, setBrand, Filter_Selection, Reset_Check, isDress,
-    setDress, isDisabled } = Use_ContextProd();
+    setDress, isDisabled, isSearch, setSearch } = Use_ContextProd();
     
   return (
     <>
@@ -75,7 +75,7 @@ export default function ShopPage() {
             <h1 className='shop-title'>Esplora i nostri capi</h1>
             
             <div class="filters">
-                <input type="search" placeholder="Cerca un prodotto..." />
+                <input type="search" placeholder="Cerca un prodotto..." value={isSearch} onChange={(e) => setSearch(e.target.value)}/>
                     <select>
                         <option value="">Ordina per</option>
                         <option value="price">Prezzo</option>

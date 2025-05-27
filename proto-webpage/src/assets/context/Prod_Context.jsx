@@ -15,6 +15,7 @@ function Api_Context_Prod({children}) {
   const [isValue, setValue] = useState(0);
   const [isDress, setDress] = useState("");
   const [isDisabled, setDisabled] = useState(false);
+  const [isSearch, setSearch] = useState("");
 
   async function List_Api() {
     try {
@@ -189,7 +190,18 @@ function Api_Context_Prod({children}) {
       setList(condition_sale);
     }
 
-    
+
+    function Filter_Search(){
+      if (isSearch !== "") {
+        const filter_search = isList.filter(element => element.name.includes(isSearch));
+        const condition_search = filter_search.length !== 0 ? filter_search : isStand;
+        setList(condition_search);
+      } else{
+        return setList(isStand);
+      }
+    }
+
+    useEffect(() => { Filter_Search() },[isSearch]);
     useEffect(() => { List_Api() },[]);
     useEffect(() => { setDress_fun() },[isDress]);
 
@@ -206,7 +218,9 @@ function Api_Context_Prod({children}) {
     Reset_Check,
     isDress,
     setDress,
-    isDisabled
+    isDisabled,
+    isSearch,
+    setSearch
   };
 
   return(
