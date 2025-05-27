@@ -5,7 +5,7 @@ export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    <header className="bg-light py-3 header-sc">
+    <header className="bg-dark py-3 header-sc bg-opacity-50">
       <div className="container">
         <div className="d-flex justify-content-between align-items-center">
           <div className="d-flex">

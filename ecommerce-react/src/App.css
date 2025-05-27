@@ -104,8 +104,8 @@
 .swiper-button-prev, .swiper-button-next{
     background-color: var(--color-white);
     position: sticky !important;
-    height: 57px !important;
-    width: 57px !important;
+    height: 49px !important;
+    width: 49px !important;
     right: 0 !important;
     margin: 0 !important;
     border-radius: 100px;
@@ -118,7 +118,7 @@
 }
 
 .btns-slider{
-    width: 160px;
+    width: 140px;
     height: auto;
     padding: 10px;
     display: flex;
@@ -153,9 +153,22 @@
     z-index: 999;
     width: 100%;
     top: 0;
+    font-family: var(--font-lato);
+    font-weight: 200;
+    background-color: var(--color-gray);
 }
 
-.text-hd{
+#text-hd{
+    font-size: 1.19em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.dropdown-menu{
+    border-radius: 0px;
+    width: 300px;
+    padding: 10px;
+    margin-top: 10px;
     font-size: 2em;
 }
 

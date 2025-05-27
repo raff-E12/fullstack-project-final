@@ -12,6 +12,7 @@ const swiper = new Swipper('.swiper', {
   modules: [Navigation, Pagination],
   direction: "horizontal",
   loop: true,
+  autoplay: true,
   navigation:{
     nextEl:".swiper-button-next",
     prevEl:".swiper-button-prev"
