@@ -1,0 +1,56 @@
+
+/***** WebPage Css Application *****/ 
+
+:root{
+    --default-color: #8C5C51;
+}
+
+#root{
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--default-color);
+}
+
+.header-sc {
+    width: 100%;
+    border: 2px solid red;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-menu a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+}
+
+.nav-actions a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.cart {
+  font-weight: bold;
+}
+
+/***** End WebPage Css Application *****/

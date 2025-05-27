@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DefaultLayout from './layout/DefaultLayout';
+import "./App.css"
 import CartPage from './pages/CartPage';
 import CategoriesPage from './pages/CategoriesPage';
 import CheckOutPage from './pages/CheckOutPage';
