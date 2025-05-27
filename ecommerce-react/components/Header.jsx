@@ -5,7 +5,7 @@ export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    <header className="py-3">
+    <header className="bg-light py-3">
       <div className="container">
         <div className="d-flex justify-content-between align-items-center">
           <div className="d-flex">
@@ -30,7 +30,7 @@ export default function Header() {
                   <div className="col-md-6">
                     <NavLink
                       className="dropdown-item"
-                      to="/category/polo-&-t-shirt"
+                      to="/categories/polo-&-t-shirt"
                       onClick={() => setIsDropdownOpen(false)}
                     >
                       Polo & t-Shirt
@@ -38,7 +38,7 @@ export default function Header() {
                     <hr className="d-md-none my-2" />
                     <NavLink
                       className="dropdown-item"
-                      to="/category/capispalla"
+                      to="/categories/capispalla"
                       onClick={() => setIsDropdownOpen(false)}
                     >
                       Capispalla
@@ -46,7 +46,7 @@ export default function Header() {
                     <hr className="d-md-none my-2" />
                     <NavLink
                       className="dropdown-item"
-                      to="/category/felpe"
+                      to="/categories/felpe"
                       onClick={() => setIsDropdownOpen(false)}
                     >
                       Felpe
@@ -57,7 +57,7 @@ export default function Header() {
                   <div className="col-md-6">
                     <NavLink
                       className="dropdown-item"
-                      to="/category/pantaloni"
+                      to="/categories/pantaloni"
                       onClick={() => setIsDropdownOpen(false)}
                     >
                       Pantaloni
@@ -65,7 +65,7 @@ export default function Header() {
                     <hr className="d-md-none my-2" />
                     <NavLink
                       className="dropdown-item"
-                      to="/category/Scarpe"
+                      to="/categories/scarpe"
                       onClick={() => setIsDropdownOpen(false)}
                     >
                       Scarpe
@@ -73,7 +73,7 @@ export default function Header() {
                     <hr className="d-md-none my-2" />
                     <NavLink
                       className="dropdown-item"
-                      to="/category/Streetwear"
+                      to="/categories/streetwear"
                       onClick={() => setIsDropdownOpen(false)}
                     >
                       Streetwear
