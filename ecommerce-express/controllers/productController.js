@@ -2,14 +2,21 @@
 const connection = require("../data/db");
 
 const index = (req, res) => {
-  let sql = "SELECT * FROM products WHERE 1=1"; 
+  let sql = `SELECT
+    products.*,
+    categories.name AS category_name,
+    categories.slug AS category_slug
+FROM
+    products
+JOIN
+    categories ON products.category_id = categories.id WHERE 1=1`
   const arrayParams = [];
 
   const { q, search, brand, fabric, min_price, max_price, on_sale } = req.query;
 
   const searchTerm = q || search;
   if (searchTerm) {
-    sql += " AND name LIKE ?";
+    sql += " AND products.name LIKE ?";
     arrayParams.push(`%${searchTerm}%`);
   }
 
@@ -55,9 +62,15 @@ const index = (req, res) => {
 
 
 const show = (req, res) => {
-  const { id } = req.params;
-  const sql = "SELECT * FROM products WHERE id = ?";
-  connection.query(sql, [id], (error, result) => {
+  const { slug } = req.params;
+  const sql = `SELECT
+    products.*,
+    categories.name AS category_name
+FROM
+    products
+JOIN
+    categories ON products.category_id = categories.id WHERE products.slug = ?`;
+  connection.query(sql, [slug], (error, result) => {
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });
     }
@@ -70,21 +83,18 @@ const show = (req, res) => {
 
 
 const indexProductCategory = (req, res) => {
-  const { categoryId } = req.params;
+  const { categorySlug } = req.params;
   const sql = `SELECT
     products.*,
-    category_product.product_id,
-    category_product.category_id,
-    categories.name AS category_name
+    categories.name AS category_name,
+    categories.slug AS category_slug
 FROM
     products
 JOIN
-    category_product ON category_product.product_id = products.id
-JOIN
-    categories ON categories.id = category_product.category_id
+    categories ON categories.id = products.category_id
 WHERE
-    categories.id = ?;`
-  connection.query(sql, [categoryId], (error, result) => {
+    categories.slug = ?;`
+  connection.query(sql, [categorySlug], (error, result) => {
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });
     }

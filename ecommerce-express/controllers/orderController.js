@@ -18,9 +18,9 @@ const validationCheckoutProcess = require("../middlewares/validationCheckoutProc
 
 
 const show = (req, res) => {
-  const { id } = req.params;
-  const sql = `SELECT *  FROM orders INNER JOIN customers ON orders.customer_id = customers.id WHERE orders.id = ?`;
-  connection.query(sql, [id], (error, result) => {
+  const { slug } = req.params;
+  const sql = `SELECT *  FROM orders INNER JOIN customers ON orders.id = customers.order_id WHERE orders.slug = ?`;
+  connection.query(sql, [slug], (error, result) => {
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });
     }
@@ -70,30 +70,6 @@ const checkoutProcess = (req, res) => {
   
 }
 
-const customerPatch = (req, res) => {
-  const customer = req.body;
-
-  if (customer) {
-
-    const { name, surname, email, billing_address, shipping_address, phone, country, id } = customer;
-    sql = "UPDATE customers SET name = ?, surname = ?, email = ?, billing_address = ?, shipping_address = ?, phone = ?, country = ? WHERE id = ?";
-    
-    connection.query(sql, [name, surname, email, billing_address, shipping_address, phone, country, id], (error, result) => {
-      if (error) {
-        return res.status(500).json({ msg: "Errore del database", code: 500 });
-      }
-      if (result.length === 0) {
-        return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
-      }
-      return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, customer: result });
-    })
-
-  }
-
-
-}
-
-
 const checkoutComplete = ()=> {
   // update dell'ordine: cambio status ordine, prezzo, metodo di pagamento
   // post order_product: tutti i prodotti ordinati
@@ -103,6 +79,5 @@ const checkoutComplete = ()=> {
 module.exports = {
   // index,
   show,
-  checkoutProcess,
-  customerPatch
+  checkoutProcess
 }

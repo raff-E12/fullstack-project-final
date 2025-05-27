@@ -4,8 +4,8 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", index);
-router.get("/:id", show);
-router.get("/category/:categoryId", indexProductCategory);
+router.get("/:slug", show);
+router.get("/category/:categorySlug", indexProductCategory);
 
 
 
