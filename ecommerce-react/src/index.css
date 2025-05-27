@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 **** Css Reset Style WebPage *****/ 
 
@@ -168,3 +169,12 @@ img {
 
 
 /***** End Css Reset Style WebPage ****
+=======
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: Parkinsans;
+}
+>>>>>>> b04c6fefb55be4a079acb0014c66f38b6eb5cb3e
