@@ -1,11 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import "../style/Header.css";
+import { UseSearch} from "../context/SearchContext"
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
+  const {isSearchActive, setSearchBarActive} = UseSearch();
   const [cartItemCount] = useState(3);
 
   const closeMenus = () => {
@@ -119,9 +121,9 @@ export default function Header() {
                   <span className="cart-badge ms-2">{cartItemCount}</span>
                 )}
               </NavLink>
-              <NavLink
-                to="/search"
-                className="nav-link icon-link"
+              <button
+                className={isSearchActive ? "nav-link icon-link" : "d-none"} 
+                onClick={()=>setSearchBarActive(prev=> !prev)}
                 title="Ricerca"
               >
                 <svg
@@ -133,7 +135,7 @@ export default function Header() {
                 >
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 1 0 1.415-1.414l-3.85-3.85zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </svg>
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
@@ -230,9 +232,9 @@ export default function Header() {
               </div>
             )}
             <div>
-              <NavLink to="/search" className="nav-link" onClick={closeMenus}>
+              <button className={isSearchActive ? "nav-link" : "d-none"} onClick={()=>{closeMenus; setSearchBarActive(prev=> !prev) }}>
                 Ricerca
-              </NavLink>
+              </button>
 
               <NavLink
                 to="/cart"
