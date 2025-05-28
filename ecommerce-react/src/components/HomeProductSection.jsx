@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
+import { Link } from "react-router-dom";
 
 export function HomeProductSection (){
     const [newArrivals, setNewArrivals] = useState([]);
@@ -38,8 +39,8 @@ export function HomeProductSection (){
             <>
                 {/* Prima Riga (3 elementi) */}
                 <div className="row mb-4">
-                    {firstRowProducts.map(({ id, name, description, price, image_url }) => (
-                        <div key={id} className="col-md-4 col-sm-6 mb-3"> {/* col-md-4 per desktop, col-sm-6 per tablet */}
+                    {firstRowProducts.map(({ id, name, description, price, image_url, slug }) => (
+                        <Link to={`products/${slug}`} key={id} className="col-md-4 col-sm-6 mb-3"> {/* col-md-4 per desktop, col-sm-6 per tablet */}
                             <div className="card h-100 shadow-sm"> {/* Aggiunto shadow-sm per una leggera ombra */}
                                 {image_url && (
                                     <img
@@ -58,14 +59,14 @@ export function HomeProductSection (){
                                     {/* <button className="btn btn-primary btn-sm">Vedi Dettagli</button> */}
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 
                 {/* Seconda Riga (4 elementi) */}
                 <div className="row">
-                    {secondRowProducts.map(({ id, name, description, price, image_url }) => (
-                        <div key={id} className="col-md-3 col-sm-6 mb-3"> {/* col-md-3 per desktop, col-sm-6 per tablet */}
+                    {secondRowProducts.map(({ id, name, description, price, image_url, slug }) => (
+                        <Link to={`products/${slug}`} key={id} className="col-md-3 col-sm-6 mb-3"> {/* col-md-3 per desktop, col-sm-6 per tablet */}
                             <div className="card h-100 shadow-sm">
                                 {image_url && (
                                     <img
@@ -84,7 +85,7 @@ export function HomeProductSection (){
                                     {/* <button className="btn btn-primary btn-sm">Vedi Dettagli</button> */}
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </>
@@ -112,6 +113,7 @@ export function HomeProductSection (){
             <div>
                 {isBestSellerSection ? renderProductCards(bestSellers) : renderProductCards(newArrivals)}
             </div>
+            <Link to={isBestSellerSection ? "/products?sort_by=price_desc" : "/products?sort_by=latest"}>View More...</Link>
         </div>
     );
 }
