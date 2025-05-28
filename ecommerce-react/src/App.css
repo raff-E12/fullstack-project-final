@@ -176,5 +176,32 @@
 
 /***** End Header Style Css *****/
 
+/***** Cards Style *****/
+
+.prod-img-box{
+    border: 2px solid red;
+    width: 100px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hd-cards{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.cards-prod{
+    width: 18rem;
+}
+
+/***** End Cards Style *****/
+
+
 
 /***** End WebPage Css Application *****/
