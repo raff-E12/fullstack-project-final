@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import { UseSearch } from "../context/SearchContext";
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const {isSearchActive, setSearchBarActive} = UseSearch()
 
   return (
     <header className="bg-dark py-3 header-sc bg-opacity-50">
@@ -93,9 +95,9 @@ export default function Header() {
             <NavLink to="/cart" className="nav-link fw-bold me-3">
               Carrello
             </NavLink>
-            <NavLink to="/search" className="nav-link fw-bold">
+            <button to="/search" className={isSearchActive ? "nav-link fw-bold" : "d-none"} onClick={()=> setSearchBarActive((prev)=> !prev)}>
               Search
-            </NavLink>
+            </button>
           </div>
         </div>
       </div>
