@@ -6,20 +6,26 @@ const index = (req, res) => {
     products.*,
     categories.name AS category_name,
     categories.slug AS category_slug
-FROM
+  FROM
     products
-JOIN
-    categories ON products.category_id = categories.id WHERE 1=1`
+  JOIN
+    categories ON products.category_id = categories.id
+  WHERE 1=1`;
+
   const arrayParams = [];
 
-  const { q, search, brand, fabric, min_price, max_price, on_sale } = req.query;
+  const { q, search, brand, fabric, min_price, max_price, on_sale } = req.query; // q parametro creato per farlo interfacciare col front end
 
   const searchTerm = q || search;
   if (searchTerm) {
-    sql += " AND products.name LIKE ?";
-    arrayParams.push(`%${searchTerm}%`);
+    sql += ` AND (
+      products.name LIKE ?
+      OR brand LIKE ?
+      OR categories.name LIKE ?
+    )`;
+    const likeTerm = `%${searchTerm}%`;
+    arrayParams.push(likeTerm, likeTerm, likeTerm);
   }
-
 
   if (brand) {
     sql += " AND brand = ?";
@@ -43,9 +49,9 @@ JOIN
   }
 
   if (on_sale === 'true') {
-    sql += `AND discount_price IS NOT NULL 
+    sql += ` AND discount_price IS NOT NULL 
     AND discount_price < price 
-    AND CURDATE() BETWEEN start_discount AND end_discount`
+    AND CURDATE() BETWEEN start_discount AND end_discount`;
   }
 
   connection.query(sql, arrayParams, (error, result) => {
@@ -57,9 +63,8 @@ JOIN
       return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
     }
     return res.status(200).json({ msg: "Benvenuto nell' API", code: 200, products: result });
-  })
+  });
 }
-
 
 const show = (req, res) => {
   const { slug } = req.params;
