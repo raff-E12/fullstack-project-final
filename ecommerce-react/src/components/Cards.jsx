@@ -6,12 +6,13 @@ export default function Cards() {
     {ProdList.map((element, index) => {
        return(
          <>
-         <div key={index}>
-            <div>
-              <img src={element.image_url} alt="dress"/>
-            </div>
-         </div>
-         </>
+        <div class="card cards-prod">
+          <img src={element.image_url} class="card-img-top" alt="dress" />
+          <div class="card-body">
+            <p class="card-text">{element.description}</p>
+          </div>
+        </div>
+        </>
        )    
     })}
   </>

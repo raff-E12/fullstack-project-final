@@ -6,7 +6,7 @@ export default function CardSections() {
   const { isProd, setProd } = UseContextProd()
 
   return (
-    <div className='container-lg p-0'>
+    <div className='container-xxl p-4 hd-cards'>
         <Cards />
     </div>
   )
