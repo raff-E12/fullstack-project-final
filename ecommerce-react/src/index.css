@@ -1,5 +1,4 @@
-
-/**** Css Reset Style WebPage *****/ 
+/**** Css Reset Style WebPage *****/
 
 /* RESET BASE */
 *,
@@ -10,9 +9,9 @@
   padding: 0;
 }
 
-html, body {
-  height: 100%;
-  width: 100%;
+html,
+body {
+
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -27,7 +26,8 @@ a {
   text-decoration: none;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -60,23 +60,65 @@ img {
   color: #6c757d;
 }
 
-.mt-1 { margin-top: 0.25rem; }
-.mt-2 { margin-top: 0.5rem; }
-.mt-3 { margin-top: 1rem; }
-.mt-4 { margin-top: 1.5rem; }
-.mt-5 { margin-top: 3rem; }
+.mt-1 {
+  margin-top: 0.25rem;
+}
 
-.mb-1 { margin-bottom: 0.25rem; }
-.mb-2 { margin-bottom: 0.5rem; }
-.mb-3 { margin-bottom: 1rem; }
-.mb-4 { margin-bottom: 1.5rem; }
-.mb-5 { margin-bottom: 3rem; }
+.mt-2 {
+  margin-top: 0.5rem;
+}
 
-.p-1 { padding: 0.25rem; }
-.p-2 { padding: 0.5rem; }
-.p-3 { padding: 1rem; }
-.p-4 { padding: 1.5rem; }
-.p-5 { padding: 3rem; }
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.mt-5 {
+  margin-top: 3rem;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-5 {
+  margin-bottom: 3rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-3 {
+  padding: 1rem;
+}
+
+.p-4 {
+  padding: 1.5rem;
+}
+
+.p-5 {
+  padding: 3rem;
+}
 
 .d-flex {
   display: flex;
@@ -110,31 +152,94 @@ img {
   --dark: #212529;
 }
 
-.bg-primary { background-color: var(--primary); color: #fff; }
-.bg-secondary { background-color: var(--secondary); color: #fff; }
-.bg-success { background-color: var(--success); color: #fff; }
-.bg-danger { background-color: var(--danger); color: #fff; }
-.bg-warning { background-color: var(--warning); color: #212529; }
-.bg-info { background-color: var(--info); color: #212529; }
-.bg-light { background-color: var(--light); color: #212529; }
-.bg-dark { background-color: var(--dark); color: #fff; }
+.bg-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
 
-.text-primary { color: var(--primary); }
-.text-secondary { color: var(--secondary); }
-.text-success { color: var(--success); }
-.text-danger { color: var(--danger); }
-.text-warning { color: var(--warning); }
-.text-info { color: var(--info); }
-.text-light { color: var(--light); }
-.text-dark { color: var(--dark); }
+.bg-secondary {
+  background-color: var(--secondary);
+  color: #fff;
+}
+
+.bg-success {
+  background-color: var(--success);
+  color: #fff;
+}
+
+.bg-danger {
+  background-color: var(--danger);
+  color: #fff;
+}
+
+.bg-warning {
+  background-color: var(--warning);
+  color: #212529;
+}
+
+.bg-info {
+  background-color: var(--info);
+  color: #212529;
+}
+
+.bg-light {
+  background-color: var(--light);
+  color: #212529;
+}
+
+.bg-dark {
+  background-color: var(--dark);
+  color: #fff;
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
+}
+
+.text-success {
+  color: var(--success);
+}
+
+.text-danger {
+  color: var(--danger);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.text-info {
+  color: var(--info);
+}
+
+.text-light {
+  color: var(--light);
+}
+
+.text-dark {
+  color: var(--dark);
+}
 
 /* BORDI E RAGGI */
-.rounded { border-radius: 0.25rem; }
-.rounded-pill { border-radius: 50rem; }
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.rounded-pill {
+  border-radius: 50rem;
+}
+
 .border {
   border: 1px solid #dee2e6;
 }
-.border-0 { border: none; }
+
+.border-0 {
+  border: none;
+}
 
 /* BUTTON STYLE BASE */
 .btn {
@@ -166,16 +271,36 @@ img {
   background-color: #5c636a;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.75rem; }
-h4 { font-size: 1.5rem; }
-h5 { font-size: 1.25rem; }
-h6 { font-size: 1rem; }
+h1 {
+  font-size: 2.5rem;
+}
 
-p { font-size: 1rem; }
+h2 {
+  font-size: 2rem;
+}
 
-ul, ol {
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+ul,
+ol {
   font-size: 1rem;
 }
 
@@ -191,14 +316,15 @@ blockquote {
   font-size: 1.1rem;
 }
 
-code, pre {
+code,
+pre {
   font-size: 0.95rem;
 }
 
-strong, em {
+strong,
+em {
   font-size: 1rem;
 }
 
 
 /***** End Css Reset Style WebPage ****/
-

@@ -1,7 +1,19 @@
+.hero_container {
+    background-color: blueviolet;
+    width: 100vw;
+    margin: 0;
+}
+
 .title_container {
     display: flex;
     justify-content: space-around;
     margin-top: 2%;
     text-align: center;
     align-items: center;
+}
+
+.text {
+    text-align: justify;
+    max-width: 30%;
+    color: antiquewhite;
 }
