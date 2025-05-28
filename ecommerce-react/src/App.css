@@ -1,6 +1,7 @@
-/***** WebPage Css Application *****/
 
-:root {
+/***** WebPage Css Application *****/ 
+
+:root{
     --default-color: #8C5C51;
     --font-poppins: "Poppins", sans-serif;
     --font-montserrant: "Lexend", sans-serif;
@@ -10,162 +11,26 @@
     --color-gray: #8f8f8f6c;
 }
 
-/***** Slider Style *****/
 
-.swiper {
-    width: 100%;
-    height: 600px;
-}
+/***** Header Style Css *****/ 
 
-.img-box {
-    width: 100%;
-    height: 600px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    padding: 38px;
-    position: relative;
-}
-
-.text-slider {
-    display: flex;
-    width: 500px;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    text-align: left;
-    position: relative;
-    bottom: -30px;
-    padding: 10px;
-    z-index: 10;
-    color: var(--color-white);
-}
-
-.bg-retro {
-    width: 100%;
-    background-color: var(--color-black);
-    height: 600px;
-    padding: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9;
-    opacity: 20%;
-}
-
-.text-slider h3 {
-    font-weight: 400;
-    font-family: var(--font-poppins);
-    text-transform: uppercase;
-    font-size: 2.6em;
-}
-
-.text-slider p {
-    font-weight: 670;
-    font-family: var(--font-lato);
-    text-transform: uppercase;
-    font-size: 1.7em;
-}
-
-.btn-slider {
-    width: 140px;
-    height: 50px;
-    padding: 10px;
-    font-size: .99em;
-    font-family: var(--font-lato);
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 300;
-    border: none;
-    cursor: pointer;
-    background-color: var(--color-white);
-}
-
-.swiper-button-prev::after,
-.swiper-button-next::after {
-    content: "";
-    display: none;
-}
-
-.options-sc {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 40;
-    padding: 20px;
-}
-
-.swiper-button-prev,
-.swiper-button-next {
-    background-color: var(--color-white);
-    position: sticky !important;
-    height: 49px !important;
-    width: 49px !important;
-    right: 0 !important;
-    margin: 0 !important;
-    border-radius: 100px;
-    font-size: 1.5em;
-    color: var(--color-black) !important;
-}
-
-.swiper-button-prev:active,
-.swiper-button-next:active {
-    background-color: var(--color-gray);
-}
-
-.btns-slider {
-    width: 140px;
-    height: auto;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.swiper-pagination {
-    width: 20% !important;
-    position: sticky !important;
-}
-
-.swiper-pagination-bullet {
-    background-color: var(--color-gray);
-}
-
-.swiper-pagination-bullet.swiper-pagination-bullet-active {
-    background-color: var(--color-white);
-}
-
-.slider-container {
-    position: relative;
-}
-
-/***** End Slider Style *****/
-
-
-/***** Header Style Css *****/
-
-.header-sc {
+.header-sc{
+    position: fixed;
+    z-index: 999;
     width: 100%;
     top: 0;
     font-family: var(--font-lato);
     font-weight: 200;
     background-color: var(--color-gray);
-    color: var(--color-white);
 }
 
-#text-hd {
+#text-hd{
     font-size: 1.19em;
     font-weight: 600;
     text-transform: uppercase;
 }
 
-.dropdown-menu {
+.dropdown-menu{
     border-radius: 0px;
     width: 400px;
     padding: 10px;
@@ -175,33 +40,6 @@
 }
 
 /***** End Header Style Css *****/
-
-/***** Cards Style *****/
-
-.prod-img-box{
-    border: 2px solid red;
-    width: 100px;
-    height: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.hd-cards{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.cards-prod{
-    width: 18rem;
-}
-
-/***** End Cards Style *****/
-
 
 
 /***** End WebPage Css Application *****/
