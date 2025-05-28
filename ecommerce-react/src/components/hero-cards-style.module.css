@@ -29,6 +29,7 @@
     margin: 50px auto;
     padding: 5px;
     gap: 5px;
+    justify-content: center;
 }
 
 .col_right {
