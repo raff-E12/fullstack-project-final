@@ -1,9 +1,12 @@
 import React from 'react'
 import Cards from "../components/Cards"
+import { UseContextProd } from '../context/ProductsContext'
 
 export default function CardSections() {
+  const { isProd, setProd } = UseContextProd()
+
   return (
-    <div>
+    <div className='container-lg p-0'>
         <Cards />
     </div>
   )
