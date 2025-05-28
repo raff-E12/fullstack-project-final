@@ -27,6 +27,18 @@
     align-items: center;
     max-width: 1000px;
     margin: 50px auto;
-    padding: 40px;
-    gap: 80px;
+    padding: 5px;
+    gap: 5px;
+}
+
+.col_right {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 400px;
+    overflow: hidden;
+}
+
+.watch_image {
+    height: 50%;
 }
