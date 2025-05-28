@@ -12,9 +12,10 @@ const index = (req, res) => {
     categories ON products.category_id = categories.id
   WHERE 1=1`;
 
-  const arrayParams = [];
+   const arrayParams = [];
 
-  const { q, search, brand, fabric, min_price, max_price, on_sale } = req.query; // q parametro creato per farlo interfacciare col front end
+  // Added 'discount' to destructuring
+  const { q, search, brand, fabric, min_price, max_price, sort_by, discount } = req.query;
 
   const searchTerm = q || search;
   if (searchTerm) {
@@ -34,7 +35,7 @@ const index = (req, res) => {
 
   if (fabric) {
     sql += " AND fabric LIKE ?";
-    arrayParams.push(fabric.trim());
+    arrayParams.push(`%${fabric.trim()}%`);
   }
 
   if (min_price && max_price) {
@@ -48,10 +49,31 @@ const index = (req, res) => {
     arrayParams.push(parseFloat(max_price));
   }
 
-  if (on_sale === 'true') {
-    sql += ` AND discount_price IS NOT NULL 
-    AND discount_price < price 
-    AND CURDATE() BETWEEN start_discount AND end_discount`;
+  // --- New Discount Filter Logic ---
+  if (discount === 'true') {
+    sql += ` AND discount IS NOT NULL
+             AND discount < price
+             AND CURDATE() BETWEEN start_discount AND end_discount`;
+  }
+  // --- End New Discount Filter Logic ---
+
+  // --- Sorting Logic ---
+  switch (sort_by) {
+    case 'price_asc':
+      sql += ' ORDER BY price ASC';
+      break;
+    case 'price_desc':
+      sql += ' ORDER BY price DESC';
+      break;
+    case 'name_asc':
+      sql += ' ORDER BY products.name ASC';
+      break;
+    case 'name_desc':
+      sql += ' ORDER BY products.name DESC';
+      break;
+    case 'latest':
+      sql += ' ORDER BY products.create_date DESC';
+      break;
   }
 
   connection.query(sql, arrayParams, (error, result) => {
