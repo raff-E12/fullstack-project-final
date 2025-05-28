@@ -39,7 +39,7 @@
     top: 0;
     left: 0;
     z-index: 9;
-    opacity: 20%;
+    opacity: 0;
 
 }
 
@@ -133,16 +133,6 @@
     position: relative;
 }
 
-.swiper-slide .img-box {
-    transform: scale(1);
-    transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
-}
-
-.swiper-slide-active .img-box {
-    transform: scale(1.05);
-    opacity: 1;
-}
-
 .swiper-slide-prev .img-box,
 .swiper-slide-next .img-box {
     transform: scale(1);
@@ -151,10 +141,24 @@
 
 .swiper-slide {
     opacity: 0.2;
-    transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+    /* tienilo per il default */
+    transition: transform 0.7s ease-in-out;
+    /* togli opacity qui */
 }
-    
+
 .swiper-slide-active {
     opacity: 0.9;
-    transform: scale(1.05);     
+    transform: scale(1.05);
+}
+
+.swiper-slide .img-box {
+    transform: scale(1);
+    transition: transform 0.7s ease-in-out;
+    /* togli opacity */
+}
+
+.swiper-slide-active .img-box {
+    transform: scale(1.05);
+    opacity: 1;
+    /* qui puoi lasciare opacity senza transizione */
 }
