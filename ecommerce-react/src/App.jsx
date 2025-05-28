@@ -10,7 +10,6 @@ import ProductsPage from './pages/ProductsPage';
 import SingleCategoryProductPage from './pages/SingleCategoryProductPage';
 import SingleOrderPage from './pages/SingleCategoryPage'
 import SingleProductPage from './pages/SingleProductPage';
-import SearcPage from './pages/SearchPage';
 import { ProductsContext } from './context/ProductsContext';
 import { SearchProvider } from './context/SearchContext';
 
@@ -34,7 +33,6 @@ export default function App() {
             <Route path='/checkout' element={<CheckOutPage />} />
             <Route path='/cart' element={<CartPage />} />
 
-            <Route path='/search' element={<SearcPage />} />
 
           </Route>
         </Routes>

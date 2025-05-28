@@ -40,7 +40,7 @@ export default function ProductPage() {
     return <div>
         <div>
 
-            <form className ={isSearchBarActive ? "d-flex" : "d-none"} onSubmit={handleSubmit}>
+            <form className ={isSearchBarActive ? "d-flex my-5 mx-auto" : "d-none"} onSubmit={handleSubmit}>
                 <input
                     type="text"
                     placeholder="Search by brand, name, or category"
