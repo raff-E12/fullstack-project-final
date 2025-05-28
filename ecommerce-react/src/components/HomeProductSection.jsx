@@ -26,34 +26,92 @@ export function HomeProductSection (){
         getProducts();
     }, []);
 
-    return <div>
-        <div>
-            <button onClick={()=> setBestSellerSection(true)}>Best Sellers</button>
-            <button onClick={()=> setBestSellerSection(false)}>New Arrivals</button>
+    const renderProductCards = (products) => {
+        if (!products || products.length === 0) {
+            return <p className="text-center mt-4">Nessun prodotto disponibile in questa sezione.</p>;
+        }
 
-            {isBestSellerSection ? bestSellers.map(({ id, name, description, price, image_url }) => (
-                <div key={id}>
-                    <h2>{name}</h2>
-                    <p>{description}</p>
-                    <p>Prezzo: €{price}</p>
-                    <img className="img-product" src={image_url} alt={name} />
+        const firstRowProducts = products.slice(0, 3);
+        const secondRowProducts = products.slice(3, 7);
+
+        return (
+            <>
+                {/* Prima Riga (3 elementi) */}
+                <div className="row mb-4">
+                    {firstRowProducts.map(({ id, name, description, price, image_url }) => (
+                        <div key={id} className="col-md-4 col-sm-6 mb-3"> {/* col-md-4 per desktop, col-sm-6 per tablet */}
+                            <div className="card h-100 shadow-sm"> {/* Aggiunto shadow-sm per una leggera ombra */}
+                                {image_url && (
+                                    <img
+                                        src={image_url}
+                                        className="card-img-top img-fluid"
+                                        alt={name}
+                                        style={{ objectFit: 'cover', height: '200px' }}
+                                    />
+                                )}
+                                <div className="card-body d-flex flex-column">
+                                    <h5 className="card-title text-truncate">{name}</h5> {/* text-truncate per nomi lunghi */}
+                                    <p className="card-text text-muted flex-grow-1" style={{ fontSize: '0.9rem' }}>
+                                        {description ? description.substring(0, 100) + '...' : 'Nessuna descrizione disponibile.'} {/* Trunca la descrizione */}
+                                    </p>
+                                    <p className="card-text fw-bold mt-auto">Prezzo: €{price ? price : 'N/A'}</p> {/* Formatta il prezzo */}
+                                    {/* <button className="btn btn-primary btn-sm">Vedi Dettagli</button> */}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-            ))
 
-            : newArrivals.map(({ id, name, description, price, image_url }) => (
-                <div key={id}>
-                    <h2>{name}</h2>
-                    <p>{description}</p>
-                    <p>Prezzo: €{price}</p>
-                    <img className="img-product" src={image_url} alt={name} />
+                {/* Seconda Riga (4 elementi) */}
+                <div className="row">
+                    {secondRowProducts.map(({ id, name, description, price, image_url }) => (
+                        <div key={id} className="col-md-3 col-sm-6 mb-3"> {/* col-md-3 per desktop, col-sm-6 per tablet */}
+                            <div className="card h-100 shadow-sm">
+                                {image_url && (
+                                    <img
+                                        src={image_url}
+                                        className="card-img-top img-fluid"
+                                        alt={name}
+                                        style={{ objectFit: 'cover', height: '180px' }}
+                                    />
+                                )}
+                                <div className="card-body d-flex flex-column">
+                                    <h6 className="card-title text-truncate">{name}</h6> {/* h6 per titoli leggermente più piccoli */}
+                                    <p className="card-text text-muted flex-grow-1" style={{ fontSize: '0.8rem' }}>
+                                        {description ? description.substring(0, 80) + '...' : 'Nessuna descrizione disponibile.'}
+                                    </p>
+                                    <p className="card-text fw-bold mt-auto">Prezzo: €{price ? price : 'N/A'}</p>
+                                    {/* <button className="btn btn-primary btn-sm">Vedi Dettagli</button> */}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-            ))
-        
-            }
+            </>
+        );
+    };
 
+    return (
+        <div className="container my-5"> {/* Container Bootstrap per un layout centrato e responsive */}
+            <div className="d-flex justify-content-end mb-4">
+                <button
+                    className={`btn ${isBestSellerSection ? 'btn-primary' : 'btn-outline-primary'} me-2`}
+                    onClick={() => setBestSellerSection(true)}
+                >
+                    Best Sellers
+                </button>
+                <button
+                    className={`btn ${!isBestSellerSection ? 'btn-primary' : 'btn-outline-primary'}`}
+                    onClick={() => setBestSellerSection(false)}
+                >
+                    New Arrivals
+                </button>
+            </div>
 
+            {/* Area di visualizzazione dei prodotti */}
+            <div>
+                {isBestSellerSection ? renderProductCards(bestSellers) : renderProductCards(newArrivals)}
+            </div>
         </div>
-
-
-    </div>
+    );
 }
