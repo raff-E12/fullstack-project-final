@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Swiper from "swiper";
-import { Navigation, Pagination, Scrollbar } from "swiper/modules";
+import { Navigation, Pagination, Scrollbar, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -14,9 +14,14 @@ import "../style/Slider.css";
 export default function Sliders() {
   useEffect(() => {
     const swiper = new Swiper(".swiper", {
-      modules: [Navigation, Pagination],
+      modules: [Navigation, Pagination, EffectFade],
       direction: "horizontal",
       loop: true,
+      effect: "fade",
+      fadeEffect: {
+        crossFade: true,
+      },
+      speed: 700,
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
@@ -24,9 +29,6 @@ export default function Sliders() {
       pagination: {
         el: ".swiper-pagination",
         clickable: true,
-      },
-      scrollbar: {
-        el: ".swiper-scrollbar",
       },
     });
   }, []);
