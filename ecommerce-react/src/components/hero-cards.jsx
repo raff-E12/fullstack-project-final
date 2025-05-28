@@ -11,6 +11,20 @@ function Hero() {
 
                 </div>
 
+                <div className={styles.image_container}>
+
+                    <div className={styles.col_left}>
+
+                    </div>
+
+                    <div className={styles.col_right}>
+
+
+                    </div>
+
+
+                </div>
+
             </div>
 
         </>
