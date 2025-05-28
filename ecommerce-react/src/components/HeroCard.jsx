@@ -20,7 +20,7 @@ function HeroCard() {
           </div>
         </div>
 
-        <div className="row">
+        <div className="row py-5">
           <div className="col-md-6">
             <div className="placeholder-img shadow rounded h-100" />
           </div>
