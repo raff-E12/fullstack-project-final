@@ -103,13 +103,13 @@ export default function Header() {
           {/* Right */}
           <div className="col-4 d-flex justify-content-end align-items-center">
             <div className="d-none d-md-flex">
-              <NavLink
-                to="/search"
-                className="nav-link icon-link"
+              <button
+                className={isSearchActive ? "nav-link icon-link" : "d-none"}
+                onClick={()=>setSearchBarActive(prev=> !prev)}
                 title="Ricerca"
               >
                 <i className="bi bi-search fs-5"></i>
-              </NavLink>
+              </button>
 
               <NavLink
                 to="/cart"
