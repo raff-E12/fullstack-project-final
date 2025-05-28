@@ -131,9 +131,68 @@ WHERE
     return res.status(200).json({ msg: "Benvenuto nell' API", code: 200, products: result });
   })
 }
+  
+  const indexHome = (req, res) => {
+  // Query for New Arrivals (e.g., ordered by creation date)
+  let newArrivalsSql = `SELECT
+    products.*,
+    categories.name AS category_name,
+    categories.slug AS category_slug
+  FROM
+    products
+  JOIN
+    categories ON products.category_id = categories.id
+  ORDER BY
+    products.create_date DESC 
+  LIMIT 7`;
+
+  // Query for Highest Priced Products
+  let highestPricedSql = `SELECT
+    products.*,
+    categories.name AS category_name,
+    categories.slug AS category_slug
+  FROM
+    products
+  JOIN
+    categories ON products.category_id = categories.id
+  ORDER BY
+    products.price DESC
+  LIMIT 7`;
+
+  // Execute both queries
+  connection.query(newArrivalsSql, (errorNewArrivals, resultNewArrival) => {
+    if (errorNewArrivals) {
+      console.error("Errore del database per i nuovi arrivi:", errorNewArrivals);
+      return res.status(500).json({ msg: "Errore del database per i nuovi arrivi", code: 500 });
+    }
+
+    connection.query(highestPricedSql, (errorHighestPriced, resultHighestPrice) => {
+      if (errorHighestPriced) {
+        console.error("Errore del database per i prodotti più costosi:", errorHighestPriced);
+        return res.status(500).json({ msg: "Errore del database per i prodotti più costosi", code: 500 });
+      }
+
+
+      if (resultNewArrival.length === 0 && resultHighestPrice.length === 0) {
+        return res.status(404).json({ msg: "Non è stato possibile trovare risultati per i nuovi arrivi o i prodotti più costosi", code: 404 });
+      }
+
+      return res.status(200).json({
+        msg: "Benvenuto nell'API",
+        code: 200,
+        products: {
+          newArrivals: resultNewArrival,
+          highestPriced: resultHighestPrice
+        }
+      });
+    });
+  });
+};
+
 
 module.exports = {
   index,
   show,
-  indexProductCategory
+  indexProductCategory,
+  indexHome
 }

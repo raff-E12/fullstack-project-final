@@ -6,9 +6,11 @@ const productRouter = require("./routers/productsRouter");
 const orderRouter = require("./routers/orderRouter");
 const categoryRouter = require("./routers/categoryRouter");
 const checkoutRouter = require("./routers/checkoutRouter");
+const homeRouter = require("./routers/homeRouter");
 const errorHandler = require("./middlewares/errorHandler");
 const pageNotFound = require("./middlewares/pageNotFound");
 const cors = require("cors");
+const { indexHome } = require("./controllers/productController");
 
 //adding cors path localhost 5173 (ognuno cambi il suo nel file .env)
 app.use(cors({
@@ -23,6 +25,7 @@ app.use(express.static("./public"));
 app.use(express.json());
 
 // ROUTERS used in 127.0.0.1:3000/products
+app.use("/", homeRouter);
 app.use("/products", productRouter);
 app.use("/orders", orderRouter);
 app.use("/categories", categoryRouter);
