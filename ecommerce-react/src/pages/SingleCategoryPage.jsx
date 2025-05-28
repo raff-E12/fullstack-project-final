@@ -1,12 +1,22 @@
 import { useParams, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function SingleCategoryPage() {
   const { categorySlug } = useParams();
   const location = useLocation();
+  const [products, setProducts] = useState([]);
 
-  console.log("URL corrente:", location.pathname);
-  console.log("Parametri URL:", useParams());
-  console.log("categorySlug:", categorySlug);
+  function getProducts() {
+    const endPoint = (`http://localhost:3000/products/category/${categoryName}`);
+    axios.get(endPoint)
+      .then(res => {
+        setProducts(res.data.products);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   const categoryNames = {
     "polo-&-t-shirt": "Polo & t-Shirt",
@@ -19,6 +29,12 @@ export default function SingleCategoryPage() {
 
   const categoryName = categoryNames[categorySlug] || "Categoria non trovata";
 
+  useEffect(() => {
+    getProducts();
+  }, [categoryName]);
+
+
+  console.log(products)
   return (
     <div className="container mt-4">
       <div className="row">
@@ -43,6 +59,17 @@ export default function SingleCategoryPage() {
           <div className="alert alert-info">
             Qui verranno mostrati tutti i prodotti della categoria "
             {categoryName}"
+            <div>
+              {products.map(({ id, name, description, price, image_url }) => (
+                <div key={id}>
+                  <h2>{name}</h2>
+                  <p>{description}</p>
+                  <p>Prezzo: €{price}</p>
+                  <img src={image_url} alt={name} />
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </div>
