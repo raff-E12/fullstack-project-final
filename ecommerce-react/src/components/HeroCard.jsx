@@ -22,28 +22,15 @@ function HeroCard() {
 
         <div className="row">
           <div className="col-md-6">
-            <img
-              src="https://th.bing.com/th/id/OIP.vQ9-B6jXvwsS6bhvOnfqJQHaLW?w=201&h=309&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-              alt="woman-dress"
-              className="img-fluid rounded shadow h-100"
-            />
+            <div className="placeholder-img shadow rounded h-100" />
           </div>
-
           <div className="col-md-6">
             <div className="row h-100">
-              <div className="col-12">
-                <img
-                  src="https://th.bing.com/th/id/OIP.vQ9-B6jXvwsS6bhvOnfqJQHaLW?w=201&h=309&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                  alt="woman-dress"
-                  className="img-fluid rounded"
-                />
+              <div className="col-12 mb-3">
+                <div className="placeholder-img rounded" />
               </div>
               <div className="col-12">
-                <img
-                  src="https://th.bing.com/th/id/OIP.vQ9-B6jXvwsS6bhvOnfqJQHaLW?w=201&h=309&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-                  alt="woman-dress"
-                  className="img-fluid rounded"
-                />
+                <div className="placeholder-img rounded" />
               </div>
             </div>
           </div>
