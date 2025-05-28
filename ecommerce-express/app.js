@@ -10,11 +10,11 @@ const errorHandler = require("./middlewares/errorHandler");
 const pageNotFound = require("./middlewares/pageNotFound");
 const cors = require("cors");
 
-//adding cors path localhost 5173
+//adding cors path localhost 5173 (ognuno cambi il suo nel file .env)
 app.use(cors({
-    origin: process.env.FE_APP
-}
-))
+    origin: process.env.FE_APP,
+    credentials: true
+}));
 
 // adding public folder on static 
 app.use(express.static("./public"));
@@ -35,7 +35,7 @@ app.use(errorHandler);
 app.use(pageNotFound);
 
 app.get("/", (req, res) => {
-    return res.status(200).json({msg: "Benvenuto nella mia Api!!", code: 200});
+    return res.status(200).json({ msg: "Benvenuto nella mia Api!!", code: 200 });
 })
 
 
