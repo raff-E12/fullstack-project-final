@@ -23,12 +23,13 @@ export default function ProductPage() {
 
     return <div>
         <div>
-            {products.map(({ id, name, description, price, image_url }) => (
+            {products.map(({ id, name, description, price, image_url, slug }) => (
                 <div key={id}>
                     <h2>{name}</h2>
                     <p>{description}</p>
                     <p>Prezzo: €{price}</p>
                     <img className="img-product" src={image_url} alt={name} />
+                    <Link to={`/products/${slug}`}>Dettagli Prodotto</Link>
                 </div>
             ))}
         </div>
