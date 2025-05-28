@@ -35,7 +35,7 @@ export default function SearchPage() {
                     <h2>{name}</h2>
                     <p>{description}</p>
                     <p>Prezzo: €{price}</p>
-                    <img src={image_url} alt={name} />
+                    <img className="img-product" src={image_url} alt={name} />
                 </div>
             ))}
         </div>

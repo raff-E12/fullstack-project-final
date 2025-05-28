@@ -33,8 +33,8 @@ export default function SingleCategoryPage() {
     getProducts();
   }, [categoryName]);
 
+  // console.log(products)
 
-  console.log(products)
   return (
     <div className="container mt-4">
       <div className="row">
@@ -61,11 +61,11 @@ export default function SingleCategoryPage() {
             {categoryName}"
             <div>
               {products.map(({ id, name, description, price, image_url }) => (
-                <div key={id}>
+                <div className="container" key={id}>
                   <h2>{name}</h2>
                   <p>{description}</p>
                   <p>Prezzo: €{price}</p>
-                  <img src={image_url} alt={name} />
+                  <img className="img-product" src={image_url} alt={name} />
                 </div>
               ))}
             </div>
