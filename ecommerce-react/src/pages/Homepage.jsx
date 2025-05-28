@@ -1,13 +1,12 @@
-import React from 'react'
-import Sliders from '../components/Sliders'
-import Hero from '../components/hero-cards'
+import React from "react";
+import Sliders from "../components/Sliders";
+import HeroCard from "../components/HeroCard";
 
 export default function Homepage() {
   return (
-    <div className='container-xxl p-0'>
+    <div>
       <Sliders />
-      <Hero />
-
+      <HeroCard />
     </div>
-  )
+  );
 }
