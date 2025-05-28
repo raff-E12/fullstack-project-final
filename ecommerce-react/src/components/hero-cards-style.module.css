@@ -21,3 +21,12 @@
     max-width: 30%;
     color: antiquewhite;
 }
+
+.image_container {
+    display: flex;
+    align-items: center;
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 40px;
+    gap: 80px;
+}
