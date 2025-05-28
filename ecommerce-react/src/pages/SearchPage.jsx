@@ -30,6 +30,17 @@ export default function SearchPage() {
 
     return <div>
         <div>
+
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    placeholder="Search by brand, name, or category"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button type="submit">Search</button>
+            </form>
+
             {products.map(({ id, name, description, price, image_url }) => (
                 <div key={id}>
                     <h2>{name}</h2>
@@ -39,16 +50,6 @@ export default function SearchPage() {
                 </div>
             ))}
         </div>
-
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Search by brand, name, or category"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button type="submit">Search</button>
-        </form>
 
     </div>
 }

@@ -1,7 +1,6 @@
+/***** WebPage Css Application *****/
 
-/***** WebPage Css Application *****/ 
-
-:root{
+:root {
     --default-color: #8C5C51;
     --font-poppins: "Poppins", sans-serif;
     --font-montserrant: "Lexend", sans-serif;
@@ -11,14 +10,14 @@
     --color-gray: #8f8f8f6c;
 }
 
-/***** Slider Style *****/ 
+/***** Slider Style *****/
 
-.swiper{
+.swiper {
     width: 100%;
     height: 600px;
 }
 
-.img-box{
+.img-box {
     width: 100%;
     height: 600px;
     background-position: center;
@@ -30,7 +29,7 @@
     position: relative;
 }
 
-.text-slider{
+.text-slider {
     display: flex;
     width: 500px;
     flex-direction: column;
@@ -44,7 +43,7 @@
     color: var(--color-white);
 }
 
-.bg-retro{
+.bg-retro {
     width: 100%;
     background-color: var(--color-black);
     height: 600px;
@@ -56,21 +55,21 @@
     opacity: 20%;
 }
 
-.text-slider h3{
+.text-slider h3 {
     font-weight: 400;
     font-family: var(--font-poppins);
     text-transform: uppercase;
     font-size: 2.6em;
 }
 
-.text-slider p{
+.text-slider p {
     font-weight: 670;
     font-family: var(--font-lato);
     text-transform: uppercase;
     font-size: 1.7em;
 }
 
-.btn-slider{
+.btn-slider {
     width: 140px;
     height: 50px;
     padding: 10px;
@@ -84,12 +83,13 @@
     background-color: var(--color-white);
 }
 
-.swiper-button-prev::after, .swiper-button-next::after{
+.swiper-button-prev::after,
+.swiper-button-next::after {
     content: "";
     display: none;
 }
 
-.options-sc{
+.options-sc {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -101,7 +101,8 @@
     padding: 20px;
 }
 
-.swiper-button-prev, .swiper-button-next{
+.swiper-button-prev,
+.swiper-button-next {
     background-color: var(--color-white);
     position: sticky !important;
     height: 49px !important;
@@ -113,11 +114,12 @@
     color: var(--color-black) !important;
 }
 
-.swiper-button-prev:active, .swiper-button-next:active{
+.swiper-button-prev:active,
+.swiper-button-next:active {
     background-color: var(--color-gray);
 }
 
-.btns-slider{
+.btns-slider {
     width: 140px;
     height: auto;
     padding: 10px;
@@ -126,31 +128,29 @@
     align-items: center;
 }
 
-.swiper-pagination{
+.swiper-pagination {
     width: 20% !important;
     position: sticky !important;
 }
 
-.swiper-pagination-bullet{
-    background-color: var(--color-gray) ;
+.swiper-pagination-bullet {
+    background-color: var(--color-gray);
 }
 
-.swiper-pagination-bullet.swiper-pagination-bullet-active{
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
     background-color: var(--color-white);
 }
 
-.slider-container{
+.slider-container {
     position: relative;
 }
 
 /***** End Slider Style *****/
 
 
-/***** Header Style Css *****/ 
+/***** Header Style Css *****/
 
-.header-sc{
-    position: fixed;
-    z-index: 999;
+.header-sc {
     width: 100%;
     top: 0;
     font-family: var(--font-lato);
@@ -159,13 +159,13 @@
     color: var(--color-white);
 }
 
-#text-hd{
+#text-hd {
     font-size: 1.19em;
     font-weight: 600;
     text-transform: uppercase;
 }
 
-.dropdown-menu{
+.dropdown-menu {
     border-radius: 0px;
     width: 400px;
     padding: 10px;
