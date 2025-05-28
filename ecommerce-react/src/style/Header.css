@@ -1,0 +1,24 @@
+.header-sc {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    top: 0;
+    font-family: var(--font-lato);
+    font-weight: 200;
+    background-color: var(--color-gray);
+}
+
+#text-hd {
+    font-size: 1.19em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.dropdown-menu {
+    border-radius: 0px;
+    width: 400px;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 2em;
+    overflow: hidden;
+}
