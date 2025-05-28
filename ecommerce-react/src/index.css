@@ -1,5 +1,4 @@
-
-/**** Css Reset Style WebPage *****/ 
+/**** Css Reset Style WebPage *****/
 
 /* RESET BASE */
 *,
@@ -10,7 +9,8 @@
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -27,7 +27,8 @@ a {
   text-decoration: none;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -72,16 +73,36 @@ img {
   --dark: #212529;
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.75rem; }
-h4 { font-size: 1.5rem; }
-h5 { font-size: 1.25rem; }
-h6 { font-size: 1rem; }
+h1 {
+  font-size: 2.5rem;
+}
 
-p { font-size: 1rem; }
+h2 {
+  font-size: 2rem;
+}
 
-ul, ol {
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+ul,
+ol {
   font-size: 1rem;
 }
 
@@ -97,14 +118,19 @@ blockquote {
   font-size: 1.1rem;
 }
 
-code, pre {
+code,
+pre {
   font-size: 0.95rem;
 }
 
-strong, em {
+strong,
+em {
   font-size: 1rem;
 }
 
+.img-product {
+  width: 300px;
+  height: 300px;
+}
 
 /***** End Css Reset Style WebPage ****/
-

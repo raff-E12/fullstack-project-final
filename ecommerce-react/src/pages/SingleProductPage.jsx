@@ -30,7 +30,7 @@ export default function SingleProductPage() {
     return <>
         <div>{name}</div>
         <div>{price}</div>
-        <img src={image_url} alt={name} />
+        <img className='img-product' src={image_url} alt={name} />
         <div>{fabric}</div>
         <div>{discount} %</div>
         <div>{category_name}</div>
