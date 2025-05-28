@@ -12,6 +12,10 @@
     align-items: center;
 }
 
+.title {
+    color: antiquewhite;
+}
+
 .text {
     text-align: justify;
     max-width: 30%;
