@@ -7,7 +7,6 @@ import CategoriesPage from './pages/CategoriesPage';
 import CheckOutPage from './pages/CheckOutPage';
 import Homepage from './pages/Homepage';
 import ProductsPage from './pages/ProductsPage';
-import SingleCategoryPage from './pages/SingleCategoryPage';
 import SingleCategoryProductPage from './pages/SingleCategoryProductPage';
 import SingleOrderPage from './pages/SingleCategoryPage'
 import SingleProductPage from './pages/SingleProductPage';
