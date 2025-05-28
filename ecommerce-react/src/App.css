@@ -156,6 +156,7 @@
     font-family: var(--font-lato);
     font-weight: 200;
     background-color: var(--color-gray);
+    color: var(--color-white);
 }
 
 #text-hd{
