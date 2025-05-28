@@ -30,7 +30,7 @@ export default function ProductPage() {
                     <p>{description}</p>
                     <p>Prezzo: €{price}</p>
                     <img className="img-product" src={image_url} alt={name} />
-                    <Link to={`/products/${slug}`}>Dettagli Prodotto</Link>
+                    <button className="btn btn-primary"><Link to={`/products/${slug}`}>Dettagli Prodotto</Link></button>
                 </div>
             ))}
         </div>
