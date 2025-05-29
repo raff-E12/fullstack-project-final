@@ -69,21 +69,6 @@ export default function Sliders() {
                 </div>
               </div>
             </div>
-            <div className="swiper-slide">
-              <div
-                className="img-box"
-                style={{ backgroundImage: `url(${Image3})` }}
-              >
-                <div className="bg-retro"></div>
-                <div className="container h-100 d-flex align-items-center justify-content-start">
-                  <div className="text-slider">
-                    <h3>Test Slider #3</h3>
-                    <p>Fashio Week 3#</p>
-                    <button className="btn-slider">Shop Now</button>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
         <div className="options-sc">

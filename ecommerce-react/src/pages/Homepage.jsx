@@ -8,8 +8,9 @@ export default function Homepage() {
   return (
     <div>
       <Sliders />
+      <HomeProductSection />
+
       <HeroCard />
-      <HomeProductSection/>
     </div>
   );
 }
