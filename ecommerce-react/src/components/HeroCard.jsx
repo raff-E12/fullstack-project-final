@@ -22,20 +22,20 @@ function HeroCard() {
 
         <div className="row py-5">
           <div className="col-md-6">
-            <div className="placeholder-img shadow rounded h-100" >
-              <button className="btn-overlay">dressses</button>
+            <div className="placeholder-img shadow rounded h-100 position relative" >
+              <button className="btn btn-light position absolute bottom-0 start-0 m-3">dressses</button>
             </div>
           </div>
           <div className="col-md-6">
             <div className="row h-100">
               <div className="col-12 mb-3">
-                <div className="placeholder-img rounded" >
-                  <button className="btn-overlay">watches</button>
+                <div className="placeholder-img rounded position relative" >
+                  <button className="btn btn-light position absolute bottom-0 start-0 m-3">watches</button>
                 </div>
               </div>
               <div className="col-12">
-                <div className="placeholder-img rounded" >
-                  <button className="btn-overlay">sneakers</button>
+                <div className="placeholder-img rounded position relative" >
+                  <button className="btn btn-light position absolute bottom-0 start-0 m-3">sneakers</button>
                 </div>
               </div>
             </div>
