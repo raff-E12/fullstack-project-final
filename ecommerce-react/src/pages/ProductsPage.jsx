@@ -7,9 +7,10 @@ import { Link } from "react-router-dom";
 export default function ProductPage() {
     const [products, setProducts] = useState([]);
     const [defaultProducts, setDefaultProducts] = useState([]);
-    const { setSearchActive, setSearchBarActive } = useSearch();
+    const { setSearchActive, isSearchBarActive, setSearchBarActive } = useSearch();
     const endPoint = 'http://localhost:3000/products';
 
+    //Chiamata Get dove passiamo i parametri per eventuali filtri e ordinamenti e ricerca
     function getProducts(params) {
         axios.get(endPoint, { params })
             .then(res => {
@@ -17,10 +18,11 @@ export default function ProductPage() {
             })
             .catch(err => {
                 console.log("Errore nel recupero dei prodotti:", err);
-                setProducts([]); // Svuota i prodotti in caso di errore
+                setProducts([]); 
             });
     };
 
+    //Semplice funzione Get per restituire tutti i prodotti
      function getdefaultProducts() {
         axios.get(endPoint)
             .then(res => {
@@ -51,7 +53,7 @@ export default function ProductPage() {
     return (
         <>
             <div className="container-xl container-prod">
-                <FilterSection handleSubmit={handleSubmit} defaultProducts={defaultProducts} />
+                <FilterSection isSearchBarActive={isSearchBarActive} handleSubmit={handleSubmit} defaultProducts={defaultProducts} />
                 <div className="prod-cards">
                     {products.length > 0 ? (
                         products.map(({ id, name, description, price, image_url, slug }) => (
