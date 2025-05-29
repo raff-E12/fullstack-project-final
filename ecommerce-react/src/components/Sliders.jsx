@@ -47,9 +47,10 @@ export default function Sliders() {
                 <div className="bg-retro"></div>
                 <div className="container h-100 d-flex align-items-center justify-content-start">
                   <div className="text-slider">
-                    <h3>Test Slider #1</h3>
-                    <p>Fashio Week 1#</p>
-                    <Link to={'/products'}><button className="btn-slider">Shop Now</button></Link>
+                    <p>Spring/Summer 2026 Collection</p>
+                    <Link to={"/products"}>
+                      <button className="btn-slider">DISCOVER IT NOW</button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -62,9 +63,11 @@ export default function Sliders() {
                 <div className="bg-retro"></div>
                 <div className="container h-100 d-flex align-items-center justify-content-start">
                   <div className="text-slider">
-                    <h3>Test Slider #2</h3>
-                    <p>Fashio Week 2#</p>
-                    <Link to={'/products'}><button className="btn-slider">Shop Now</button></Link>
+                    <h3>LEATHER CAPSULE </h3>
+                    <p>Spring 2026</p>
+                    <Link to={"/products"}>
+                      <button className="btn-slider">Shop Now</button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -44,7 +44,6 @@ export function HomeProductSection() {
       <>
         <div className="row mb-4">
           {" "}
-          {/* Added margin bottom for spacing */}
           {firstRowProducts.map((product) => (
             <Link
               to={`products/${product.slug}`}
@@ -123,7 +122,7 @@ export function HomeProductSection() {
   return (
     <div className="container my-5">
       <div className="featured-header d-flex justify-content-between align-items-center mb-4">
-        <h2 className="featured-title mb-0 me-4">Featured Products</h2>
+        <h2 className="featured-title mb-0 me-4">FEATURED PRODUCTS</h2>
 
         <div className="featured-tabs">
           <button

@@ -62,7 +62,6 @@
 .btn-slider {
     width: clamp(120px, 20vw, 140px);
     /* Responsive button width */
-    height: 50px;
     padding: 10px;
     font-size: .99em;
     font-family: var(--font-lato);
