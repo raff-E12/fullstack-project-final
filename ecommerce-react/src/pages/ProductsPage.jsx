@@ -8,8 +8,6 @@ export default function ProductPage() {
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const { isSearchBarActive, setSearchActive, setSearchBarActive } = useSearch();
-    const { addToCart } = useCart();
-
 
     const endPoint = 'http://localhost:3000/products';
 
@@ -66,11 +64,12 @@ export default function ProductPage() {
                                     <p><b>Prezzo:</b> €{price}</p>
                                 </div>
                             </Link>
-                        </div>
+
+                        </div >
                     </>)
                 })}
             </div>
-        </div>
+        </div >
     </>)
 }
 
