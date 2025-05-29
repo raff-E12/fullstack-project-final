@@ -11,7 +11,7 @@ function HeroCard() {
             </h1>
           </div>
           <div className="col-6">
-            <p className="lead text-center my-5">
+            <p className="lead text-center my-5 text-justify">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
               itaque consequuntur culpa, obcaecati qui, at est pariatur, ipsa
               dicta laboriosam cupiditate quam natus perferendis iste incidunt
