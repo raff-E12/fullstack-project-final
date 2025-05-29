@@ -12,10 +12,9 @@ function HeroCard() {
           </div>
           <div className="col-12 col-md-6">
             <p className="lead text-center my-5 text-justify">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-              itaque consequuntur culpa, obcaecati qui, at est pariatur, ipsa
-              dicta laboriosam cupiditate quam natus perferendis iste incidunt
-              alias molestias corporis fugit.
+              Esplora le ultime tendenze: felpe comode, scarpe stilose e
+              l'immancabile streetwear. Scopri ora la nostra selezione
+              esclusiva pensata per unire stile e comfort
             </p>
           </div>
         </div>
