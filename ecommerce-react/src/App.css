@@ -88,4 +88,5 @@
     height: 50px;
     background-color: var(--color-red);
     position: absolute;
+    top: 0;
 }
