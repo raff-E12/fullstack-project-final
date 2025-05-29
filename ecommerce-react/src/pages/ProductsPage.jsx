@@ -8,8 +8,6 @@ export default function ProductPage() {
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const { isSearchBarActive, setSearchActive, setSearchBarActive } = useSearch();
-    const { addToCart } = useCart();
-
 
     const endPoint = 'http://localhost:3000/products';
 
@@ -29,10 +27,10 @@ export default function ProductPage() {
         getProducts();
         setSearchActive(true);
 
-         return () => {
-      setSearchActive(false);
-      setSearchBarActive(false);
-    };
+        return () => {
+            setSearchActive(false);
+            setSearchBarActive(false);
+        };
     }, []);
 
     function handleSubmit(event) {
@@ -40,9 +38,9 @@ export default function ProductPage() {
         getProducts();
     }
 
-    return(<>
-    <div className="container-xl container-prod">
-            <form className ={`container-xl form-prod`} onSubmit={handleSubmit}>
+    return (<>
+        <div className="container-xl container-prod">
+            <form className={`container-xl form-prod`} onSubmit={handleSubmit}>
                 <input
                     type="text"
                     placeholder="Search by brand, name, or category"
@@ -50,7 +48,7 @@ export default function ProductPage() {
                     id="form-prod"
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-             <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary">Search</button>
             </form>
         <div className="prod-cards">
             {products.map(({ id, name, description, price, image_url, slug }) => {

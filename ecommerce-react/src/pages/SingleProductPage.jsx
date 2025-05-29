@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 export default function SingleProductPage() {
 
@@ -9,6 +10,8 @@ export default function SingleProductPage() {
     const endPoint = `http://127.0.0.1:3000/products/${slug}`;
 
     const [productSlug, setProductSlug] = useState([]);
+
+    const { addToCart } = useCart();
 
     function getProductsSlug() {
         axios.get(endPoint)
@@ -35,6 +38,9 @@ export default function SingleProductPage() {
         <div>{discount} %</div>
         <div>{category_name}</div>
         <div>{description}</div>
+        <button onClick={() => addToCart(productSlug)}>
+            Aggiungi al carrello
+        </button>
     </>
 
 };
