@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Image1 from "../assets/imgs/hero-1.jpg";
 import Image2 from "../assets/imgs/hero-2.jpg";
+import { Link } from "react-router-dom";
 
 import "../style/Slider.css";
 
@@ -48,7 +49,7 @@ export default function Sliders() {
                   <div className="text-slider">
                     <h3>Test Slider #1</h3>
                     <p>Fashio Week 1#</p>
-                    <button className="btn-slider">Shop Now</button>
+                    <Link to={'/products'}><button className="btn-slider">Shop Now</button></Link>
                   </div>
                 </div>
               </div>
@@ -63,7 +64,7 @@ export default function Sliders() {
                   <div className="text-slider">
                     <h3>Test Slider #2</h3>
                     <p>Fashio Week 2#</p>
-                    <button className="btn-slider">Shop Now</button>
+                    <Link to={'/products'}><button className="btn-slider">Shop Now</button></Link>
                   </div>
                 </div>
               </div>
