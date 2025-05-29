@@ -4,6 +4,8 @@
 .social-swiper-container {
     width: 100%;
     overflow-x: hidden;
+    padding-top: 10rem;
+    padding-bottom: 10rem;
 }
 
 /* Wrapper principale - responsive */
@@ -132,7 +134,7 @@ font-size: 2rem;
     }
 }
 
-@media (max-width: 991.98px) {
+@media (max-width: 992px) {
 
     .social-card-base,
     .social-card-green {
@@ -146,7 +148,7 @@ font-size: 2rem;
     }
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 768px) {
     .social-swiper-wrapper {
         flex-direction: column;
         gap: 1.5rem;
@@ -190,7 +192,14 @@ font-size: 2rem;
 }
 
 /* Mobile piccolo */
-@media (max-width: 575.98px) {
+@media (max-width: 576px) {
+
+    .social-swiper-container {
+            padding-top: 3rem;
+            padding-bottom: 3rem; 
+          }
+
+
     .social-swiper-wrapper {
         gap: 1rem;
         padding: 0 0.5rem;

@@ -107,7 +107,7 @@ const SocialSwiper = () => {
   const translateX = -(currentSlide * slideWidth);
 
   return (
-    <div className="social-swiper-container my-5">
+    <div className="social-swiper-container">
       <div className="social-swiper-wrapper">
         {/* Card informativa a sinistra */}
         <div className="social-card-container">
@@ -141,7 +141,7 @@ const SocialSwiper = () => {
                   (currentSlide < 0 ||
                     currentSlide >= images.length - Math.ceil(slidesToShow))
                     ? "none" // Nessuna animazione per i salti infiniti
-                    : "transform 0.3s ease-in-out", // Animazione normale
+                    : "transform 0.3s ease-in-out",
               }}
             >
               {/* Genera tutte le slide */}
