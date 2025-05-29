@@ -6,13 +6,11 @@ function HeroCard() {
     <section>
       <div className="container mt-5">
         <div className="row">
-          <div className=" col-12 col-md-6">
-            <h4 className="display-4 fw-bold text-center my-5">
-              LEATHER CAPSULE
-            </h4>
+          <div className=" col-12 ">
+            <h4 className="display-4 fw-bold mt-5">LEATHER CAPSULE</h4>
           </div>
-          <div className="col-12 col-md-6">
-            <p className="lead text-center my-5 text-justify">
+          <div className="col-12">
+            <p className="lead mb-5 text-end text-justify">
               Let yourself be captivated by our leather collection — a perfect
               balance between artisanal tradition and contemporary design.
             </p>

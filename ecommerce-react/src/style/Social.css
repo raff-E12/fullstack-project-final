@@ -169,6 +169,10 @@ font-size: 2rem;
         height: 200px;
     }
 
+    .social-card-green{
+        width: 100%
+    }
+
     .social-slider {
         width: 100%;
         max-width: calc(100vw - 2rem);
