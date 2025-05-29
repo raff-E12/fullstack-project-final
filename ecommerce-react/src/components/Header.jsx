@@ -1,14 +1,17 @@
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "../style/Header.css";
-import { UseSearch } from "../context/SearchContext";
+import { useSearch } from "../context/SearchContext";
+import { useCart } from "../context/CartContext";
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
-  const { isSearchActive, setSearchBarActive } = UseSearch();
-  const [cartItemCount] = useState(3);
+  const { isSearchActive, setSearchBarActive } = useSearch();
+  // const [cartItemCount] = useState(3);
+  const { cartItems } = useCart();
+  const cartItemCount = cartItems.length;
 
   const closeMenus = () => {
     setIsDropdownOpen(false);
@@ -105,7 +108,7 @@ export default function Header() {
             <div className="d-none d-md-flex">
               <button
                 className={isSearchActive ? "nav-link icon-link" : "d-none"}
-                onClick={()=>setSearchBarActive(prev=> !prev)}
+                onClick={() => setSearchBarActive(prev => !prev)}
                 title="Ricerca"
               >
                 <i className="bi bi-search fs-5"></i>
