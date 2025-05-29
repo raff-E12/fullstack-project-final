@@ -1,4 +1,5 @@
 import "../style/HeroCard.css";
+import { Link } from "react-router-dom";
 
 function HeroCard() {
   return (
