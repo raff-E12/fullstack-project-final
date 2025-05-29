@@ -3,13 +3,13 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 export default function DefaultLayout() {
-
-    return <>
-        <Header />
-        <main className="container-xxl">
-            <Outlet />
-        </main>
-        <Footer />
+  return (
+    <>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </>
-
-};
+  );
+}

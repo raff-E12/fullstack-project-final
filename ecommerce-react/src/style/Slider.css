@@ -19,7 +19,6 @@
 
 .text-slider {
     display: flex;
-    width: min(500px, 90%);
     /* Responsive width */
     flex-direction: column;
     justify-content: flex-start;

@@ -5,11 +5,11 @@ import Social from "../components/Social";
 
 export default function Homepage() {
   return (
-    <div>
+    <>
       <Sliders />
       <HomeProductSection />
       <HeroCard />
       <Social />
-    </div>
+    </>
   );
 }
