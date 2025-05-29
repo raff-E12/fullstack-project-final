@@ -114,7 +114,7 @@ export function HomeProductSection() {
             <div>
                 {isBestSellerSection ? renderProductCards(bestSellers) : renderProductCards(newArrivals)}
             </div>
-            <Link to={isBestSellerSection ? "/products?sort_by=price_desc" : "/products?sort_by=latest"}>View More...</Link>
+            <Link to={isBestSellerSection ? "/products?sort_by=price_desc" : "/products?sort_by=latest" } className="btn btn-primary">View More...</Link>
         </div>
     );
 }

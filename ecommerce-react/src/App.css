@@ -1,3 +1,6 @@
+
+/***** Css Webpage *****/ 
+
 :root{
     --default-color: #8C5C51;
     --font-poppins: "Poppins", sans-serif;
@@ -8,6 +11,8 @@
     --color-red: #d50000;
     --color-black: #000000;
     --color-gray: #8f8f8f6c;
+    --color-green: #03c200;
+    --color-green-second: #066505;
 }
 
 .container-prod{
@@ -41,7 +46,6 @@
 
 .prod-cards{
     width: 100%;
-    border: 2px solid red;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,3 +104,109 @@
     border-radius: 100px;
     transform: rotate(-10deg);
 }
+
+.prod-sc{
+    padding: 90px;
+    height: 120vh;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.img-prod-add{
+    width: 440px;
+    height: 440px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.sections-prod{
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.img-prod-add img{
+    width: 100%;
+    height: auto;
+    transform: scale(1.13, 1.13);
+}
+
+.prod-descriptions{
+    width: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-left: 20px;
+}
+
+.text-prod{
+    width: 100%;
+    font-family: var(--font-lato);
+    text-align: left;
+    padding: 23px;
+}
+
+#text-dec{
+    font-size: .89em;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.text-prod h2{
+    font-size: 2.1em;
+}
+
+#price{
+    font-weight: 800;
+    font-size: 1em;
+}
+
+.prod-review{
+    position: relative;
+    padding: 10px;
+}
+
+.sale-prod{
+    width: 70px;
+    height: 70px;
+    background-color: var(--color-red);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-montserrant);
+    text-transform: uppercase;
+    top: 0;
+    font-size: .89em;
+    left: 0;
+    color: var(--color-white);
+    border-radius: 100px;
+    transform: rotate(-10deg);
+    z-index: 10;
+}
+
+.extra-prod{
+    width: 100%;
+    padding: 10px;
+}
+
+.extra-prod p{
+    margin: 0;
+}
+
+.btn-prod{
+    width: 100%;
+    padding: 10px;
+    background: var(--color-green);
+    font-family: var(--font-lato);
+    color: var(--color-white);
+    text-transform: uppercase;
+    border: none;
+}
+
+.btn-prod:active{
+    background-color: var(--color-green-second);
+}
+
+/***** End Css Webpage *****/
