@@ -1,5 +1,6 @@
 import "../style/HeroCard.css";
 import { Link } from "react-router-dom";
+import HoodieRalphLaurien from "../assets/imgs/HoodiesRalphlauren.jpg";
 
 function HeroCard() {
   return (
@@ -22,27 +23,27 @@ function HeroCard() {
 
         <div className="row g-4 py-4">
           <div className="col-12 col-md-6">
-            <div className="placeholder-img shadow rounded position-relative" style={{ height: '620px' }} >
-              <button className="btn btn-light position-absolute bottom-0 start-0 m-3">dressses</button>
+            <div className="placeholder-img shadow rounded position-relative img-bg-1th"  >
+              <Link to="/categories/streetwear" className="btn btn-light position-absolute bottom-0 start-0 m-3">Dresses </Link>
             </div>
           </div>
           <div className="col-12 col-md-6">
             <div className="row">
               <div className="col-12 mb-3">
-                <div className="placeholder-img rounded position-relative" >
-                  <button className="btn btn-light position-absolute bottom-0 start-0 m-3">watches</button>
+                <div className="placeholder-img rounded position-relative img-bg-2th" >
+                  <Link to="/categories/felpe" className="btn btn-light position-absolute bottom-0 start-0 m-3">Hoodies  </Link>
                 </div>
               </div>
               <div className="col-12">
-                <div className="placeholder-img rounded position-relative" >
-                  <button className="btn btn-light position-absolute bottom-0 start-0 m-3">sneakers</button>
+                <div className="placeholder-img rounded position-relative img-bg-3th" >
+                  <Link to="/categories/scarpe" className="btn btn-light position-absolute bottom-0 start-0 m-3">Sneakers  </Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
 

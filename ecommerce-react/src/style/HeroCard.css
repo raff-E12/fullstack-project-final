@@ -15,3 +15,23 @@ img {
 .text-justify {
     text-align: justify;
 }
+
+.img-bg-1th {
+    height: 620px;
+    background-image: url(../assets/imgs/Streetwear.jpg);
+    background-size: cover;
+
+}
+
+.img-bg-2th {
+    background-image: url(../assets/imgs/HoodiesRalphlauren.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+.img-bg-3th {
+    background-image: url(../assets/imgs/shoes.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
