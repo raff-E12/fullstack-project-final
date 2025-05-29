@@ -11,6 +11,8 @@ const SocialSwiper = () => {
   // Array con i nomi delle tue immagini nella cartella public/img
   const originalImages = [
     "img-slider-3.jpg",
+    "img-slider-1.jpg",
+    "img-slider-2.jpg",
     "img-slider-4.jpg",
     "img-slider-5.jpg",
   ];

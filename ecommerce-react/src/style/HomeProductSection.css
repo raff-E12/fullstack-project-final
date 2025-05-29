@@ -1,6 +1,7 @@
-
-hr {
-    color: #333;
+/* Header */
+.featured-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
 }
 
 .featured-title {
@@ -27,7 +28,6 @@ hr {
     color: #4c4b4b;
     cursor: pointer;
     transition: all 0.3s ease;
-    position: relative;
 }
 
 .featured-tab:hover {
@@ -39,6 +39,20 @@ hr {
     transform: translateY(-1px);
 }
 
+.premium-row {
+    margin-bottom: 2rem;
+}
+
+.compact-row {
+    margin-bottom: 1rem;
+}
+
+.no-products-message {
+    text-align: center;
+    padding: 40px 0;
+    color: #666;
+    font-size: 1rem;
+}
 
 .view-more-btn {
     display: inline-block;
@@ -59,7 +73,7 @@ hr {
     box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
     .featured-header {
         flex-direction: column;
@@ -80,7 +94,23 @@ hr {
         flex: 1;
         text-align: center;
         padding: 10px 16px;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .premium-card-image-container {
+        height: 200px;
+    }
+
+    .compact-card-image-container {
+        height: 140px;
+    }
+
+    .premium-card-body {
+        padding: 16px;
+    }
+
+    .compact-card-body {
+        padding: 10px;
     }
 }
 
@@ -88,5 +118,4 @@ hr {
     .featured-tab {
         padding: 8px 12px;
         font-size: 1rem;
-    }
-}
+    } }
