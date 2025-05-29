@@ -12,30 +12,33 @@ import SingleOrderPage from './pages/SingleCategoryPage'
 import SingleProductPage from './pages/SingleProductPage';
 import { ProductsContext } from './context/ProductsContext';
 import { SearchProvider } from './context/SearchContext';
+import { CartProvider } from './context/CartContext';
 
 export default function App() {
   return <div>
-    <ProductsContext>
+    <CartProvider>
+      <ProductsContext>
         <SearchProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<DefaultLayout />}>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<DefaultLayout />}>
 
-            <Route path='/' element={<Homepage />} />
-            <Route path='/products' element={<ProductsPage />} />
-            <Route path='/products/:slug' element={<SingleProductPage />} />
-            <Route path='/categories/:categorySlug' element={<SingleCategoryProductPage />} />
+                <Route path='/' element={<Homepage />} />
+                <Route path='/products' element={<ProductsPage />} />
+                <Route path='/products/:slug' element={<SingleProductPage />} />
+                <Route path='/categories/:categorySlug' element={<SingleCategoryProductPage />} />
 
-            <Route path='/orders/:slug' element={<SingleOrderPage />} />
+                <Route path='/orders/:slug' element={<SingleOrderPage />} />
 
-            <Route path='/categories' element={<CategoriesPage />} />
+                <Route path='/categories' element={<CategoriesPage />} />
 
-            <Route path='/checkout' element={<CheckOutPage />} />
-            <Route path='/cart' element={<CartPage />} />r
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      </SearchProvider>
-    </ProductsContext>
+                <Route path='/checkout' element={<CheckOutPage />} />
+                <Route path='/cart' element={<CartPage />} />r
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </SearchProvider>
+      </ProductsContext>
+    </CartProvider>
   </div>
 }
