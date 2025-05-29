@@ -1,0 +1,75 @@
+/* Featured Products Header */
+.featured-header {
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 30px !important;
+}
+
+.featured-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+/* Tab Navigation */
+.featured-tabs {
+    display: flex;
+    gap: 0;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.featured-tab {
+    background: none;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    color: #06060653;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.featured-tab:hover {
+    color: #000000;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.featured-tab.active {
+    color: rgba(0, 0, 0);
+    transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .featured-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .featured-title {
+        font-size: 1.5rem;
+    }
+
+    .featured-tabs {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .featured-tab {
+        flex: 1;
+        text-align: center;
+        padding: 10px 16px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .featured-tab {
+        padding: 8px 12px;
+        font-size: 0.75rem;
+    }
+}
