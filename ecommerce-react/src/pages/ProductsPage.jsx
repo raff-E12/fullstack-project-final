@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 
 export default function ProductPage() {
     const [products, setProducts] = useState([]);
-    const { isSearchBarActive, setSearchActive, setSearchBarActive } = useSearch();
-    const endPoint = 'http://localhost:3000/products?';
+    const [defaultProducts, setDefaultProducts] = useState([]);
+    const { setSearchActive, setSearchBarActive } = useSearch();
+    const endPoint = 'http://localhost:3000/products';
 
     function getProducts(params) {
         axios.get(endPoint, { params })
@@ -15,12 +16,26 @@ export default function ProductPage() {
                 setProducts(res.data.products);
             })
             .catch(err => {
-                console.log(err);
+                console.log("Errore nel recupero dei prodotti:", err);
+                setProducts([]); // Svuota i prodotti in caso di errore
             });
     };
 
+     function getdefaultProducts() {
+        axios.get(endPoint)
+            .then(res => {
+                setDefaultProducts(res.data.products);
+            })
+            .catch(err => {
+                console.log("Errore nel recupero dei prodotti:", err);
+                setProducts([]); // Svuota i prodotti in caso di errore
+            });
+    };
+
+
     useEffect(() => {
-        getProducts();
+        getProducts({});
+        getdefaultProducts(); 
         setSearchActive(true);
 
         return () => {
@@ -36,21 +51,25 @@ export default function ProductPage() {
     return (
         <>
             <div className="container-xl container-prod">
-                <FilterSection handleSubmit={handleSubmit} />
+                <FilterSection handleSubmit={handleSubmit} defaultProducts={defaultProducts} />
                 <div className="prod-cards">
-                    {products.map(({ id, name, description, price, image_url, slug }) => (
-                        <div className="cards" key={id}>
-                            <div className="sale">sale%</div>
-                            <Link to={`/products/${slug}`}>
-                                <div className="img-card" style={{ backgroundImage: `url(${image_url})` }}></div>
-                                <div className="text-cards">
-                                    <h2>{name}</h2>
-                                    <p>{description}</p>
-                                    <p><b>Prezzo:</b> €{price}</p>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
+                    {products.length > 0 ? (
+                        products.map(({ id, name, description, price, image_url, slug }) => (
+                            <div className="cards" key={id}>
+                                <div className="sale">sale%</div>
+                                <Link to={`/products/${slug}`}>
+                                    <div className="img-card" style={{ backgroundImage: `url(${image_url})` }}></div>
+                                    <div className="text-cards">
+                                        <h2>{name}</h2>
+                                        <p>{description}</p>
+                                        <p><b>Prezzo:</b> €{price}</p>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))
+                    ) : (
+                        <p>Nessun prodotto trovato.</p>
+                    )}
                 </div>
             </div>
         </>
