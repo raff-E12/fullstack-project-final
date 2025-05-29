@@ -11,3 +11,7 @@ img {
     width: 100%;
     height: 300px;
 }
+
+.text-justify {
+    text-align: justify;
+}
