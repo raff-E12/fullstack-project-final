@@ -35,7 +35,7 @@ function HeroCard() {
               </div>
               <div className="col-12">
                 <div className="placeholder-img rounded position-relative" >
-                  <button className="btn btn-light position-absolute bottom-0 start-0 m-3">sneakers</button>
+                  <Link to="/categories/watches" className="btn btn-light position-absolute bottom-0 start-0 m-3">sneakers  </Link>
                 </div>
               </div>
             </div>
