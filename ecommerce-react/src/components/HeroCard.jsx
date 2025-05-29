@@ -1,5 +1,5 @@
 import "../style/HeroCard.css";
-import { link } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 function HeroCard() {
   return (
@@ -30,7 +30,7 @@ function HeroCard() {
             <div className="row">
               <div className="col-12 mb-3">
                 <div className="placeholder-img rounded position-relative" >
-                  <link to="/categories/watches" className="btn btn-light position-absolute bottom-0 start-0 m-3">watches  </link>
+                  <Link to="/categories/watches" className="btn btn-light position-absolute bottom-0 start-0 m-3">watches  </Link>
                 </div>
               </div>
               <div className="col-12">
