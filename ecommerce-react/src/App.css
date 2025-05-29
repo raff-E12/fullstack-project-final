@@ -56,7 +56,6 @@
     height: 394px;
     background-color: var(--color-white);
     padding: 10px;
-    overflow: hidden;
     position: relative;
 }
 
@@ -74,7 +73,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    gap: 1px;
+    gap: 2px;
     flex-direction: column;
 }
 
@@ -84,9 +83,20 @@
 }
 
 .sale{
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background-color: var(--color-red);
     position: absolute;
-    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-montserrant);
+    text-transform: uppercase;
+    top: -2px;
+    font-size: .89em;
+    left: 0;
+    color: var(--color-white);
+    border-radius: 100px;
+    transform: rotate(-10deg);
 }

@@ -56,7 +56,7 @@ export default function ProductPage() {
             {products.map(({ id, name, description, price, image_url, slug }) => {
                 return(<>
                     <div className="cards">
-                        <div className="sale">sale%</div>
+                        {<div className="sale">sale%</div>}
                         <Link to={`/products/${slug}`} key={id}>
                            <div className="img-card" style={{backgroundImage:`url(${image_url})`}}>
                            </div>
