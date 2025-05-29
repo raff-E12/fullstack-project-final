@@ -7,7 +7,6 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Image1 from "../assets/imgs/hero-1.jpg";
 import Image2 from "../assets/imgs/hero-2.jpg";
-import Image3 from "../assets/imgs/hero-3.jpg";
 
 import "../style/Slider.css";
 
