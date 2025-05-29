@@ -6,20 +6,27 @@ const index = (req, res) => {
     products.*,
     categories.name AS category_name,
     categories.slug AS category_slug
-FROM
+  FROM
     products
-JOIN
-    categories ON products.category_id = categories.id WHERE 1=1`
-  const arrayParams = [];
+  JOIN
+    categories ON products.category_id = categories.id
+  WHERE 1=1`;
 
-  const { q, search, brand, fabric, min_price, max_price, on_sale } = req.query;
+   const arrayParams = [];
+
+  // Added 'discount' to destructuring
+  const { q, search, brand, fabric, min_price, max_price, sort_by, discount } = req.query;
 
   const searchTerm = q || search;
   if (searchTerm) {
-    sql += " AND products.name LIKE ?";
-    arrayParams.push(`%${searchTerm}%`);
+    sql += ` AND (
+      products.name LIKE ?
+      OR brand LIKE ?
+      OR categories.name LIKE ?
+    )`;
+    const likeTerm = `%${searchTerm}%`;
+    arrayParams.push(likeTerm, likeTerm, likeTerm);
   }
-
 
   if (brand) {
     sql += " AND brand = ?";
@@ -28,7 +35,7 @@ JOIN
 
   if (fabric) {
     sql += " AND fabric LIKE ?";
-    arrayParams.push(fabric.trim());
+    arrayParams.push(`%${fabric.trim()}%`);
   }
 
   if (min_price && max_price) {
@@ -42,10 +49,31 @@ JOIN
     arrayParams.push(parseFloat(max_price));
   }
 
-  if (on_sale === 'true') {
-    sql += `AND discount_price IS NOT NULL 
-    AND discount_price < price 
-    AND CURDATE() BETWEEN start_discount AND end_discount`
+  // --- New Discount Filter Logic ---
+  if (discount === 'true') {
+    sql += ` AND discount IS NOT NULL
+             AND discount < price
+             AND CURDATE() BETWEEN start_discount AND end_discount`;
+  }
+  // --- End New Discount Filter Logic ---
+
+  // --- Sorting Logic ---
+  switch (sort_by) {
+    case 'price_asc':
+      sql += ' ORDER BY price ASC';
+      break;
+    case 'price_desc':
+      sql += ' ORDER BY price DESC';
+      break;
+    case 'name_asc':
+      sql += ' ORDER BY products.name ASC';
+      break;
+    case 'name_desc':
+      sql += ' ORDER BY products.name DESC';
+      break;
+    case 'latest':
+      sql += ' ORDER BY products.create_date DESC';
+      break;
   }
 
   connection.query(sql, arrayParams, (error, result) => {
@@ -57,9 +85,8 @@ JOIN
       return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
     }
     return res.status(200).json({ msg: "Benvenuto nell' API", code: 200, products: result });
-  })
+  });
 }
-
 
 const show = (req, res) => {
   const { slug } = req.params;
@@ -104,9 +131,68 @@ WHERE
     return res.status(200).json({ msg: "Benvenuto nell' API", code: 200, products: result });
   })
 }
+  
+  const indexHome = (req, res) => {
+  // Query for New Arrivals (e.g., ordered by creation date)
+  let newArrivalsSql = `SELECT
+    products.*,
+    categories.name AS category_name,
+    categories.slug AS category_slug
+  FROM
+    products
+  JOIN
+    categories ON products.category_id = categories.id
+  ORDER BY
+    products.create_date DESC 
+  LIMIT 7`;
+
+  // Query for Highest Priced Products
+  let highestPricedSql = `SELECT
+    products.*,
+    categories.name AS category_name,
+    categories.slug AS category_slug
+  FROM
+    products
+  JOIN
+    categories ON products.category_id = categories.id
+  ORDER BY
+    products.price DESC
+  LIMIT 7`;
+
+  // Execute both queries
+  connection.query(newArrivalsSql, (errorNewArrivals, resultNewArrival) => {
+    if (errorNewArrivals) {
+      console.error("Errore del database per i nuovi arrivi:", errorNewArrivals);
+      return res.status(500).json({ msg: "Errore del database per i nuovi arrivi", code: 500 });
+    }
+
+    connection.query(highestPricedSql, (errorHighestPriced, resultHighestPrice) => {
+      if (errorHighestPriced) {
+        console.error("Errore del database per i prodotti più costosi:", errorHighestPriced);
+        return res.status(500).json({ msg: "Errore del database per i prodotti più costosi", code: 500 });
+      }
+
+
+      if (resultNewArrival.length === 0 && resultHighestPrice.length === 0) {
+        return res.status(404).json({ msg: "Non è stato possibile trovare risultati per i nuovi arrivi o i prodotti più costosi", code: 404 });
+      }
+
+      return res.status(200).json({
+        msg: "Benvenuto nell'API",
+        code: 200,
+        products: {
+          newArrivals: resultNewArrival,
+          highestPriced: resultHighestPrice
+        }
+      });
+    });
+  });
+};
+
 
 module.exports = {
   index,
   show,
-  indexProductCategory
+  indexProductCategory,
+  indexHome
 }

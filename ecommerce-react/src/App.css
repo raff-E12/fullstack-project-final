@@ -1,5 +1,5 @@
 
-/***** WebPage Css Application *****/ 
+/***** Css Webpage *****/ 
 
 :root{
     --default-color: #8C5C51;
@@ -7,173 +7,206 @@
     --font-montserrant: "Lexend", sans-serif;
     --font-lato: "Lato", sans-serif;
     --color-white: #ffff;
+    --color-white-1: #d1d1d1;
+    --color-red: #d50000;
     --color-black: #000000;
     --color-gray: #8f8f8f6c;
+    --color-green: #03c200;
+    --color-green-second: #066505;
 }
 
-/***** Slider Style *****/ 
-
-.swiper{
-    width: 100%;
-    height: 600px;
+.container-prod{
+    padding: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.img-box{
+.form-prod{
     width: 100%;
-    height: 600px;
+    background-color: var(--color-white-1);
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    display: flex;
+    font-family: var(--font-lato);
+    font-weight: 500;
+}
+
+#form-prod{
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid var(--color-gray);
+}
+
+.prod-cards{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+}
+
+.cards{
+    width: 240px;
+    border-radius: 10px;
+    height: 394px;
+    background-color: var(--color-white);
+    padding: 10px;
+    position: relative;
+}
+
+.img-card{
+    width: 100%;
+    height: 230px;
+    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    padding: 38px;
-    position: relative;
-}
-
-.text-slider{
-    display: flex;
-    width: 500px;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    text-align: left;
-    position: relative;
-    bottom: -30px;
     padding: 10px;
-    z-index: 10;
-    color: var(--color-white);
 }
 
-.bg-retro{
-    width: 100%;
-    background-color: var(--color-black);
-    height: 600px;
-    padding: 10px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9;
-    opacity: 20%;
-}
-
-.text-slider h3{
-    font-weight: 400;
-    font-family: var(--font-poppins);
-    text-transform: uppercase;
-    font-size: 2.6em;
-}
-
-.text-slider p{
-    font-weight: 670;
-    font-family: var(--font-lato);
-    text-transform: uppercase;
-    font-size: 1.7em;
-}
-
-.btn-slider{
-    width: 140px;
-    height: 50px;
-    padding: 10px;
-    font-size: .99em;
-    font-family: var(--font-lato);
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 300;
-    border: none;
-    cursor: pointer;
-    background-color: var(--color-white);
-}
-
-.swiper-button-prev::after, .swiper-button-next::after{
-    content: "";
-    display: none;
-}
-
-.options-sc{
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 40;
-    padding: 20px;
-}
-
-.swiper-button-prev, .swiper-button-next{
-    background-color: var(--color-white);
-    position: sticky !important;
-    height: 49px !important;
-    width: 49px !important;
-    right: 0 !important;
-    margin: 0 !important;
-    border-radius: 100px;
-    font-size: 1.5em;
-    color: var(--color-black) !important;
-}
-
-.swiper-button-prev:active, .swiper-button-next:active{
-    background-color: var(--color-gray);
-}
-
-.btns-slider{
-    width: 140px;
-    height: auto;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.swiper-pagination{
-    width: 20% !important;
-    position: sticky !important;
-}
-
-.swiper-pagination-bullet{
-    background-color: var(--color-gray) ;
-}
-
-.swiper-pagination-bullet.swiper-pagination-bullet-active{
-    background-color: var(--color-white);
-}
-
-.slider-container{
-    position: relative;
-}
-
-/***** End Slider Style *****/
-
-
-/***** Header Style Css *****/ 
-
-.header-sc{
-    position: fixed;
-    z-index: 999;
-    width: 100%;
-    top: 0;
-    font-family: var(--font-lato);
-    font-weight: 200;
-    background-color: var(--color-gray);
-}
-
-#text-hd{
-    font-size: 1.19em;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.dropdown-menu{
-    border-radius: 0px;
-    width: 400px;
-    padding: 10px;
+.text-cards{
     margin-top: 10px;
-    font-size: 2em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+    flex-direction: column;
+}
+
+.text-cards h2{
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.sale{
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-red);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-montserrant);
+    text-transform: uppercase;
+    top: -2px;
+    font-size: .89em;
+    left: 0;
+    color: var(--color-white);
+    border-radius: 100px;
+    transform: rotate(-10deg);
+}
+
+.prod-sc{
+    padding: 90px;
+    height: 120vh;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.img-prod-add{
+    width: 440px;
+    height: 440px;
+    border-radius: 10px;
     overflow: hidden;
 }
 
-/***** End Header Style Css *****/
+.sections-prod{
+    justify-content: center;
+    align-items: flex-start;
+}
 
+.img-prod-add img{
+    width: 100%;
+    height: auto;
+    transform: scale(1.13, 1.13);
+}
 
-/***** End WebPage Css Application *****/
+.prod-descriptions{
+    width: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-left: 20px;
+}
+
+.text-prod{
+    width: 100%;
+    font-family: var(--font-lato);
+    text-align: left;
+    padding: 23px;
+}
+
+#text-dec{
+    font-size: .89em;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.text-prod h2{
+    font-size: 2.1em;
+}
+
+#price{
+    font-weight: 800;
+    font-size: 1em;
+}
+
+.prod-review{
+    position: relative;
+    padding: 10px;
+}
+
+.sale-prod{
+    width: 70px;
+    height: 70px;
+    background-color: var(--color-red);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-montserrant);
+    text-transform: uppercase;
+    top: 0;
+    font-size: .89em;
+    left: 0;
+    color: var(--color-white);
+    border-radius: 100px;
+    transform: rotate(-10deg);
+    z-index: 10;
+}
+
+.extra-prod{
+    width: 100%;
+    padding: 10px;
+}
+
+.extra-prod p{
+    margin: 0;
+}
+
+.btn-prod{
+    width: 100%;
+    padding: 10px;
+    background: var(--color-green);
+    font-family: var(--font-lato);
+    color: var(--color-white);
+    text-transform: uppercase;
+    border: none;
+}
+
+.btn-prod:active{
+    background-color: var(--color-green-second);
+}
+
+/***** End Css Webpage *****/

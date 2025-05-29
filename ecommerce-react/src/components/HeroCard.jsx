@@ -1,5 +1,5 @@
 import "../style/HeroCard.css";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 function HeroCard() {
   return (
@@ -15,7 +15,7 @@ function HeroCard() {
             <p className="lead text-center my-5 text-justify">
               Esplora le ultime tendenze: felpe comode, scarpe stilose e
               l'immancabile streetwear. Scopri ora la nostra selezione
-              esclusiva pensata per unire stile e comfort.
+              esclusiva pensata per unire stile e comfort
             </p>
           </div>
         </div>
