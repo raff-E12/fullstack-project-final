@@ -23,14 +23,17 @@ function HeroCard() {
         <div className="row py-5">
           <div className="col-md-6">
             <div className="placeholder-img shadow rounded h-100" />
+            <button>dressses</button>
           </div>
           <div className="col-md-6">
             <div className="row h-100">
               <div className="col-12 mb-3">
                 <div className="placeholder-img rounded" />
+                <button>watches</button>
               </div>
               <div className="col-12">
                 <div className="placeholder-img rounded" />
+                <button>sneakers</button>
               </div>
             </div>
           </div>
