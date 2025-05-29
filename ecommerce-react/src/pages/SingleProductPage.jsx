@@ -30,17 +30,31 @@ export default function SingleProductPage() {
 
     const { name, description, price, image_url, fabric, discount, category_name } = productSlug;
 
-    return <>
-        <div>{name}</div>
-        <div>{price}</div>
-        <img className='img-product' src={image_url} alt={name} />
-        <div>{fabric}</div>
-        <div>{discount} %</div>
-        <div>{category_name}</div>
-        <div>{description}</div>
-        <button onClick={() => addToCart(productSlug)}>
-            Aggiungi al carrello
-        </button>
-    </>
+    return(<>
+      <div className='container-xxl prod-sc d-flex'>
+       {productSlug.length !== 0 ?  <div className='container-lg p-2 d-flex sections-prod'>
+             <div className='prod-review'>
+                <p className='sale-prod'>{discount} %</p>
+                <div className='img-prod-add'>
+                    <img  src={image_url} alt={name} />
+                </div>
+             </div>
+            <div className='prod-descriptions'>
+               <div className='text-prod'>
+                  <p id='text-dec'>- Descrizione Prodotti</p>
+                    <h1>{name}</h1>
+                    <h4 id='price'>€{price}</h4>
+               </div>
+               <div className='extra-prod'>
+                    <h5>Descrizione:</h5>
+                    <p>{fabric}</p>
+                    <p>{category_name}</p>
+                    <p>{description}</p>
+               </div>
+                <button className='btn-prod' onClick={() => addToCart(productSlug)}> Aggiungi al carrello </button>
+            </div>
+        </div> :  <div className='container-lg p-2 d-flex sections-prod'> <b>Loading...</b> </div>}
+      </div>
+    </>)
 
 };

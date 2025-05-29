@@ -42,42 +42,26 @@ export function HomeProductSection() {
     const secondRowProducts = products.slice(3, 7);
 
     return (
-      <>
-        <div className="row mb-4">
-          {firstRowProducts.map((product) => {
-            return (
-              <Link
-                to={`products/${product.slug}`}
-                key={product.id}
-                className="col-md-4 col-sm-6 mb-3"
-              >
-                <div className="card h-100 shadow-sm">
-                  {product.image_url && (
-                    <img
-                      src={product.image_url}
-                      className="card-img-top img-fluid"
-                      alt={product.name}
-                      style={{ objectFit: "cover", height: "200px" }}
-                    />
-                  )}
-                  <div className="card-body d-flex flex-column">
-                    <h5 className="card-title text-truncate">{product.name}</h5>
-                    <p
-                      className="card-text text-muted flex-grow-1"
-                      style={{ fontSize: "0.9rem" }}
-                    >
-                      {product.description
-                        ? product.description.substring(0, 100) + "..."
-                        : "Nessuna descrizione disponibile."}
-                    </p>
-                    <p className="card-text fw-bold mt-auto">
-                      Prezzo: €{product.price ? product.price : "N/A"}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            );
-          })}
+        <div className="container my-5">
+            <div className="d-flex justify-content-end mb-4">
+                <button
+                    className={`btn ${isBestSellerSection ? 'btn-primary' : 'btn-outline-primary'} me-2`}
+                    onClick={() => setBestSellerSection(true)}
+                >
+                    Best Sellers
+                </button>
+                <button
+                    className={`btn ${!isBestSellerSection ? 'btn-primary' : 'btn-outline-primary'}`}
+                    onClick={() => setBestSellerSection(false)}
+                >
+                    New Arrivals
+                </button>
+            </div>
+
+            <div>
+                {isBestSellerSection ? renderProductCards(bestSellers) : renderProductCards(newArrivals)}
+            </div>
+            <Link to={isBestSellerSection ? "/products?sort_by=price_desc" : "/products?sort_by=latest" } className="btn btn-primary">View More...</Link>
         </div>
 
         <div className="row">

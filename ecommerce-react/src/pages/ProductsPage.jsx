@@ -51,10 +51,10 @@ export default function ProductPage() {
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
         <div className="prod-cards">
-            {products.map(({ id, name, description, price, image_url, slug }) => {
+            {products.length !== 0 ? products.map(({ id, name, description, price, image_url, slug, sku_order_code }) => {
                 return(<>
                     <div className="cards">
-                        {<div className="sale">sale%</div>}
+                        {sku_order_code !== "" ? <div className="sale">sale%</div> : ""}
                         <Link to={`/products/${slug}`} key={id}>
                            <div className="img-card" style={{backgroundImage:`url(${image_url})`}}>
                            </div>
@@ -66,7 +66,7 @@ export default function ProductPage() {
                         </Link>
                     </div>
                 </>)
-            })}
+            }) : <b>Loading...</b>}
         </div>
     </div>
     </>)
