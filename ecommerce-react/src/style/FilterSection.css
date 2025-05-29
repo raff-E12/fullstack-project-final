@@ -1,0 +1,227 @@
+/* FilterSection.css */
+
+.filter-wrapper {
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* Header */
+.filter-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #333;
+    font-size: 14px;
+}
+
+.search-input::placeholder {
+    color: #888;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #333;
+}
+
+.controls-section {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.order-select {
+    padding: 12px 16px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #333;
+    font-size: 1rem;
+    min-width: 120px;
+}
+
+.order-select:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.filter-toggle {
+    padding: 12px 20px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+
+/* Pannello Filtri */
+.filter-panel {
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.filter-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #333;
+    font-size: 14px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.price-range {
+    display: flex;
+    gap: 8px;
+}
+
+.price-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #333;
+    font-size: 14px;
+}
+
+.price-input::placeholder {
+    color: #888;
+}
+
+.price-input:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.checkbox-section {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ccc;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #666;
+}
+
+/* Bottoni Azione */
+.filter-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #333;
+}
+
+.btn-reset {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #ccc;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-reset:hover {
+    border-color: #666;
+    color: #333;
+}
+
+.btn-apply {
+    padding: 10px 24px;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .filter-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-section {
+        min-width: auto;
+    }
+
+    .controls-section {
+        justify-content: space-between;
+    }
+
+    .order-select {
+        flex: 1;
+        min-width: auto;
+    }
+
+    .filter-actions {
+        flex-direction: column;
+    }
+
+    .btn-reset,
+    .btn-apply {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .filter-wrapper {
+        padding: 16px;
+        margin: 16px 0;
+    }
+
+    .price-range {
+        flex-direction: column;
+    } }
