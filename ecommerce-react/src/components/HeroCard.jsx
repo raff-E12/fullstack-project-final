@@ -27,7 +27,7 @@ function HeroCard() {
             </div>
           </div>
           <div className="col-12 col-md-6">
-            <div className="row h-100">
+            <div className="row">
               <div className="col-12 mb-3">
                 <div className="placeholder-img rounded position-relative" >
                   <button className="btn btn-light position-absolute bottom-0 start-0 m-3">watches</button>
