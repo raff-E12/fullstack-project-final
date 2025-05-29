@@ -31,36 +31,44 @@ export default function ProductPage() {
       setSearchActive(false);
       setSearchBarActive(false);
     };
-    }, [searchTerm]);
+    }, []);
 
     function handleSubmit(event) {
         event.preventDefault();
         getProducts();
     }
 
-    return <div>
-        <div>
-
-            <form className ={isSearchBarActive ? "d-flex my-5 mx-auto" : "d-none"} onSubmit={handleSubmit}>
+    return(<>
+    <div className="container-xl container-prod">
+            <form className ={`container-xl form-prod`} onSubmit={handleSubmit}>
                 <input
                     type="text"
                     placeholder="Search by brand, name, or category"
                     value={searchTerm}
+                    id="form-prod"
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button type="submit">Search</button>
+             <button type="submit" class="btn btn-primary">Search</button>
             </form>
-
-            {products.map(({ id, name, description, price, image_url, slug }) => (
-                <Link to={`/products/${slug}`} key={id}>
-                    <h2>{name}</h2>
-                    <p>{description}</p>
-                    <p>Prezzo: €{price}</p>
-                    <img className="img-product" src={image_url} alt={name} />
-                </Link>
-            ))}
+        <div className="prod-cards">
+            {products.map(({ id, name, description, price, image_url, slug }) => {
+                return(<>
+                    <div className="cards">
+                        <div className="sale">sale%</div>
+                        <Link to={`/products/${slug}`} key={id}>
+                           <div className="img-card" style={{backgroundImage:`url(${image_url})`}}>
+                           </div>
+                           <div className="text-cards">
+                                <h2>{name}</h2>
+                                <p>{description}</p>
+                                <p><b>Prezzo:</b> €{price}</p>
+                           </div>
+                        </Link>
+                    </div>
+                </>)
+            })}
         </div>
-
     </div>
+    </>)
 }
 

@@ -4,6 +4,88 @@
     --font-montserrant: "Lexend", sans-serif;
     --font-lato: "Lato", sans-serif;
     --color-white: #ffff;
+    --color-white-1: #d1d1d1;
+    --color-red: #d50000;
     --color-black: #000000;
     --color-gray: #8f8f8f6c;
+}
+
+.container-prod{
+    padding: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-prod{
+    width: 100%;
+    background-color: var(--color-white-1);
+    padding: 10px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    display: flex;
+    font-family: var(--font-lato);
+    font-weight: 500;
+}
+
+#form-prod{
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 2px solid var(--color-gray);
+}
+
+.prod-cards{
+    width: 100%;
+    border: 2px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+}
+
+.cards{
+    width: 240px;
+    border-radius: 10px;
+    height: 394px;
+    background-color: var(--color-white);
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.img-card{
+    width: 100%;
+    height: 230px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 10px;
+}
+
+.text-cards{
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1px;
+    flex-direction: column;
+}
+
+.text-cards h2{
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.sale{
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-red);
+    position: absolute;
 }
