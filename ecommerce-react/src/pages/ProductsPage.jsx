@@ -1,20 +1,16 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
-import { useSearch } from "../context/SearchContext";
+import { useSearch } from '../context/SearchContext'
+import FilterSection from "./FilterSection";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
 
 export default function ProductPage() {
     const [products, setProducts] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
     const { isSearchBarActive, setSearchActive, setSearchBarActive } = useSearch();
+    const endPoint = 'http://localhost:3000/products?';
 
-    const endPoint = 'http://localhost:3000/products';
-
-    function getProducts() {
-        axios.get(endPoint, {
-            params: { q: searchTerm }  // nome parametro inserito in express;
-        })
+    function getProducts(params) {
+        axios.get(endPoint, { params })
             .then(res => {
                 setProducts(res.data.products);
             })
@@ -33,43 +29,30 @@ export default function ProductPage() {
         };
     }, []);
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        getProducts();
+    function handleSubmit(params) {
+        getProducts(params);
     }
 
-    return (<>
-        <div className="container-xl container-prod">
-            <form className={`container-xl form-prod`} onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Search by brand, name, or category"
-                    value={searchTerm}
-                    id="form-prod"
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
-            <div className="prod-cards">
-                {products.map(({ id, name, description, price, image_url, slug }) => {
-                    return (<>
-                        <div className="cards">
+    return (
+        <>
+            <div className="container-xl container-prod">
+                <FilterSection handleSubmit={handleSubmit} />
+                <div className="prod-cards">
+                    {products.map(({ id, name, description, price, image_url, slug }) => (
+                        <div className="cards" key={id}>
                             <div className="sale">sale%</div>
-                            <Link to={`/products/${slug}`} key={id}>
-                                <div className="img-card" style={{ backgroundImage: `url(${image_url})` }}>
-                                </div>
+                            <Link to={`/products/${slug}`}>
+                                <div className="img-card" style={{ backgroundImage: `url(${image_url})` }}></div>
                                 <div className="text-cards">
                                     <h2>{name}</h2>
                                     <p>{description}</p>
                                     <p><b>Prezzo:</b> €{price}</p>
                                 </div>
                             </Link>
-
-                        </div >
-                    </>)
-                })}
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div >
-    </>)
+        </>
+    );
 }
-
