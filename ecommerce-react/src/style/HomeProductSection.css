@@ -1,8 +1,6 @@
-/* Featured Products Header */
-.featured-header {
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 15px;
-    margin-bottom: 30px !important;
+
+hr {
+    color: #333;
 }
 
 .featured-title {
@@ -26,7 +24,7 @@
     border: none;
     padding: 12px 24px;
     font-size: 1rem;
-    color: #06060653;
+    color: #4c4b4b;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -34,12 +32,31 @@
 
 .featured-tab:hover {
     color: #000000;
-    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .featured-tab.active {
     color: rgba(0, 0, 0);
     transform: translateY(-1px);
+}
+
+
+.view-more-btn {
+    display: inline-block;
+    padding: 12px 32px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+.view-more-btn:hover {
+    background-color: #000000;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
 }
 
 /* Responsive Design */
@@ -70,6 +87,6 @@
 @media (max-width: 480px) {
     .featured-tab {
         padding: 8px 12px;
-        font-size: 0.75rem;
+        font-size: 1rem;
     }
 }

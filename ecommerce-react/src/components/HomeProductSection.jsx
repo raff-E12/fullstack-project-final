@@ -42,7 +42,9 @@ export function HomeProductSection() {
 
     return (
       <>
-        <div className="row mb-4"> {/* Added margin bottom for spacing */}
+        <div className="row mb-4">
+          {" "}
+          {/* Added margin bottom for spacing */}
           {firstRowProducts.map((product) => (
             <Link
               to={`products/${product.slug}`}
@@ -69,7 +71,8 @@ export function HomeProductSection() {
                       : "Nessuna descrizione disponibile."}
                   </p>
                   <p className="card-text fw-bold mt-auto">
-                    Prezzo: €{product.price ? product.price : "N/A"} {/* Format price */}
+                    Prezzo: €{product.price ? product.price : "N/A"}{" "}
+                    {/* Format price */}
                   </p>
                 </div>
               </div>
@@ -119,9 +122,8 @@ export function HomeProductSection() {
 
   return (
     <div className="container my-5">
-      {/* Header con titolo e tab */}
       <div className="featured-header d-flex justify-content-between align-items-center mb-4">
-        <h2 className="featured-title mb-0">Featured Products</h2>
+        <h2 className="featured-title mb-0 me-4">Featured Products</h2>
 
         <div className="featured-tabs">
           <button
@@ -139,7 +141,6 @@ export function HomeProductSection() {
         </div>
       </div>
 
-      {/* Contenuto prodotti */}
       <div>
         {/* Call renderProductRow with the appropriate data based on the state */}
         {isBestSellerSection
@@ -147,16 +148,18 @@ export function HomeProductSection() {
           : renderProductRow(newArrivals)}
       </div>
 
-      <Link
-        to={
-          isBestSellerSection
-            ? "/products?sort_by=price_desc"
-            : "/products?sort_by=latest"
-        }
-        className="btn btn-primary mt-4" // Added some margin top for the button
-      >
-        View More...
-      </Link>
+      <div className="text-center mt-4">
+        <Link
+          to={
+            isBestSellerSection
+              ? "/products?sort_by=price_desc"
+              : "/products?sort_by=latest"
+          }
+          className="view-more-btn"
+        >
+          View More
+        </Link>
+      </div>
     </div>
   );
 }
