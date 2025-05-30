@@ -71,7 +71,7 @@ export default function SingleProductPage() {
             <div className='box-desc review'>
                <div className='review-number rv-number'>
                     <h2 id='percents-rv'>4.3</h2>
-                    <a id='links-hovering'><p>Vedi le recensioni <i class="bi bi-arrow-right-short"></i></p></a>
+                    <a id='links-hovering'><p>Vedi le recensioni <i className="bi bi-arrow-right-short"></i></p></a>
                </div>
                <div className='review-number rv-parph'>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. 

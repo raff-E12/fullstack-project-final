@@ -4,7 +4,7 @@ import "../style/PremiumCard.css";
 export function PremiumCard({ product }) {
   return (
     <Link
-      to={`products/${product.slug}`}
+      to={`/products/${product.slug}`}
       className="col-md-4 col-sm-6 mb-4 premium-card"
     >
       <div className="card h-100">
