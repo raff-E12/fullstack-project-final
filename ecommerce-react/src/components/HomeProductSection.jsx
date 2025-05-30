@@ -17,7 +17,7 @@ export function HomeProductSection() {
       .get(endPoint)
       .then((res) => {
         setNewArrivals(res.data.products.newArrivals || []);
-        setBestSellers(res.data.products.highestPriced || []);
+        setBestSellers(res.data.products.bestSellers || []);
       })
       .catch((err) => {
         console.error("Error fetching products:", err);
@@ -89,7 +89,7 @@ export function HomeProductSection() {
         <Link
           to={
             isBestSellerSection
-              ? "/products?sort_by=price_desc"
+              ? "/products/bestsellers"
               : "/products?sort_by=latest"
           }
           className="view-more-btn"

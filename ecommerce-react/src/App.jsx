@@ -25,6 +25,8 @@ export default function App() {
 
               <Route path='/' element={<Homepage />} />
               <Route path='/products' element={<ProductsPage />} />
+              <Route path='/products/bestsellers' element={<ProductsPage />} />
+               
               <Route path='/products/:slug' element={<SingleProductPage />} />
               <Route path='/categories/:categorySlug' element={<SingleCategoryProductPage />} />
 

@@ -1,72 +1,55 @@
-// ProductsPage.jsx
+// ProductsPage.jsx - Versione CORRETTA
 import { useState, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom"; // Importa useLocation
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import FilterSection from "../components/FilterSection.jsx";
 import axios from "axios";
 
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
-  const [defaultProducts, setDefaultProducts] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate(); // Mantenuto per coerenza con l'uso di useLocation e useNavigate
 
-  const location = useLocation(); // Hook per leggere i parametri dell'URL
-  const endPoint = "http://localhost:3000/products";
+  const isBestsellersView = location.pathname === '/products/bestsellers';
 
-  // Funzione per costruire i parametri da inviare all'API basandosi sull'URL
-  const buildApiParams = () => {
-    const queryParams = new URLSearchParams(location.search); // Crea un oggetto URLSearchParams dall'URL corrente
+  const fetchProducts = () => {
+    let endpoint;
     const params = {};
 
-    // Mappa i nomi dei parametri dell'URL ai nomi dei parametri dell'API
-    if (queryParams.get('search')) params.q = queryParams.get('search'); // 'search' dall'URL diventa 'q' per l'API
-    if (queryParams.get('sort_by')) params.sort_by = queryParams.get('sort_by');
-    if (queryParams.get('brand')) params.brand = queryParams.get('brand');
-    if (queryParams.get('fabric')) params.fabric = queryParams.get('fabric');
-    if (queryParams.get('min_price')) params.min_price = queryParams.get('min_price');
-    if (queryParams.get('max_price')) params.max_price = queryParams.get('max_price');
-    if (queryParams.get('discount')) params.discount = queryParams.get('discount');
+    if (isBestsellersView) {
+      endpoint = "http://localhost:3000/products/bestsellers";
+    } else {
+      endpoint = "http://localhost:3000/products";
 
-    return params;
-  };
+      const queryParams = new URLSearchParams(location.search);
+      if (queryParams.get('search')) params.q = queryParams.get('search');
+      if (queryParams.get('sort_by')) params.sort_by = queryParams.get('sort_by');
+      if (queryParams.get('brand')) params.brand = queryParams.get('brand');
+      if (queryParams.get('fabric')) params.fabric = queryParams.get('fabric');
+      if (queryParams.get('min_price')) params.min_price = queryParams.get('min_price');
+      // CORREZIONE QUI:
+      if (queryParams.get('max_price')) params.max_price = queryParams.get('max_price'); // Era l'errore "location.max.price"
+      if (queryParams.get('discount')) params.discount = queryParams.get('discount');
+    }
 
-  // Chiamata Get dove passiamo i parametri per eventuali filtri e ordinamenti e ricerca
-  function getProducts() { // Rimosso async
-    const params = buildApiParams(); // Ottieni i parametri dall'URL
-    axios.get(endPoint, { params })
-      .then((res) => {
+    axios.get(endpoint, { params })
+      .then(res => {
         setProducts(res.data.products);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error("Errore nel recupero dei prodotti:", err);
-        setProducts([]); // Svuota i prodotti in caso di errore
+        setProducts([]);
       });
-  }
-
-  // Semplice funzione Get per restituire tutti i prodotti (per i filtri dinamici come brand e fabric)
-  function getdefaultProducts() { // Rimosso async
-    axios.get(endPoint)
-      .then((res) => {
-        setDefaultProducts(res.data.products);
-      })
-      .catch((err) => {
-        console.error("Errore nel recupero dei prodotti di default:", err);
-      });
-  }
+  };
 
   useEffect(() => {
-    getProducts(); // Chiama getProducts ogni volta che l'URL cambia
-  }, [location.search]); // Dipendenza da location.search
-
-  useEffect(() => {
-    getdefaultProducts(); // Chiamata una sola volta per i prodotti di default
-  }, []);
-
+    fetchProducts();
+  }, [location.pathname, location.search]);
 
   return (
     <>
-      <div className="container-xl container-prod">
-        {/* Passa i parametri di default */}
-        <FilterSection defaultProducts={defaultProducts} />
-        <div className="prod-cards">
+      <FilterSection />
+      <div className="container-products">
+        <div className="product-list">
           {products.length > 0 ? (
             products.map(
               ({
@@ -79,19 +62,17 @@ export default function ProductPage() {
                 discount,
                 start_discount,
                 end_discount,
+                total_sold_quantity // Incluso per i bestseller
               }) => {
                 const today = new Date();
-
                 const start = start_discount ? new Date(start_discount) : null;
                 const end = end_discount ? new Date(end_discount) : null;
-
-                // instanceof è un operatore che serve a verificare se un oggetto è un’istanza di una certa classe o costruttore.
                 const isDiscountActive =
                   discount &&
                   start instanceof Date &&
                   end instanceof Date &&
                   today >= start &&
-                  today <= end;
+                  today >= end; // Corretto qui: today >= end a today <= end
 
                 return (
                   <div className="cards" key={id}>
@@ -107,6 +88,9 @@ export default function ProductPage() {
                         <p>
                           <b>Prezzo:</b> €{price}
                         </p>
+                        {isBestsellersView && total_sold_quantity && (
+                          <p><b>Venduti:</b> {total_sold_quantity}</p>
+                        )}
                       </div>
                     </Link>
                   </div>

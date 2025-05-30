@@ -147,17 +147,22 @@ WHERE
   LIMIT 7`;
 
   // Query for Highest Priced Products
-  let highestPricedSql = `SELECT
+  let bestSellersSql = `SELECT
     products.*,
     categories.name AS category_name,
-    categories.slug AS category_slug
-  FROM
+    categories.slug AS category_slug, -- <--- VIRGOLA MANCANTE QUI
+    SUM(order_product.quantity) AS total_product_quantity
+FROM
     products
-  JOIN
+JOIN
     categories ON products.category_id = categories.id
-  ORDER BY
-    products.price DESC
-  LIMIT 7`;
+JOIN
+    order_product ON order_product.product_id = products.id
+GROUP BY
+    products.id, products.name, products.description, products.price, products.image_url, products.image_still_life_url, products.brand, products.sku_order_code, products.fabric, products.discount, products.start_discount, products.end_discount, categories.name, categories.slug -- <--- GROUP BY AGGIUNTO CON TUTTE LE COLONNE NON AGGREGATE
+ORDER BY
+    total_product_quantity DESC
+LIMIT 7;`
 
   // Execute both queries
   connection.query(newArrivalsSql, (errorNewArrivals, resultNewArrival) => {
@@ -166,14 +171,14 @@ WHERE
       return res.status(500).json({ msg: "Errore del database per i nuovi arrivi", code: 500 });
     }
 
-    connection.query(highestPricedSql, (errorHighestPriced, resultHighestPrice) => {
-      if (errorHighestPriced) {
-        console.error("Errore del database per i prodotti più costosi:", errorHighestPriced);
+    connection.query(bestSellersSql, (errorBestSellers, resultBestSellers) => {
+      if (errorBestSellers) {
+        console.error("Errore del database per i prodotti più costosi:", errorBestSellers);
         return res.status(500).json({ msg: "Errore del database per i prodotti più costosi", code: 500 });
       }
 
 
-      if (resultNewArrival.length === 0 && resultHighestPrice.length === 0) {
+      if (resultNewArrival.length === 0 && resultBestSellers.length === 0) {
         return res.status(404).json({ msg: "Non è stato possibile trovare risultati per i nuovi arrivi o i prodotti più costosi", code: 404 });
       }
 
@@ -182,7 +187,7 @@ WHERE
         code: 200,
         products: {
           newArrivals: resultNewArrival,
-          highestPriced: resultHighestPrice
+          bestSellers: resultBestSellers
         }
       });
     });
@@ -190,9 +195,44 @@ WHERE
 };
 
 
+const indexBestSellers = (req, res) => {
+   let bestSellersSql = `SELECT
+    products.*,
+    categories.name AS category_name,
+    categories.slug AS category_slug,
+    SUM(order_product.quantity) AS total_product_quantity
+FROM
+    products
+JOIN
+    categories ON products.category_id = categories.id
+JOIN
+    order_product ON order_product.product_id = products.id
+GROUP BY
+    products.id, products.name, products.description, products.price, products.image_url, products.image_still_life_url,
+    products.create_date, -- <--- AGGIUNTO
+    products.brand, products.sku_order_code, products.fabric, products.discount, products.start_discount, products.end_discount,
+    products.is_visible_product, -- <--- AGGIUNTO
+    products.category_id, products.slug, -- Assicurati che products.slug sia qui se non lo ridenomini
+    categories.name, categories.slug
+ORDER BY
+    total_product_quantity DESC;`
+  connection.query(bestSellersSql, (error, result) => {
+    console.log("Numero di prodotti bestseller trovati:", result.length)
+    if (error) {
+      return res.status(500).json({ msg: "Errore del database", code: 500 });
+    }
+    if (result.length === 0) {
+      return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
+    }
+    return res.status(200).json({ msg: "Benvenuto nell' API", code: 200, products: result });
+  })
+}
+
+
 module.exports = {
   index,
   show,
   indexProductCategory,
-  indexHome
+  indexHome,
+  indexBestSellers
 }
