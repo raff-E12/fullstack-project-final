@@ -49,8 +49,6 @@ export default function SingleCategoryProductPage() {
 
 
                     <div className="alert alert-info">
-
-                        {categoryName}"
                         <div className="row g-4">
                             {products.map((product) => (
                                 <div className="col-12  col-md-6 col-lg-4" key={product.slug} >
