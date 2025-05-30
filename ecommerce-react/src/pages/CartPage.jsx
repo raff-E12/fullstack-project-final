@@ -3,14 +3,12 @@ import { useCart } from "../context/CartContext";
 export default function CartPage() {
     const { cartItems } = useCart();
 
-    let totalPrice = 0
+    let totalPrice = 0;
 
     for (let i = 0; i < cartItems.length; i++) {
         const element = cartItems[i];
-        totalPrice += element.price * (element.quantity || 1);
-        // console.log(totalPrice)
+        totalPrice += element.price * element.quantity; // Aggiungi la quantità al calcolo del prezzo
     }
-    // console.log(totalPrice)
 
     return (
         <div>
@@ -23,6 +21,7 @@ export default function CartPage() {
                         <h2>{item.name}</h2>
                         <p>{item.description}</p>
                         <p>Prezzo: €{item.price}</p>
+                        <p>Quantità: {item.quantity}</p> {/* Mostra la quantità */}
                         <img className="img-product" src={item.image_url} alt={item.name} />
                     </div>
                 ))

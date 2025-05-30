@@ -40,11 +40,11 @@ export default function FilterSection({
     handleSubmit(params);
   }, [searchTerm, order]);
 
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
-    const params = buildSearchParams();
-    handleSubmit(params);
-  };
+  // const handleSearchSubmit = (event) => {
+  //   event.preventDefault();
+  //   const params = buildSearchParams();
+  //   handleSubmit(params);
+  // };
 
   const handleApplyFilters = () => {
     const params = buildSearchParams();
@@ -68,9 +68,8 @@ export default function FilterSection({
         <div className="filter-header">
           <div className="search-section">
             <input
-              className={`search-input ${
-                isSearchBarActive ? "d-block" : "d-none d-md-block"
-              }`}
+              className={`search-input ${isSearchBarActive ? "d-block" : "d-none d-md-block"
+                }`}
               type="text"
               placeholder="Cerca prodotti..."
               value={searchTerm}

@@ -11,7 +11,9 @@ export default function Header() {
   const { isSearchActive, setSearchBarActive } = useSearch();
   // const [cartItemCount] = useState(3);
   const { cartItems } = useCart();
-  const cartItemCount = cartItems.length;
+
+  // Il metodo .reduce() serve per ridurre (cioè accumulare) tutti gli elementi di un array in un singolo valore.
+  const cartItemCount = cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
 
   const closeMenus = () => {
     setIsDropdownOpen(false);
