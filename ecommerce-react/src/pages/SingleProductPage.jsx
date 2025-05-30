@@ -28,7 +28,7 @@ export default function SingleProductPage() {
         getProductsSlug();
     }, []);
 
-    const { name, description, price, image_url, fabric, discount, category_name, start_discount, end_discount } = productSlug;
+    const { name, description, price, image_url, fabric, discount, category_name, start_discount, end_discount, sku_order_code, brand } = productSlug;
 
     const today = new Date();
 
