@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import "../style/PremiumCard.css";
 
 export function PremiumCard({ product }) {
-  console.log(product)
   return (
     <Link
       to={`products/${product.slug}`}
