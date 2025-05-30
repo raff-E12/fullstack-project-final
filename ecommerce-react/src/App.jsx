@@ -31,7 +31,8 @@ export default function App() {
               <Route path='/categories' element={<CategoriesPage />} />
 
               <Route path='/checkout' element={<CheckOutPage />} />
-              <Route path='/cart' element={<CartPage />} />r
+              <Route path='/cart' element={<CartPage />} />
+
             </Route>
           </Routes>
         </BrowserRouter>

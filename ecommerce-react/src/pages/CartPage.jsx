@@ -1,4 +1,8 @@
+import { NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
+import CheckOutPage from "../pages/CheckOutPage";
+
 
 export default function CartPage() {
     const { cartItems } = useCart();
@@ -73,6 +77,7 @@ export default function CartPage() {
             <div className="text-end mt-4">
                 <h3>Totale: €{totalPrice.toFixed(2)}</h3>
             </div>
+            <Link to="/checkout"><button>Procedi al checkout</button></Link>
         </div>
     );
 }
