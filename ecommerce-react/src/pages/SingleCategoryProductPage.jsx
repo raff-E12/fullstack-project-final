@@ -40,25 +40,16 @@ export default function SingleCategoryProductPage() {
         <div className="container mt-4">
             <div className="row">
                 <div className="col-12">
-                    <h1>Debug Info</h1>
-                    <p>
-                        <strong>URL corrente:</strong> {location.pathname}
-                    </p>
-                    <p>
-                        <strong>categorySlug ricevuto:</strong>{" "}
-                        {categorySlug || "UNDEFINED"}
-                    </p>
-                    <p>
-                        <strong>Tutti i params:</strong> {JSON.stringify(useParams())}
-                    </p>
+                    <h1 className="mt-5">{categoryName}</h1>
+                    <p> Stile senza tempo, comfort assoluto! 🌟 Scopri la nostra esclusiva selezione di Polo & T-Shirt, perfette per ogni occasione. Dai un tocco di classe al tuo look con una polo elegante o scegli la freschezza di una t-shirt dal design unico. Qualità, tendenza e versatilità si incontrano per offrirti il meglio della moda casual. Esprimi la tua personalità con i nostri capi, pensati per chi non rinuncia mai allo stile! </p>
 
                     <hr />
 
                     <h1>Prodotti - {categoryName}</h1>
-                    <p className="text-muted">Slug: {categorySlug}</p>
+
 
                     <div className="alert alert-info">
-                        Qui verranno mostrati tutti i prodotti della categoria "
+
                         {categoryName}"
                         <div className="row g-4">
                             {products.map((product) => (
