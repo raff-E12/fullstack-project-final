@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+import emailjs from '@emailjs/browser';
+
 export default function CheckOutForm({ amount }) {
     const endpoint = "http://localhost:3000/checkout"; // Endpoint del tuo backend
 
@@ -26,8 +28,34 @@ export default function CheckOutForm({ amount }) {
         });
     };
 
+    const sendConfirmationEmail = () => {
+        emailjs.send(
+            'process.env.EMAILJS_SERVICE_ID',        //  Service ID
+            'process.env.EMAILJS_TEMPLATE_ID',       // Template ID
+            {
+                name: formData.name,
+                surname: formData.surname,
+                email: formData.email,
+                phone: formData.phone,
+                amount: formData.amount,
+                billing_address: formData.billing_address,
+                shipping_address: formData.shipping_address,
+                country: formData.country
+            },
+            'process.env.EMAILJS_PUBLIC_KEY'         // s Public Key
+        )
+            .then((result) => {
+                console.log('Email inviata con successo!', result.text);
+            })
+            .catch((error) => {
+                console.error('Errore nell\'invio dell\'email:', error);
+            });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        sendConfirmationEmail(); // Invia l'email di conferma
 
         axios.get(endpoint, formData)
             .then(response => {
