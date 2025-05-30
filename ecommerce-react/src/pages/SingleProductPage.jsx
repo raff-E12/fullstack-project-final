@@ -17,7 +17,7 @@ export default function SingleProductPage() {
         axios.get(endPoint)
             .then((res) => {
                 setProductSlug(res.data.products[0]);
-                console.log("Prodotto recuperato:", res.data.products[0]);
+                // console.log("Prodotto recuperato:", res.data.products[0]);
             })
             .catch((error) => {
                 console.error("Errore nel recupero del prodotto:", error);
@@ -32,6 +32,12 @@ export default function SingleProductPage() {
 
     return(<>
       <div className='container-xxl prod-sc d-flex'>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">Products</li>
+                <li class="breadcrumb-item" aria-current="page">{category_name}</li>
+            </ol>
+        </nav>
        {productSlug.length !== 0 ?  <div className='container-lg p-2 d-flex sections-prod'>
              <div className='prod-review'>
                 <p className='sale-prod'>{discount} %</p>
@@ -47,13 +53,13 @@ export default function SingleProductPage() {
                </div>
                <div className='extra-prod'>
                     <h5>Descrizione:</h5>
-                    <p>{fabric}</p>
-                    <p>{category_name}</p>
                     <p>{description}</p>
                </div>
                 <button className='btn-prod' onClick={() => addToCart(productSlug)}> Aggiungi al carrello </button>
             </div>
         </div> :  <div className='container-lg p-2 d-flex sections-prod'> <b>Loading...</b> </div>}
+        <div className='desc-prod'>
+        </div>
       </div>
     </>)
 
