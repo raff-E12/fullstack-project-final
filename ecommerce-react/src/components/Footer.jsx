@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import Newsletter from "./Newsletter";
 
 export default function Footer() {
   return (
@@ -101,24 +102,8 @@ export default function Footer() {
 
           {/* DESTRA: Subscribe + Follow Us */}
           <div className="col-12 col-md-6">
-            <div className="mb-4">
-              <h5 className="mb-3">Subscribe</h5>
-              <p className="mb-3">
-                Ricevi uno sconto del 10% iscrivendoti alla newsletter
-              </p>
-              <div className="input-group mb-3">
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="Inserisci la tua email qui per uno sconto del 10%"
-                  aria-label="Email"
-                />
-                <button className="btn btn-primary" type="button">
-                  <i className="bi bi-envelope me-1"></i>Iscriviti
-                </button>
-              </div>
-            </div>
 
+            <Newsletter />
             <div>
               <h5 className="mb-3">Follow Us</h5>
               <div className="d-flex gap-3">
