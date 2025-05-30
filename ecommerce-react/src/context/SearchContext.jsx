@@ -6,10 +6,9 @@ const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
 
-    const [isSearchActive, setSearchActive] = useState(false);
-    const [isSearchBarActive, setSearchBarActive] = useState(false);
+   const [searchTerm, setSearchTerm] = useState("");
 
-    return <SearchContext.Provider value={{ isSearchActive, setSearchActive, isSearchBarActive, setSearchBarActive }}>
+    return <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
 
         {children}
     </SearchContext.Provider>

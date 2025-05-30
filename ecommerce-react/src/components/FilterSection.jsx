@@ -1,13 +1,9 @@
 // FilterSection.jsx
 import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../style/FilterSection.css";
 
-export default function FilterSection({
-  handleSubmit,
-  defaultProducts,
-  isSearchBarActive,
-}) {
-  const [searchTerm, setSearchTerm] = useState("");
+export default function FilterSection({ defaultProducts }) {
   const [order, setOrder] = useState("");
   const [brandFilter, setBrandFilter] = useState("");
   const [fabricFilter, setFabricFilter] = useState("");
@@ -16,6 +12,9 @@ export default function FilterSection({
   const [maxPrice, setMaxPrice] = useState("");
   const [isFilterVisible, setFilterVisible] = useState(false);
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const uniqueBrands = [
     ...new Set(defaultProducts.map((product) => product.brand)),
   ];
@@ -23,60 +22,101 @@ export default function FilterSection({
     ...new Set(defaultProducts.map((product) => product.fabric)),
   ];
 
-  const buildSearchParams = () => {
-    return {
-      q: searchTerm,
-      sort_by: order,
-      brand: brandFilter,
-      fabric: fabricFilter,
-      discount: discountChecked,
-      min_price: minPrice,
-      max_price: maxPrice,
-    };
+  const updateUrlWithParams = (currentFilters) => {
+    const newQueryParams = new URLSearchParams(location.search);
+
+    const currentSearchTerm = newQueryParams.get('search');
+    newQueryParams.forEach((value, key) => {
+      if (key !== 'search') {
+        newQueryParams.delete(key);
+      }
+    });
+
+    if (currentFilters.order) {
+      newQueryParams.set('sort_by', currentFilters.order);
+    }
+    if (currentFilters.brand) {
+      newQueryParams.set('brand', currentFilters.brand);
+    }
+    if (currentFilters.fabric) {
+      newQueryParams.set('fabric', currentFilters.fabric);
+    }
+    if (currentFilters.discount) {
+      newQueryParams.set('discount', 'true');
+    }
+    if (currentFilters.minPrice) {
+      newQueryParams.set('min_price', currentFilters.minPrice);
+    }
+    if (currentFilters.maxPrice) {
+      newQueryParams.set('max_price', currentFilters.maxPrice);
+    }
+
+    if (currentSearchTerm && !newQueryParams.get('search')) {
+        newQueryParams.set('search', currentSearchTerm);
+    }
+
+    navigate(`?${newQueryParams.toString()}`);
   };
 
   useEffect(() => {
-    const params = buildSearchParams();
-    handleSubmit(params);
-  }, [searchTerm, order]);
+    const queryParams = new URLSearchParams(location.search);
+    setOrder(queryParams.get('sort_by') || "");
+    setBrandFilter(queryParams.get('brand') || "");
+    setFabricFilter(queryParams.get('fabric') || "");
+    setDiscountChecked(queryParams.get('discount') === 'true');
+    setMinPrice(queryParams.get('min_price') || "");
+    setMaxPrice(queryParams.get('max_price') || "");
+  }, [location.search]);
 
-  // const handleSearchSubmit = (event) => {
-  //   event.preventDefault();
-  //   const params = buildSearchParams();
-  //   handleSubmit(params);
-  // };
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    if (order !== (queryParams.get('sort_by') || "") || location.search === "") {
+        const currentFilters = {
+            order: order,
+            brand: brandFilter,
+            fabric: fabricFilter,
+            discount: discountChecked,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
+        };
+        updateUrlWithParams(currentFilters);
+    }
+  }, [order]);
 
   const handleApplyFilters = () => {
-    const params = buildSearchParams();
-    handleSubmit(params);
+    const currentFilters = {
+      order: order,
+      brand: brandFilter,
+      fabric: fabricFilter,
+      discount: discountChecked,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+    };
+    updateUrlWithParams(currentFilters);
   };
 
   const resetFilters = () => {
+    const newQueryParams = new URLSearchParams(location.search);
+    const currentSearch = newQueryParams.get('search');
+    const paramsToKeep = new URLSearchParams();
+    if (currentSearch) {
+        paramsToKeep.set('search', currentSearch);
+    }
+
     setBrandFilter("");
     setFabricFilter("");
     setDiscountChecked(false);
     setMinPrice("");
     setMaxPrice("");
-    setSearchTerm("");
     setOrder("");
+
+    navigate(`?${paramsToKeep.toString()}`);
   };
 
   return (
     <div className="filter-wrapper">
       <div className="container-fluid">
-        {/* Header */}
         <div className="filter-header">
-          <div className="search-section">
-            <input
-              className={`search-input ${isSearchBarActive ? "d-block" : "d-none d-md-block"
-                }`}
-              type="text"
-              placeholder="Cerca prodotti..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-
           <div className="controls-section">
             <select
               className="order-select"
@@ -101,7 +141,6 @@ export default function FilterSection({
           </div>
         </div>
 
-        {/* Pannello Filtri */}
         {isFilterVisible && (
           <div className="filter-panel">
             <div className="row g-3">
