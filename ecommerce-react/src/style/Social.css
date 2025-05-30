@@ -52,6 +52,8 @@
     margin-bottom: 0;
 }
 .social-card-subtitle a {
+    color: black;
+    text-decoration: none;
 font-size: 2rem;
 }
 
