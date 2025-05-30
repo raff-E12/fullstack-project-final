@@ -60,14 +60,20 @@ export default function SingleCategoryProductPage() {
                     <div className="alert alert-info">
                         Qui verranno mostrati tutti i prodotti della categoria "
                         {categoryName}"
-                        <div>
+                        <div className="row gy-4">
                             {products.map(({ id, name, description, price, image_url, slug }) => (
-                                <Link to={`/products/${slug}`} className="container" key={id}>
-                                    <h2>{name}</h2>
-                                    <p>{description}</p>
-                                    <p>Prezzo: €{price}</p>
-                                    <img className="img-product" src={image_url} alt={name} />
-                                </Link>
+                                <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={id} >
+                                    <Link to={`/products/${slug}`} className="text-decoration-none text-dark">
+                                        <div className="card h-100 shadow-sm">
+                                            <div className="card-body">
+                                                <h2>{name}</h2>
+                                                <p>{description}</p>
+                                                <p>Prezzo: €{price}</p>
+                                            </div>
+                                            <img className="card-img-bottom" src={image_url} alt={name} />
+                                        </div>
+                                    </Link>
+                                </div>
                             ))}
                         </div>
 
