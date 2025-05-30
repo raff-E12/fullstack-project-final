@@ -63,9 +63,9 @@ export default function ProductPage() {
         <div className="prod-cards">
           {products.length > 0 ? (
             products.map(
-              ({ id, name, description, price, image_url, slug }) => (
+              ({ id, name, description, price, image_url, slug, discount }) => (
                 <div className="cards" key={id}>
-                  <div className="sale">sale%</div>
+                  <div className={discount ? "sale" : "d-none"}>sale%</div>
                   <Link to={`/products/${slug}`}>
                     <div
                       className="img-card"
