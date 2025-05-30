@@ -28,7 +28,7 @@ export default function SingleProductPage() {
         getProductsSlug();
     }, []);
 
-    const { name, description, price, image_url, fabric, discount, category_name, start_discount, end_discount } = productSlug;
+    const { name, description, price, image_url, fabric, discount, category_name, start_discount, end_discount, sku_order_code, brand } = productSlug;
 
     return(<>
       <div className='container-xxl prod-sc d-flex'>
@@ -59,6 +59,25 @@ export default function SingleProductPage() {
             </div>
         </div> :  <div className='container-lg p-2 d-flex sections-prod'> <b>Loading...</b> </div>}
         <div className='desc-prod'>
+            <div className='box-desc review'>
+               <div className='review-number rv-number'>
+                    <h2 id='percents-rv'>4.3</h2>
+                    <a id='links-hovering'><p>Vedi le recensioni <i class="bi bi-arrow-right-short"></i></p></a>
+               </div>
+               <div className='review-number rv-parph'>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et commodo ex. 
+                        In consequat ac lacus ut semper, interdum ac orci.</p>
+               </div>
+            </div>
+              <div className='box-desc desc'>
+                <div className='list-desc'>
+                    <ul>
+                        <li><p><b>Sku:</b> {sku_order_code}</p></li>
+                        <li><p><b>Material: </b>{fabric}</p></li>
+                        <li><p><b>Brand:</b> {brand}</p></li>
+                    </ul>
+                </div>
+            </div>
         </div>
       </div>
     </>)
