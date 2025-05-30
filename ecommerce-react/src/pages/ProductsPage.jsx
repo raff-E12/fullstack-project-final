@@ -63,24 +63,49 @@ export default function ProductPage() {
         <div className="prod-cards">
           {products.length > 0 ? (
             products.map(
-              ({ id, name, description, price, image_url, slug, discount }) => (
-                <div className="cards" key={id}>
-                  <div className={discount ? "sale" : "d-none"}>sale%</div>
-                  <Link to={`/products/${slug}`}>
-                    <div
-                      className="img-card"
-                      style={{ backgroundImage: `url(${image_url})` }}
-                    ></div>
-                    <div className="text-cards">
-                      <h2>{name}</h2>
-                      <p>{description}</p>
-                      <p>
-                        <b>Prezzo:</b> €{price}
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-              )
+              ({
+                id,
+                name,
+                description,
+                price,
+                image_url,
+                slug,
+                discount,
+                start_discount,
+                end_discount,
+              }) => {
+                const today = new Date();
+
+                const start = start_discount ? new Date(start_discount) : null;
+                const end = end_discount ? new Date(end_discount) : null;
+
+                // instanceof è un operatore che serve a verificare se un oggetto è un’istanza di una certa classe o costruttore.
+                const isDiscountActive =
+                  discount &&
+                  start instanceof Date &&
+                  end instanceof Date &&
+                  today >= start &&
+                  today <= end;
+
+                return (
+                  <div className="cards" key={id}>
+                    <div className={isDiscountActive ? "sale" : "d-none"}>sale%</div>
+                    <Link to={`/products/${slug}`}>
+                      <div
+                        className="img-card"
+                        style={{ backgroundImage: `url(${image_url})` }}
+                      ></div>
+                      <div className="text-cards">
+                        <h2>{name}</h2>
+                        <p>{description}</p>
+                        <p>
+                          <b>Prezzo:</b> €{price}
+                        </p>
+                      </div>
+                    </Link>
+                  </div>
+                );
+              }
             )
           ) : (
             <p>Nessun prodotto trovato.</p>

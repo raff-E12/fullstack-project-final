@@ -28,7 +28,7 @@ export default function SingleProductPage() {
         getProductsSlug();
     }, []);
 
-    const { name, description, price, image_url, fabric, discount, category_name } = productSlug;
+    const { name, description, price, image_url, fabric, discount, category_name, start_discount, end_discount } = productSlug;
 
     return(<>
       <div className='container-xxl prod-sc d-flex'>

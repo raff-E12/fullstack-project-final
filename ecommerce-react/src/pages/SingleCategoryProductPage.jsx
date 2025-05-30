@@ -1,7 +1,7 @@
 import { useParams, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
+import { PremiumCard } from "../components/PremiumCard";
 
 export default function SingleCategoryProductPage() {
     const { categorySlug } = useParams();
@@ -60,14 +60,11 @@ export default function SingleCategoryProductPage() {
                     <div className="alert alert-info">
                         Qui verranno mostrati tutti i prodotti della categoria "
                         {categoryName}"
-                        <div>
-                            {products.map(({ id, name, description, price, image_url, slug }) => (
-                                <Link to={`/products/${slug}`} className="container" key={id}>
-                                    <h2>{name}</h2>
-                                    <p>{description}</p>
-                                    <p>Prezzo: €{price}</p>
-                                    <img className="img-product" src={image_url} alt={name} />
-                                </Link>
+                        <div className="row g-4">
+                            {products.map((product) => (
+                                <div className="col-12  col-md-6 col-lg-4" key={product.slug} >
+                                    <PremiumCard product={product} />
+                                </div>
                             ))}
                         </div>
 
