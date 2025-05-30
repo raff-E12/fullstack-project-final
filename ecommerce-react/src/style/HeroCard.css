@@ -15,3 +15,24 @@ img {
 .text-justify {
     text-align: justify;
 }
+
+.img-bg-1th {
+    height: 620px;
+    background-image: url(../assets/imgs/streetwear-category.jpg);
+    background-position: center;
+    background-size: cover;
+
+}
+
+.img-bg-2th {
+    background-image: url(../assets/imgs/hoodies-category.jpg);
+    background-position: top;
+    background-size: cover;
+}
+
+.img-bg-3th {
+    background-image: url(../assets/imgs/shoes-category.jpg);
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,117 @@
+.premium-card {
+    text-decoration: none;
+    color: inherit;
+}
+
+.premium-card:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.premium-card .card {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    border: none;
+}
+
+.premium-card:hover .card {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.premium-card-image-container {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+    background: #f8f9fa;
+}
+
+.premium-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.premium-card:hover .premium-card-image {
+    transform: scale(1.05);
+}
+
+.premium-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.premium-card:hover .premium-card-overlay {
+    opacity: 1;
+}
+
+.premium-card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.premium-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.premium-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.premium-card-description {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex-grow: 1;
+}
+
+.premium-card-price-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.premium-card-price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.premium-card-button {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.premium-card-button:hover {
+    background: #000000;
+    color: white;
+}

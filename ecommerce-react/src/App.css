@@ -1,6 +1,19 @@
 
 /***** Css Webpage *****/ 
 
+
+
+h1,h2,h3,h4,h5{
+    font-family: Parkinsans;
+}
+
+
+p{
+    font-family: var(--font-lato);
+}
+
+
+
 :root{
     --default-color: #8C5C51;
     --font-poppins: "Poppins", sans-serif;
