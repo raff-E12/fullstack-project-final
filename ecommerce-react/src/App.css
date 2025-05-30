@@ -120,7 +120,7 @@ p{
 
 .prod-sc{
     padding: 90px;
-    height: 120vh;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
 }
