@@ -1,19 +1,25 @@
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckOutForm from "../components/CheckOutForm";
+
+const endPointDiscount = "http://localhost:3000/checkout/discount-code"
 
 export default function CartPage() {
   const { cartItems } = useCart();
   const [discountCode, setDiscountCode] = useState("");
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+  const [validPromo, setValidPromo] = useState(false);
+  const [appliedPromoPercentage, setAppliedPromoPercentage] = useState(0);
+  const [promoMessage, setPromoMessage] = useState("");
 
   let subtotal = 0;
   const shippingCost = 5.99;
   const today = new Date();
 
-  // Calcolo subtotale
+
   for (let i = 0; i < cartItems.length; i++) {
     const element = cartItems[i];
     const price = parseFloat(element.price);
@@ -32,24 +38,61 @@ export default function CartPage() {
     subtotal += finalPrice * quantity;
   }
 
-  const total = subtotal + (cartItems.length > 0 ? shippingCost : 0);
+  let total = subtotal + (cartItems.length > 0 ? shippingCost : 0);
+  if (validPromo && appliedPromoPercentage > 0) {
+    total -= (total * appliedPromoPercentage) / 100;
+  }
 
   const handleDiscountSubmit = (e) => {
     e.preventDefault();
-    console.log("Codice sconto inserito:", discountCode);
+    setPromoMessage("Verifica codice..."); 
+
+    axios.get(endPointDiscount)
+      .then((res) => {
+        const fetchedPromos = res.data.promos;
+
+
+        const foundPromo = fetchedPromos.find(
+          (promo) =>
+            promo.code === discountCode &&
+            promo.is_valid === 1 && 
+            new Date(promo.start_discount) <= today && 
+            new Date(promo.end_discount) >= today   
+        );
+
+        if (foundPromo) {
+          
+          const discountValue = parseFloat(foundPromo.discount); 
+
+          if (!isNaN(discountValue)) {
+            setValidPromo(true);
+            setAppliedPromoPercentage(discountValue);
+            setPromoMessage("Codice sconto applicato!");
+          } else {
+     
+            setValidPromo(false);
+            setAppliedPromoPercentage(0);
+            setPromoMessage("Errore: valore sconto della promo non valido.");
+          }
+        } else {
+    
+          setValidPromo(false);
+          setAppliedPromoPercentage(0);
+          setPromoMessage("Codice sconto non valido o scaduto.");
+        }
+      })
+      .catch((err) => {
+        console.error("Errore nel recupero dei codici sconto:", err);
+        setValidPromo(false);
+        setAppliedPromoPercentage(0);
+        setPromoMessage("Errore nella verifica del codice.");
+      });
   };
 
   const handleCheckoutSuccess = (orderData) => {
-    // Gestisci il successo dell'ordine
+   
     console.log("Ordine completato:", orderData);
-
-    // Potresti voler:
-    // - Svuotare il carrello
-    // - Mostrare un messaggio di successo
-    // - Reindirizzare a una pagina di conferma
-
     setShowCheckoutForm(false);
-    // Esempio: alert("Ordine completato con successo!");
   };
 
   const handleCheckoutCancel = () => {
@@ -84,7 +127,7 @@ export default function CartPage() {
         </div>
       ) : (
         <div className="row">
-          {/* Lista prodotti */}
+          
           <div className="col-lg-8">
             <div className="card shadow-sm">
               <div className="card-body p-0">
@@ -93,11 +136,12 @@ export default function CartPage() {
                   const quantity = parseInt(item.quantity);
                   const start = new Date(item.start_discount);
                   const end = new Date(item.end_discount);
+                  const isValid =item.is_valid
 
                   let finalPrice = price;
                   let hasDiscount = false;
 
-                  if (today >= start && today <= end) {
+                  if (isValid === 1 && today >= start && today <= end) {
                     const discount = parseFloat(item.discount);
                     finalPrice = price - (price * discount) / 100;
                     hasDiscount = true;
@@ -107,7 +151,7 @@ export default function CartPage() {
                     <div key={index}>
                       <div className="p-4">
                         <div className="row align-items-center">
-                          {/* Immagine prodotto */}
+                        
                           <div className="col-md-3 col-4 mb-3 mb-md-0">
                             <img
                               src={item.image_url}
@@ -121,7 +165,7 @@ export default function CartPage() {
                             />
                           </div>
 
-                          {/* Dettagli prodotto */}
+                         
                           <div className="col-md-5 col-8">
                             <Link
                               to={`/products/${item.slug}`}
@@ -146,7 +190,7 @@ export default function CartPage() {
                             </div>
                           </div>
 
-                          {/* Prezzo */}
+                   
                           <div className="col-md-4 col-12 text-md-end mt-3 mt-md-0">
                             {hasDiscount ? (
                               <div>
@@ -181,7 +225,6 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* Riepilogo ordine con form checkout */}
           <div className="col-lg-4 mt-4 mt-lg-0">
             <div className="card shadow-sm" style={{ top: "20px" }}>
               <div className="card-header bg-light">
@@ -192,7 +235,7 @@ export default function CartPage() {
               <div className="card-body">
                 {!showCheckoutForm ? (
                   <>
-                    {/* Subtotale */}
+                 
                     <div className="d-flex justify-content-between mb-2">
                       <span>Subtotale prodotti:</span>
                       <span>€{subtotal.toFixed(2)}</span>
@@ -204,15 +247,24 @@ export default function CartPage() {
                       <span>€{shippingCost.toFixed(2)}</span>
                     </div>
 
+         
+                    {validPromo && appliedPromoPercentage > 0 && (
+                        <div className="d-flex justify-content-between mb-2 text-success fw-bold">
+                            <span>Sconto promo:</span>
+                            {/* Formula corretta per mostrare l'importo dello sconto */}
+                            <span>-€{(subtotal * appliedPromoPercentage / 100).toFixed(2)}</span>
+                        </div>
+                    )}
+
                     <hr />
 
-                    {/* Totale */}
+             
                     <div className="d-flex justify-content-between mb-4">
                       <span className="h5 fw-bold">Totale:</span>
                       <span className="h5 fw-bold">€{total.toFixed(2)}</span>
                     </div>
 
-                    {/* Form codice sconto */}
+   
                     <div className="mb-4">
                       <label className="form-label small fw-semibold">
                         Codice Sconto
@@ -233,10 +285,16 @@ export default function CartPage() {
                             Applica
                           </button>
                         </div>
+                       
+                        {promoMessage && (
+                          <small className={`form-text ${validPromo ? "text-success" : "text-danger"}`}>
+                            {promoMessage}
+                          </small>
+                        )}
                       </form>
                     </div>
 
-                    {/* Pulsante checkout */}
+             
                     <div className="d-grid">
                       <button
                         onClick={() => setShowCheckoutForm(true)}
@@ -246,7 +304,7 @@ export default function CartPage() {
                       </button>
                     </div>
 
-                    {/* Link continua shopping */}
+
                     <div className="text-center mt-3">
                       <Link
                         to="/products"

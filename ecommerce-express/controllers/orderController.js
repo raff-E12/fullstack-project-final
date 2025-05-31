@@ -1,22 +1,7 @@
 const countries = require("../data/countries")
 const validator = require("validator")
 const connection = require("../data/db");
-const validationCheckoutProcess = require("../middlewares/validationCheckoutProcess");
 const slugify = require("slugify");
-
-// const index = (req, res) => {
-//   const sql = "SELECT * FROM orders";
-//   connection.query(sql, (error, result) => {
-//     if (error) {
-//       return res.status(500).json({ msg: "Errore del database", code: 500 });
-//     }
-//     if (result.length === 0) {
-//       return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
-//     }
-//     return res.status(200).json({ msg: "Benvenuto nell' API di Orders", code: 200, orders: result });
-//   })
-// }
-
 
 const show = (req, res) => {
   const { slug } = req.params;
@@ -100,15 +85,27 @@ const checkoutProcess = (req, res) => {
 
 }
 
-const checkoutComplete = () => {
-  // update dell'ordine: cambio status ordine, prezzo, metodo di pagamento
-  // post order_product: tutti i prodotti ordinati
-  // Invio email
+const indexDiscountCode = (req, res)=>{
+  const dicountCodeSql = `SELECT * 
+  FROM promos`
+
+ connection.query(dicountCodeSql, (error, result) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).json({ msg: "Errore del database", code: 500 });
+          }
+          if (result.affectedRows === 0) {
+            return res.status(404).json({ msg: "Non è stato possibile aggiornare lo slug dell'ordine", code: 404 });
+          }
+
+          return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, promos: result });
+        }
+        )
+
 }
 
 module.exports = {
-  // index,
   show,
   checkoutProcess,
-  checkoutComplete
+  indexDiscountCode
 }
