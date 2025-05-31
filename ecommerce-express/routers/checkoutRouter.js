@@ -5,7 +5,7 @@ const validationCustomerUpdate = require("../middlewares/validationCustomerUpdat
 const express = require("express");
 const router = express.Router();
 
-
-router.post("/", validationCheckoutProcess, checkoutProcess);
 router.get("/discount-code", indexDiscountCode);
+router.post("/", validationCheckoutProcess, checkoutProcess);
+
 module.exports = router;

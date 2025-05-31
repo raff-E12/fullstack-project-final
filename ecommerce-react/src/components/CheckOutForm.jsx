@@ -2,15 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import emailjs from "@emailjs/browser";
 
-export default function CheckOutForm({ amount, onSuccess, onCancel }) {
-  const endpoint = "http://localhost:3000/checkout";
-
+export default function CheckOutForm({ amount, onCancel, cartItems }) {
+  console.log(cartItems, "cart Items in CheckoutFOrm")
+  const endpoint = "http://localhost:3000/checkout/";
   const standardFormData = {
     name: "",
     surname: "",
     email: "",
     phone: "",
-    amount: amount,
     billing_address: "",
     shipping_address: "",
     country: "",
@@ -52,28 +51,17 @@ export default function CheckOutForm({ amount, onSuccess, onCancel }) {
   //     });
   // };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    console.log({formData, amount, cartItems})
+    axios.post(endpoint, {formData, amount, cartItems})
+    .then(res=> console.log(res))
+    .catch(err=>console.log(err));
 
-    try {
       // sendConfirmationEmail();
 
-      const response = await axios.post(endpoint, formData);
-      console.log("Ordine inviato con successo:", response.data);
-
-      setFormData(standardFormData);
-
-      // Callback per notificare il successo al componente padre
-      if (onSuccess) {
-        onSuccess(response.data);
-      }
-    } catch (error) {
-      console.error("Errore nell'invio dell'ordine:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit}>

@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
@@ -9,6 +8,7 @@ const endPointDiscount = "http://localhost:3000/checkout/discount-code"
 
 export default function CartPage() {
   const { cartItems } = useCart();
+   console.log(cartItems, "cart Items in Cart Page")
   const [discountCode, setDiscountCode] = useState("");
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [validPromo, setValidPromo] = useState(false);
@@ -98,6 +98,10 @@ export default function CartPage() {
   const handleCheckoutCancel = () => {
     setShowCheckoutForm(false);
   };
+
+  useEffect(()=>{
+    return console.log(cartItems)
+  }, [])
 
   return (
     <div className="container py-4">

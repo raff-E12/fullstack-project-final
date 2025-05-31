@@ -19,7 +19,8 @@ const show = (req, res) => {
 
 const checkoutProcess = (req, res) => {
 
-  const { name, surname, email, billing_address, shipping_address, phone, country, amount } = req.body;
+  const { formData, amount, cartItems } = req.body;
+  const {name, surname, email, billing_address, shipping_address, phone, country} = formData
   console.log(req.body);
   const sql = "INSERT INTO customers (`name`, `surname`, `email`, `billing_address`, `shipping_address`, `phone`, `country`) VALUES (?, ?, ?, ?, ?, ?, ?);"
 

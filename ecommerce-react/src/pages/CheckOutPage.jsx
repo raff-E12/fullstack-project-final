@@ -4,6 +4,7 @@ import CheckOutForm from "../components/CheckOutForm";
 
 export default function CheckOutPage() {
     const { cartItems } = useCart();
+    console.log(cartItems, "cart Items in Checkout Page")
     const today = new Date();
 
     const calculateFinalPrice = (item) => {
@@ -103,7 +104,7 @@ export default function CheckOutPage() {
                         </form> */}
                         {/* FORM */}
                         <div>
-                            <CheckOutForm amount={totalOrder} />
+                            <CheckOutForm amount={totalOrder} cartItems={cartItems} />
                         </div>
                     </div>
                 </>
