@@ -45,7 +45,7 @@ export default function SingleCategoryProductPage() {
                         <span className="invisible">.</span>
                     </div>
                     <h1 className="mt-5">{categoryName}</h1>
-                    <p> Stile senza tempo, comfort assoluto! 🌟 Scopri la nostra esclusiva      selezione di Polo & T-Shirt, perfette per ogni occasione. Dai un tocco di classe al tuo look con una polo elegante o scegli la freschezza di una t-shirt dal design unico. Qualità, tendenza e versatilità si incontrano per offrirti il meglio della moda casual. Esprimi la tua personalità con i nostri capi, pensati per chi non rinuncia mai allo stile! </p>
+                    <p> Eleganza, comfort e qualità in ogni dettaglio, Scopri la nostra selezione esclusiva di capi pensati per accompagnarti in ogni momento della giornata. Dal casual all’elegante, ogni prodotto è realizzato con materiali di alta qualità per offrirti il massimo dello stile e della comodità. Scegli ciò che meglio esprime la tua personalità e rendi unico il tuo look con le ultime tendenze della moda </p>
 
                     <hr />
 
