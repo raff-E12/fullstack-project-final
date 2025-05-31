@@ -40,6 +40,10 @@ export default function SingleCategoryProductPage() {
         <div className="container mt-4 mb-5">
             <div className="row">
                 <div className="col-12">
+
+                    <div className="mb-5">
+                        <span className="invisible">.</span>
+                    </div>
                     <h1 className="mt-5">{categoryName}</h1>
                     <p> Stile senza tempo, comfort assoluto! 🌟 Scopri la nostra esclusiva      selezione di Polo & T-Shirt, perfette per ogni occasione. Dai un tocco di classe al tuo look con una polo elegante o scegli la freschezza di una t-shirt dal design unico. Qualità, tendenza e versatilità si incontrano per offrirti il meglio della moda casual. Esprimi la tua personalità con i nostri capi, pensati per chi non rinuncia mai allo stile! </p>
 
