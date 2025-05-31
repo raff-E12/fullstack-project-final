@@ -57,7 +57,7 @@ export default function CheckOutForm({ amount }) {
 
         sendConfirmationEmail(); // Invia l'email di conferma
 
-        axios.get(endpoint, formData)
+        axios.post(endpoint, formData)
             .then(response => {
                 setFormData(standardFormData); // Reset form data
                 console.log("Ordine inviato con successo:", response.data);
