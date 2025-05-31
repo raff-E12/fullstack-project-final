@@ -1,5 +1,6 @@
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
+import CheckOutForm from "../components/CheckoutForm";
 
 export default function CheckOutPage() {
     const { cartItems } = useCart();
@@ -100,8 +101,10 @@ export default function CheckOutPage() {
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form> */}
-
-                        <p><Link to="/login">Accedi</Link></p>
+                        {/* FORM */}
+                        <div>
+                            <CheckOutForm amount={totalOrder} />
+                        </div>
                     </div>
                 </>
             )}
