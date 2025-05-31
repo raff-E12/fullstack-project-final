@@ -2,13 +2,15 @@ import { NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import CheckOutForm from "../components/CheckOutForm"; // Importa il componente
 
 export default function CartPage() {
   const { cartItems } = useCart();
   const [discountCode, setDiscountCode] = useState("");
+  const [showCheckoutForm, setShowCheckoutForm] = useState(false);
 
   let subtotal = 0;
-  const shippingCost = 5.99; // Costo spedizione fisso
+  const shippingCost = 5.99;
   const today = new Date();
 
   // Calcolo subtotale
@@ -30,13 +32,28 @@ export default function CartPage() {
     subtotal += finalPrice * quantity;
   }
 
-  // Calcolo totale finale
   const total = subtotal + (cartItems.length > 0 ? shippingCost : 0);
 
   const handleDiscountSubmit = (e) => {
     e.preventDefault();
-    // TODO: Implementare logica codice sconto con backend
     console.log("Codice sconto inserito:", discountCode);
+  };
+
+  const handleCheckoutSuccess = (orderData) => {
+    // Gestisci il successo dell'ordine
+    console.log("Ordine completato:", orderData);
+
+    // Potresti voler:
+    // - Svuotare il carrello
+    // - Mostrare un messaggio di successo
+    // - Reindirizzare a una pagina di conferma
+
+    setShowCheckoutForm(false);
+    // Esempio: alert("Ordine completato con successo!");
+  };
+
+  const handleCheckoutCancel = () => {
+    setShowCheckoutForm(false);
   };
 
   return (
@@ -164,73 +181,89 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* Riepilogo ordine */}
+          {/* Riepilogo ordine con form checkout */}
           <div className="col-lg-4 mt-4 mt-lg-0">
             <div className="card shadow-sm" style={{ top: "20px" }}>
               <div className="card-header bg-light">
-                <h5 className="fw-bold mb-0">Riepilogo Ordine</h5>
+                <h5 className="fw-bold mb-0">
+                  {showCheckoutForm ? "Checkout" : "Riepilogo Ordine"}
+                </h5>
               </div>
               <div className="card-body">
-                {/* Subtotale */}
-                <div className="d-flex justify-content-between mb-2">
-                  <span>Subtotale prodotti:</span>
-                  <span>€{subtotal.toFixed(2)}</span>
-                </div>
+                {!showCheckoutForm ? (
+                  <>
+                    {/* Subtotale */}
+                    <div className="d-flex justify-content-between mb-2">
+                      <span>Subtotale prodotti:</span>
+                      <span>€{subtotal.toFixed(2)}</span>
+                    </div>
 
-                {/* Spedizione */}
-                <div className="d-flex justify-content-between mb-2">
-                  <span>Spedizione:</span>
-                  <span>€{shippingCost.toFixed(2)}</span>
-                </div>
+                    {/* Spedizione */}
+                    <div className="d-flex justify-content-between mb-2">
+                      <span>Spedizione:</span>
+                      <span>€{shippingCost.toFixed(2)}</span>
+                    </div>
 
-                <hr />
+                    <hr />
 
-                {/* Totale */}
-                <div className="d-flex justify-content-between mb-4">
-                  <span className="h5 fw-bold">Totale:</span>
-                  <span className="h5 fw-bold">€{total.toFixed(2)}</span>
-                </div>
+                    {/* Totale */}
+                    <div className="d-flex justify-content-between mb-4">
+                      <span className="h5 fw-bold">Totale:</span>
+                      <span className="h5 fw-bold">€{total.toFixed(2)}</span>
+                    </div>
 
-                {/* Form codice sconto */}
-                <div className="mb-4">
-                  <label className="form-label small fw-semibold">
-                    Codice Sconto
-                  </label>
-                  <form onSubmit={handleDiscountSubmit}>
-                    <div className="input-group mb-2">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Inserisci codice"
-                        value={discountCode}
-                        onChange={(e) => setDiscountCode(e.target.value)}
-                      />
+                    {/* Form codice sconto */}
+                    <div className="mb-4">
+                      <label className="form-label small fw-semibold">
+                        Codice Sconto
+                      </label>
+                      <form onSubmit={handleDiscountSubmit}>
+                        <div className="input-group mb-2">
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Inserisci codice"
+                            value={discountCode}
+                            onChange={(e) => setDiscountCode(e.target.value)}
+                          />
+                          <button
+                            className="btn btn-outline-secondary"
+                            type="submit"
+                          >
+                            Applica
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
+                    {/* Pulsante checkout */}
+                    <div className="d-grid">
                       <button
-                        className="btn btn-outline-secondary"
-                        type="submit"
+                        onClick={() => setShowCheckoutForm(true)}
+                        className="btn btn-primary btn-lg"
                       >
-                        Applica
+                        Procedi al Checkout
                       </button>
                     </div>
-                  </form>
-                </div>
 
-                {/* Pulsante checkout */}
-                <div className="d-grid">
-                  <Link to="/checkout" className="btn btn-primary btn-lg">
-                    Procedi al Checkout
-                  </Link>
-                </div>
-
-                {/* Link continua shopping */}
-                <div className="text-center mt-3">
-                  <Link
-                    to="/products"
-                    className="text-decoration-none small text-dark"
-                  >
-                    ← Continua lo Shopping
-                  </Link>
-                </div>
+                    {/* Link continua shopping */}
+                    <div className="text-center mt-3">
+                      <Link
+                        to="/products"
+                        className="text-decoration-none small text-dark"
+                      >
+                        ← Continua lo Shopping
+                      </Link>
+                    </div>
+                  </>
+                ) : (
+                  // Utilizzo del componente CheckOutForm
+                  <CheckOutForm
+                    amount={total}
+                    onSuccess={handleCheckoutSuccess}
+                    onCancel={handleCheckoutCancel}
+                  />
+                )}
               </div>
             </div>
           </div>
