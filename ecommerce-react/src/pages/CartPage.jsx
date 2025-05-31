@@ -1,83 +1,241 @@
 import { NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import CheckOutPage from "../pages/CheckOutPage";
-
+import { useState } from "react";
 
 export default function CartPage() {
-    const { cartItems } = useCart();
+  const { cartItems } = useCart();
+  const [discountCode, setDiscountCode] = useState("");
 
-    let totalPrice = 0;
+  let subtotal = 0;
+  const shippingCost = 5.99; // Costo spedizione fisso
+  const today = new Date();
 
-    const today = new Date();
+  // Calcolo subtotale
+  for (let i = 0; i < cartItems.length; i++) {
+    const element = cartItems[i];
+    const price = parseFloat(element.price);
+    const quantity = parseInt(element.quantity);
 
-    for (let i = 0; i < cartItems.length; i++) {
-        const element = cartItems[i];
-        const price = parseFloat(element.price);
-        const quantity = parseInt(element.quantity);
+    const start = new Date(element.start_discount);
+    const end = new Date(element.end_discount);
 
-        const start = new Date(element.start_discount);
-        const end = new Date(element.end_discount);
+    let finalPrice = price;
 
-        let finalPrice = price;
-
-        if (today >= start && today <= end) {
-            const discount = parseFloat(element.discount);
-            finalPrice = price - (price * discount / 100);
-            console.log(`Sconto applicato: ${discount}% su ${element.name}`);
-        }
-
-        totalPrice += finalPrice * quantity;
+    if (today >= start && today <= end) {
+      const discount = parseFloat(element.discount);
+      finalPrice = price - (price * discount) / 100;
     }
 
-    return (
-        <div>
-            <h1>Carrello</h1>
-            {cartItems.length === 0 ? (
-                <p>Il carrello è vuoto.</p>
-            ) : (
-                cartItems.map((item, index) => {
-                    const price = parseFloat(item.price);
-                    const quantity = parseInt(item.quantity);
-                    const start = new Date(item.start_discount);
-                    const end = new Date(item.end_discount);
+    subtotal += finalPrice * quantity;
+  }
 
-                    let finalPrice = price;
-                    let hasDiscount = false;
+  // Calcolo totale finale
+  const total = subtotal + (cartItems.length > 0 ? shippingCost : 0);
 
-                    if (today >= start && today <= end) {
-                        const discount = parseFloat(item.discount);
-                        finalPrice = price - (price * discount / 100);
-                        hasDiscount = true;
-                    }
+  const handleDiscountSubmit = (e) => {
+    e.preventDefault();
+    // TODO: Implementare logica codice sconto con backend
+    console.log("Codice sconto inserito:", discountCode);
+  };
 
-                    return (
-                        <div key={index}>
-                            <h2>{item.name}</h2>
-                            <p>{item.description}</p>
-                            {hasDiscount ? (
-                                <>
-                                    <p>
-                                        Prezzo originale: <s>€{price.toFixed(2)}</s>
-                                    </p>
-                                    <p>
-                                        Prezzo scontato: <strong>€{finalPrice.toFixed(2)}</strong>
-                                    </p>
-                                    <p>Sconto: {item.discount}%</p>
-                                </>
-                            ) : (
-                                <p>Prezzo: €{price.toFixed(2)}</p>
-                            )}
-                            <p>Quantità: {quantity}</p>
-                            <img className="img-product" src={item.image_url} alt={item.name} />
-                        </div>
-                    );
-                })
-            )}
-            <div className="text-end mt-4">
-                <h3>Totale: €{totalPrice.toFixed(2)}</h3>
-            </div>
-            <Link to="/checkout"><button>Procedi al checkout</button></Link>
+  return (
+    <div className="container py-4">
+      {/* Header */}
+      <div className="row mb-4">
+        <div className="col-12">
+          <h1 className="h2 fw-bold text-center text-md-start">
+            Il tuo Carrello
+          </h1>
         </div>
-    );
+      </div>
+
+      {cartItems.length === 0 ? (
+        <div className="row">
+          <div className="col-12 text-center py-5">
+            <div className="mb-4">
+              <i className="bi bi-cart-x display-1 text-muted"></i>
+            </div>
+            <h3 className="text-muted mb-3">Il carrello è vuoto</h3>
+            <p className="text-muted mb-4">
+              Aggiungi alcuni prodotti per iniziare
+            </p>
+            <Link to="/products" className="btn btn-primary btn-lg">
+              Continua lo Shopping
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <div className="row">
+          {/* Lista prodotti */}
+          <div className="col-lg-8">
+            <div className="card shadow-sm">
+              <div className="card-body p-0">
+                {cartItems.map((item, index) => {
+                  const price = parseFloat(item.price);
+                  const quantity = parseInt(item.quantity);
+                  const start = new Date(item.start_discount);
+                  const end = new Date(item.end_discount);
+
+                  let finalPrice = price;
+                  let hasDiscount = false;
+
+                  if (today >= start && today <= end) {
+                    const discount = parseFloat(item.discount);
+                    finalPrice = price - (price * discount) / 100;
+                    hasDiscount = true;
+                  }
+
+                  return (
+                    <div key={index}>
+                      <div className="p-4">
+                        <div className="row align-items-center">
+                          {/* Immagine prodotto */}
+                          <div className="col-md-3 col-4 mb-3 mb-md-0">
+                            <img
+                              src={item.image_url}
+                              alt={item.name}
+                              className="img-fluid rounded"
+                              style={{
+                                maxHeight: "120px",
+                                objectFit: "cover",
+                                width: "100%",
+                              }}
+                            />
+                          </div>
+
+                          {/* Dettagli prodotto */}
+                          <div className="col-md-5 col-8">
+                            <Link
+                              to={`/products/${item.slug}`}
+                              className="text-decoration-none text-dark"
+                            >
+                              <h5 className="fw-bold mb-2 text-dark">
+                                {item.name}
+                              </h5>
+                              <p className="text-muted small mb-2">
+                                {item.description}
+                              </p>
+                            </Link>
+                            <div className="d-flex align-items-center">
+                              <span className="badge bg-light text-dark border">
+                                Qty: {quantity}
+                              </span>
+                              {hasDiscount && (
+                                <span className="badge bg-success ms-2">
+                                  -{item.discount}%
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Prezzo */}
+                          <div className="col-md-4 col-12 text-md-end mt-3 mt-md-0">
+                            {hasDiscount ? (
+                              <div>
+                                <div className="text-muted text-decoration-line-through small">
+                                  €{price.toFixed(2)}
+                                </div>
+                                <div className="h5 fw-bold text-success mb-0">
+                                  €{finalPrice.toFixed(2)}
+                                </div>
+                                <div className="small text-muted">
+                                  Totale: €{(finalPrice * quantity).toFixed(2)}
+                                </div>
+                              </div>
+                            ) : (
+                              <div>
+                                <div className="h5 fw-bold mb-0">
+                                  €{price.toFixed(2)}
+                                </div>
+                                <div className="small text-muted">
+                                  Totale: €{(price * quantity).toFixed(2)}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      {index < cartItems.length - 1 && <hr className="m-0" />}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Riepilogo ordine */}
+          <div className="col-lg-4 mt-4 mt-lg-0">
+            <div className="card shadow-sm sticky-top" style={{ top: "20px" }}>
+              <div className="card-header bg-light">
+                <h5 className="fw-bold mb-0">Riepilogo Ordine</h5>
+              </div>
+              <div className="card-body">
+                {/* Subtotale */}
+                <div className="d-flex justify-content-between mb-2">
+                  <span>Subtotale prodotti:</span>
+                  <span>€{subtotal.toFixed(2)}</span>
+                </div>
+
+                {/* Spedizione */}
+                <div className="d-flex justify-content-between mb-2">
+                  <span>Spedizione:</span>
+                  <span>€{shippingCost.toFixed(2)}</span>
+                </div>
+
+                <hr />
+
+                {/* Totale */}
+                <div className="d-flex justify-content-between mb-4">
+                  <span className="h5 fw-bold">Totale:</span>
+                  <span className="h5 fw-bold">€{total.toFixed(2)}</span>
+                </div>
+
+                {/* Form codice sconto */}
+                <div className="mb-4">
+                  <label className="form-label small fw-semibold">
+                    Codice Sconto
+                  </label>
+                  <form onSubmit={handleDiscountSubmit}>
+                    <div className="input-group mb-2">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Inserisci codice"
+                        value={discountCode}
+                        onChange={(e) => setDiscountCode(e.target.value)}
+                      />
+                      <button
+                        className="btn btn-outline-secondary"
+                        type="submit"
+                      >
+                        Applica
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                {/* Pulsante checkout */}
+                <div className="d-grid">
+                  <Link to="/checkout" className="btn btn-primary btn-lg">
+                    Procedi al Checkout
+                  </Link>
+                </div>
+
+                {/* Link continua shopping */}
+                <div className="text-center mt-3">
+                  <Link
+                    to="/products"
+                    className="text-decoration-none small text-dark"
+                  >
+                    ← Continua lo Shopping
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

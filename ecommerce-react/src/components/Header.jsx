@@ -1,26 +1,55 @@
-import { NavLink } from "react-router-dom";
+// Header.jsx
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../style/Header.css";
-import { useSearch } from "../context/SearchContext";
+import { useSearch } from "../context/SearchContext"; // Assicurati che searchTerm e setSearchTerm vengano da qui
 import { useCart } from "../context/CartContext";
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileCategoriesOpen, setIsMobileCategoriesOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false); // default false
-  const { isSearchActive, setSearchBarActive } = useSearch();
-  const { cartItems } = useCart();
+  
+  // STATI MANCANTI E CORRETTI:
+  const [isSearchInputVisible, setIsSearchInputVisible] = useState(false); // Stato per la visibilità della barra di ricerca
+  const [isCartOpen, setIsCartOpen] = useState(false); // Stato per la visibilità del mini-carrello al hover
 
-  const cartItemCount = cartItems.reduce(
-    (total, item) => total + (item.quantity || 0),
-    0
-  );
+  const { searchTerm, setSearchTerm } = useSearch(); // Importa searchTerm e setSearchTerm da useSearch
+  const { cartItems } = useCart();
+  const navigate = useNavigate();
+
+  const cartItemCount = cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
 
   const closeMenus = () => {
     setIsDropdownOpen(false);
     setIsMobileMenuOpen(false);
     setIsMobileCategoriesOpen(false);
+    // Potresti voler chiudere anche la barra di ricerca quando si chiudono gli altri menu
+    // setIsSearchInputVisible(false);
+  };
+
+  const performSearch = () => {
+    if (searchTerm.trim()) {
+      navigate(`/products?search=${encodeURIComponent(searchTerm.trim())}`);
+      setSearchTerm("");
+      setIsSearchInputVisible(false);
+      closeMenus();
+    } else {
+      setIsSearchInputVisible(false);
+    }
+  };
+
+  const handleSearchFormSubmit = (e) => {
+    e.preventDefault();
+    performSearch();
+  };
+
+  const handleSearchButtonClick = () => {
+    if (isSearchInputVisible) {
+      performSearch();
+    } else {
+      setIsSearchInputVisible(true);
+    }
   };
 
   return (
@@ -91,6 +120,27 @@ export default function Header() {
                 onMouseEnter={() => setIsCartOpen(true)}
                 onMouseLeave={() => setIsCartOpen(false)}
               >
+                {/* Contenitore flessibile per bottone e input di ricerca */}
+                <div className="search-container-desktop d-flex align-items-center">
+                  {isSearchInputVisible && (
+                    <form onSubmit={handleSearchFormSubmit} className="d-inline-flex me-2">
+                      <input
+                        type="text"
+                        placeholder="Cerca..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                    </form>
+                  )}
+                  <button
+                    type="button"
+                    className="nav-link"
+                    onClick={handleSearchButtonClick}
+                  >
+                    Ricerca
+                  </button>
+                </div>
+
                 <NavLink
                   to="/cart"
                   className="nav-link icon-link d-inline-flex align-items-center"
@@ -105,7 +155,7 @@ export default function Header() {
                   <div className="mini-cart-dropdown">
                     {cartItems.map((item, index) => (
                       <div key={index} className="mini-cart-item">
-                        <img src={item.image_url} alt={item.name} width={40} /> //modificare dimensione e classe dim, messa solo come segnaposto;
+                        <img src={item.image_url} alt={item.name} width={40} />
                         <span>{item.name}</span> - x{item.quantity}
                         <p><strong>{item.price} €</strong></p>
                       </div>
@@ -168,27 +218,37 @@ export default function Header() {
                 </NavLink>
               </div>
             )}
+            <div className="mobile-search-and-cart mt-3">
+              <button
+                type="button"
+                className="nav-link mb-2"
+                onClick={handleSearchButtonClick}
+              >
+                Ricerca
+              </button>
 
-            <button
-              className={isSearchActive ? "nav-link" : "d-none"}
-              onClick={() => {
-                setSearchBarActive((prev) => !prev);
-                closeMenus();
-              }}
-            >
-              Ricerca
-            </button>
-
-            <NavLink
-              to="/cart"
-              className="nav-link mt-2 d-inline-flex align-items-center"
-              onClick={closeMenus}
-            >
-              Carrello
-              {cartItemCount > 0 && (
-                <span className="cart-badge ms-2">{cartItemCount}</span>
+              {isSearchInputVisible && (
+                <form onSubmit={handleSearchFormSubmit} className="mb-2">
+                  <input
+                    type="text"
+                    placeholder="Cerca..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </form>
               )}
-            </NavLink>
+
+              <NavLink
+                to="/cart"
+                className="nav-link d-inline-flex align-items-center"
+                onClick={closeMenus}
+              >
+                Carrello
+                {cartItemCount > 0 && (
+                  <span className="cart-badge ms-2">{cartItemCount}</span>
+                )}
+              </NavLink>
+            </div>
           </div>
         )}
       </div>

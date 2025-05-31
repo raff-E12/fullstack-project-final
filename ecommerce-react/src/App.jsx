@@ -12,12 +12,14 @@ import SingleOrderPage from './pages/SingleCategoryPage'
 import SingleProductPage from './pages/SingleProductPage';
 import { SearchProvider } from './context/SearchContext';
 import { CartProvider } from './context/CartContext';
+import ScrollToTop from './components/ScrollToTop';
 
 export default function App() {
   return <div>
     <CartProvider>
       <SearchProvider>
         <BrowserRouter>
+          <ScrollToTop/>
           <Routes>
             <Route element={<DefaultLayout />}>
 

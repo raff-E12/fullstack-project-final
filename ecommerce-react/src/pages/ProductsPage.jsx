@@ -1,65 +1,71 @@
+// ProductsPage.jsx
 import { useState, useEffect } from "react";
-import { useSearch } from "../context/SearchContext";
+import { useLocation, Link } from "react-router-dom"; // Importa useLocation
 import FilterSection from "../components/FilterSection.jsx";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
   const [defaultProducts, setDefaultProducts] = useState([]);
-  const { setSearchActive, isSearchBarActive, setSearchBarActive } =
-    useSearch();
+
+  const location = useLocation(); // Hook per leggere i parametri dell'URL
   const endPoint = "http://localhost:3000/products";
 
-  //Chiamata Get dove passiamo i parametri per eventuali filtri e ordinamenti e ricerca
-  function getProducts(params) {
-    axios
-      .get(endPoint, { params })
+  // Funzione per costruire i parametri da inviare all'API basandosi sull'URL
+  const buildApiParams = () => {
+    const queryParams = new URLSearchParams(location.search); // Crea un oggetto URLSearchParams dall'URL corrente
+    const params = {};
+
+    // Mappa i nomi dei parametri dell'URL ai nomi dei parametri dell'API
+    if (queryParams.get('search')) params.q = queryParams.get('search'); // 'search' dall'URL diventa 'q' per l'API
+    if (queryParams.get('sort_by')) params.sort_by = queryParams.get('sort_by');
+    if (queryParams.get('brand')) params.brand = queryParams.get('brand');
+    if (queryParams.get('fabric')) params.fabric = queryParams.get('fabric');
+    if (queryParams.get('min_price')) params.min_price = queryParams.get('min_price');
+    if (queryParams.get('max_price')) params.max_price = queryParams.get('max_price');
+    if (queryParams.get('discount')) params.discount = queryParams.get('discount');
+
+    return params;
+  };
+
+  // Chiamata Get dove passiamo i parametri per eventuali filtri e ordinamenti e ricerca
+  function getProducts() { // Rimosso async
+    const params = buildApiParams(); // Ottieni i parametri dall'URL
+    axios.get(endPoint, { params })
       .then((res) => {
         setProducts(res.data.products);
       })
       .catch((err) => {
-        console.log("Errore nel recupero dei prodotti:", err);
-        setProducts([]);
-      });
-  }
-
-  //Semplice funzione Get per restituire tutti i prodotti
-  function getdefaultProducts() {
-    axios
-      .get(endPoint)
-      .then((res) => {
-        setDefaultProducts(res.data.products);
-      })
-      .catch((err) => {
-        console.log("Errore nel recupero dei prodotti:", err);
+        console.error("Errore nel recupero dei prodotti:", err);
         setProducts([]); // Svuota i prodotti in caso di errore
       });
   }
 
-  useEffect(() => {
-    getProducts({});
-    getdefaultProducts();
-    setSearchActive(true);
+  // Semplice funzione Get per restituire tutti i prodotti (per i filtri dinamici come brand e fabric)
+  function getdefaultProducts() { // Rimosso async
+    axios.get(endPoint)
+      .then((res) => {
+        setDefaultProducts(res.data.products);
+      })
+      .catch((err) => {
+        console.error("Errore nel recupero dei prodotti di default:", err);
+      });
+  }
 
-    return () => {
-      setSearchActive(false);
-      setSearchBarActive(false);
-    };
+  useEffect(() => {
+    getProducts(); // Chiama getProducts ogni volta che l'URL cambia
+  }, [location.search]); // Dipendenza da location.search
+
+  useEffect(() => {
+    getdefaultProducts(); // Chiamata una sola volta per i prodotti di default
   }, []);
 
-  function handleSubmit(params) {
-    getProducts(params);
-  }
 
   return (
     <>
       <div className="container-xl container-prod">
-        <FilterSection
-          isSearchBarActive={isSearchBarActive}
-          handleSubmit={handleSubmit}
-          defaultProducts={defaultProducts}
-        />
+        {/* Passa i parametri di default */}
+        <FilterSection defaultProducts={defaultProducts} />
         <div className="prod-cards">
           {products.length > 0 ? (
             products.map(
@@ -108,7 +114,7 @@ export default function ProductPage() {
               }
             )
           ) : (
-            <p>Nessun prodotto trovato.</p>
+            <p className="text-center mt-4">Nessun prodotto trovato.</p>
           )}
         </div>
       </div>
