@@ -1,3 +1,4 @@
+/* Header base - sempre posizionato in alto */
 .header-sc {
     position: fixed;
     z-index: 999;
@@ -5,10 +6,21 @@
     top: 0;
     font-family: var(--font-lato, 'Arial', sans-serif);
     font-weight: 200;
+    transition: all 0.3s ease;
+}
+
+/* Stile per l'header nella homepage - con blur e trasparenza */
+.header-sc.homepage-header {
     background-color: rgba(37, 36, 36, 0.4);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
+}
+
+/* Stile per l'header nelle altre pagine - sfondo solido, senza shadow */
+.header-sc.page-header {
+    background-color: rgb(37, 36, 36);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: none;
 }
 
 #text-hd {
@@ -53,6 +65,7 @@
     border-radius: 6px;
     transition: all 0.3s ease;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .dropdown-toggle:hover {
@@ -70,6 +83,9 @@
 }
 
 .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
     border-radius: 12px;
     width: 400px;
     padding: 1.5rem;
@@ -79,7 +95,17 @@
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    animation: slideDown 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 @keyframes slideDown {
@@ -166,6 +192,226 @@
     gap: 0.5rem;
 }
 
+/* Container per ricerca e carrello allineati orizzontalmente */
+.search-cart-container {
+    gap: 1rem;
+}
+
+.search-container-desktop {
+    align-items: center;
+}
+
+/* Form di ricerca sempre presente */
+.search-form {
+    min-width: 200px;
+}
+
+.search-input {
+    padding: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 0.9rem;
+    width: 200px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.search-input.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.search-input.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #0d6efd;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Container carrello */
+.cart-container {
+    position: relative;
+}
+
+.cart-toggle-btn {
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
+}
+
+.cart-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Mini cart dropdown */
+.mini-cart-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(33, 37, 41, 0.98);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    min-width: 280px;
+    max-width: 350px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    margin-top: 0.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.mini-cart-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.mini-cart-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.mini-cart-item img {
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.mini-cart-item-info {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.mini-cart-item-info span {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mini-cart-item-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mini-cart-footer {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mini-cart-empty {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 1rem 0;
+}
+
+.mini-cart-empty p {
+    margin: 0;
+    font-style: italic;
+}
+
+/* Mobile version del mini cart */
+.mobile-mini-cart {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+/* Hamburger menu button */
+.mobile-menu-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    transition: all 0.3s ease;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.mobile-menu-btn:focus,
+.mobile-menu-btn:active {
+    outline: none;
+    background: none;
+    border: none;
+}
+
+.hamburger-line {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 2px 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+/* Animazione hamburger menu */
+.mobile-menu-btn .hamburger-line:nth-child(1).open {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-btn .hamburger-line:nth-child(2).open {
+    opacity: 0;
+}
+
+.mobile-menu-btn .hamburger-line:nth-child(3).open {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Mobile search form */
+.mobile-search-form {
+    transition: all 0.3s ease;
+}
+
+.mobile-search-form.visible {
+    opacity: 1;
+    max-height: 60px;
+    overflow: visible;
+}
+
+.mobile-search-form.hidden {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.mobile-search-form .search-input {
+    width: 100%;
+    pointer-events: auto;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
     .dropdown-menu {
         width: 300px;
@@ -183,5 +429,32 @@
 
     #text-hd {
         font-size: 1rem;
+    }
+
+    .mobile-nav-menu {
+        background: rgba(33, 37, 41, 0.98);
+        backdrop-filter: blur(15px);
+        border-radius: 12px;
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    .mobile-nav-menu .nav-link,
+    .mobile-nav-menu .btn {
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
+    }
+
+    .mobile-nav-menu .nav-link:focus,
+    .mobile-nav-menu .nav-link:active,
+    .mobile-nav-menu .btn:focus,
+    .mobile-nav-menu .btn:active {
+        outline: none;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .mini-cart-dropdown {
+        min-width: 250px;
+        max-width: 280px;
     }
 }
