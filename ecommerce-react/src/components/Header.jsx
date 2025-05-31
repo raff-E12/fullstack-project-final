@@ -222,25 +222,40 @@ export default function Header() {
                     <div className="mini-cart-dropdown">
                       {cartItems.length > 0 ? (
                         <>
-                          {cartItems.map((item, index) => (
-                            <div key={index} className="mini-cart-item">
-                              <img
-                                src={item.image_url}
-                                alt={item.name}
-                                width={40}
-                              />
-                              <div className="mini-cart-item-info">
-                                <span>{item.name}</span>
-                                <div className="mini-cart-item-details">
-                                  <span>x{item.quantity}</span>
-                                  <strong>{item.price} €</strong>
+                          <div className="mini-cart-items-list">
+                            {cartItems.map((item, index) => (
+                              <div key={index} className="mini-cart-item">
+                                <img
+                                  src={item.image_url}
+                                  alt={item.name}
+                                  width={40}
+                                />
+                                <div className="mini-cart-item-info">
+                                  <span>{item.name}</span>
+                                  <div className="mini-cart-item-details">
+                                    <span>x{item.quantity}</span>
+                                    <strong>{item.price} €</strong>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          ))}
+                            ))}
+                          </div>
                           <div className="mini-cart-footer">
+                            <div className="mini-cart-total">
+                              <strong>
+                                Totale:{" "}
+                                {cartItems
+                                  .reduce(
+                                    (total, item) =>
+                                      total + item.price * item.quantity,
+                                    0
+                                  )
+                                  .toFixed(2)}{" "}
+                                €
+                              </strong>
+                            </div>
                             <button
-                              className="btn btn-primary w-100"
+                              className="btn btn-primary w-100 mt-2"
                               onClick={handleGoToCart}
                             >
                               Vai al Carrello
@@ -385,25 +400,40 @@ export default function Header() {
                 <div className="mobile-mini-cart">
                   {cartItems.length > 0 ? (
                     <>
-                      {cartItems.map((item, index) => (
-                        <div key={index} className="mini-cart-item">
-                          <img
-                            src={item.image_url}
-                            alt={item.name}
-                            width={40}
-                          />
-                          <div className="mini-cart-item-info">
-                            <span>{item.name}</span>
-                            <div className="mini-cart-item-details">
-                              <span>x{item.quantity}</span>
-                              <strong>{item.price} €</strong>
+                      <div className="mini-cart-items-list">
+                        {cartItems.map((item, index) => (
+                          <div key={index} className="mini-cart-item">
+                            <img
+                              src={item.image_url}
+                              alt={item.name}
+                              width={40}
+                            />
+                            <div className="mini-cart-item-info">
+                              <span>{item.name}</span>
+                              <div className="mini-cart-item-details">
+                                <span>x{item.quantity}</span>
+                                <strong>{item.price} €</strong>
+                              </div>
                             </div>
                           </div>
+                        ))}
+                      </div>
+                      <div className="mini-cart-footer">
+                        <div className="mini-cart-total">
+                          <strong>
+                            Totale:{" "}
+                            {cartItems
+                              .reduce(
+                                (total, item) =>
+                                  total + item.price * item.quantity,
+                                0
+                              )
+                              .toFixed(2)}{" "}
+                            €
+                          </strong>
                         </div>
-                      ))}
-                      <div className="mini-cart-footer mt-2">
                         <button
-                          className="btn btn-primary w-100"
+                          className="btn btn-primary w-100 mt-2"
                           onClick={handleGoToCart}
                         >
                           Vai al Carrello

@@ -166,7 +166,7 @@ export default function CartPage() {
 
           {/* Riepilogo ordine */}
           <div className="col-lg-4 mt-4 mt-lg-0">
-            <div className="card shadow-sm sticky-top" style={{ top: "20px" }}>
+            <div className="card shadow-sm" style={{ top: "20px" }}>
               <div className="card-header bg-light">
                 <h5 className="fw-bold mb-0">Riepilogo Ordine</h5>
               </div>
