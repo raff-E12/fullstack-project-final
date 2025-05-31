@@ -62,7 +62,27 @@ export default function SingleProductPage() {
             <div className="prod-review">
               {isDiscountActive && <p className="sale-prod">{discount} %</p>}
               <div className="img-prod-add">
-                <img src={image_url} alt={name} />
+                <div id="carouselExample" class="carousel slide">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src={image_url} class="d-block w-100" alt={name} />
+                    </div>
+                    <div class="carousel-item">
+                      <img src={image_url} class="d-block w-100" alt={name} />
+                    </div>
+                    <div class="carousel-item">
+                      <img src={image_url} class="d-block w-100" alt={name} />
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
               </div>
             </div>
             <div className="prod-descriptions">
