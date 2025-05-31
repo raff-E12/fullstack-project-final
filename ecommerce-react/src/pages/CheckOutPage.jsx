@@ -1,6 +1,6 @@
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import CheckOutForm from "../components/CheckoutForm";
+import CheckOutForm from "../components/CheckOutForm";
 
 export default function CheckOutPage() {
     const { cartItems } = useCart();
