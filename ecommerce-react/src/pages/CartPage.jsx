@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import CheckOutForm from "../components/CheckOutForm"; // Importa il componente
+import CheckOutForm from "../components/CheckOutForm";
 
 export default function CartPage() {
   const { cartItems } = useCart();
