@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import "../style/SingleProductPage.css";
+import { useNavigate } from "react-router-dom";
 
 export default function SingleProductPage() {
   const { slug } = useParams();
@@ -54,6 +56,12 @@ export default function SingleProductPage() {
     today >= start &&
     today <= end;
 
+  const navigate = useNavigate()
+
+  function handleGoBack() {
+    navigate(-1)
+  }
+
   return (
     <>
       <div className="container-xxl prod-sc d-flex">
@@ -103,6 +111,9 @@ export default function SingleProductPage() {
               >
                 {" "}
                 Aggiungi al carrello{" "}
+              </button>
+              <button onClick={handleGoBack} className="btn btn-secondary">
+                torna alla pagina precedente
               </button>
             </div>
           </div>
