@@ -30,8 +30,8 @@ export default function CheckOutForm({ amount }) {
 
     const sendConfirmationEmail = () => {
         emailjs.send(
-            'process.env.EMAILJS_SERVICE_ID',        //  Service ID
-            'process.env.EMAILJS_TEMPLATE_ID',       // Template ID
+            import.meta.env.VITE_EMAILJS_SERVICE_ID,    // Service ID
+            import.meta.env.VITE_EMAILJS_TEMPLATE_ID,   //  Template ID
             {
                 name: formData.name,
                 surname: formData.surname,
@@ -42,7 +42,7 @@ export default function CheckOutForm({ amount }) {
                 shipping_address: formData.shipping_address,
                 country: formData.country
             },
-            'process.env.EMAILJS_PUBLIC_KEY'         // s Public Key
+            import.meta.env.VITE_EMAILJS_PUBLIC_KEY     // Public Key
         )
             .then((result) => {
                 console.log('Email inviata con successo!', result.text);
