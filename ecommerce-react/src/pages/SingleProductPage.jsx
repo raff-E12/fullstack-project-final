@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import "../style/SingleProductPage.css";
+import { useNavigate } from "react-router-dom";
 
 export default function SingleProductPage() {
   const { slug } = useParams();
@@ -54,6 +56,12 @@ export default function SingleProductPage() {
     today >= start &&
     today <= end;
 
+  const navigate = useNavigate()
+
+  function handleGoBack() {
+    navigate(-1)
+  }
+
   return (
     <>
       <div className="container-xxl prod-sc d-flex">
@@ -62,7 +70,27 @@ export default function SingleProductPage() {
             <div className="prod-review">
               {isDiscountActive && <p className="sale-prod">{discount} %</p>}
               <div className="img-prod-add">
-                <img src={image_url} alt={name} />
+                <div id="carouselExample" class="carousel slide">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src={image_url} class="d-block w-100" alt={name} />
+                    </div>
+                    <div class="carousel-item">
+                      <img src={image_url} class="d-block w-100" alt={name} />
+                    </div>
+                    <div class="carousel-item">
+                      <img src={image_url} class="d-block w-100" alt={name} />
+                    </div>
+                  </div>
+                  <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
+                  </button>
+                  <button className="carousel-control-next" type="button" classNameName="" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
+                  </button>
+                </div>
               </div>
             </div>
             <div className="prod-descriptions">
@@ -83,6 +111,9 @@ export default function SingleProductPage() {
               >
                 {" "}
                 Aggiungi al carrello{" "}
+              </button>
+              <button onClick={handleGoBack} className="btn btn-secondary">
+                torna alla pagina precedente
               </button>
             </div>
           </div>
