@@ -8,7 +8,7 @@ import CheckOutForm from "../components/CheckOutForm";
 const endPointDiscount = "http://localhost:3000/checkout/discount-code"
 
 export default function CartPage() {
-  const { cartItems } = useCart();
+  const { cartItems, removeFromCart, updateQuantity } = useCart();
   const [discountCode, setDiscountCode] = useState("");
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
   const [validPromo, setValidPromo] = useState(false);
@@ -45,7 +45,7 @@ export default function CartPage() {
 
   const handleDiscountSubmit = (e) => {
     e.preventDefault();
-    setPromoMessage("Verifica codice..."); 
+    setPromoMessage("Verifica codice...");
 
     axios.get(endPointDiscount)
       .then((res) => {
@@ -55,27 +55,27 @@ export default function CartPage() {
         const foundPromo = fetchedPromos.find(
           (promo) =>
             promo.code === discountCode &&
-            promo.is_valid === 1 && 
-            new Date(promo.start_discount) <= today && 
-            new Date(promo.end_discount) >= today   
+            promo.is_valid === 1 &&
+            new Date(promo.start_discount) <= today &&
+            new Date(promo.end_discount) >= today
         );
 
         if (foundPromo) {
-          
-          const discountValue = parseFloat(foundPromo.discount); 
+
+          const discountValue = parseFloat(foundPromo.discount);
 
           if (!isNaN(discountValue)) {
             setValidPromo(true);
             setAppliedPromoPercentage(discountValue);
             setPromoMessage("Codice sconto applicato!");
           } else {
-     
+
             setValidPromo(false);
             setAppliedPromoPercentage(0);
             setPromoMessage("Errore: valore sconto della promo non valido.");
           }
         } else {
-    
+
           setValidPromo(false);
           setAppliedPromoPercentage(0);
           setPromoMessage("Codice sconto non valido o scaduto.");
@@ -90,7 +90,7 @@ export default function CartPage() {
   };
 
   const handleCheckoutSuccess = (orderData) => {
-   
+
     console.log("Ordine completato:", orderData);
     setShowCheckoutForm(false);
   };
@@ -127,7 +127,7 @@ export default function CartPage() {
         </div>
       ) : (
         <div className="row">
-          
+
           <div className="col-lg-8">
             <div className="card shadow-sm">
               <div className="card-body p-0">
@@ -136,7 +136,7 @@ export default function CartPage() {
                   const quantity = parseInt(item.quantity);
                   const start = new Date(item.start_discount);
                   const end = new Date(item.end_discount);
-                  const isValid =item.is_valid
+                  const isValid = item.is_valid;
 
                   let finalPrice = price;
                   let hasDiscount = false;
@@ -151,7 +151,8 @@ export default function CartPage() {
                     <div key={index}>
                       <div className="p-4">
                         <div className="row align-items-center">
-                        
+
+                          {/* Immagine */}
                           <div className="col-md-3 col-4 mb-3 mb-md-0">
                             <img
                               src={item.image_url}
@@ -165,7 +166,7 @@ export default function CartPage() {
                             />
                           </div>
 
-                         
+                          {/* Info prodotto + quantità */}
                           <div className="col-md-5 col-8">
                             <Link
                               to={`/products/${item.slug}`}
@@ -178,7 +179,8 @@ export default function CartPage() {
                                 {item.description}
                               </p>
                             </Link>
-                            <div className="d-flex align-items-center">
+
+                            <div className="d-flex align-items-center mb-2">
                               <span className="badge bg-light text-dark border">
                                 Qty: {quantity}
                               </span>
@@ -188,9 +190,36 @@ export default function CartPage() {
                                 </span>
                               )}
                             </div>
+
+                            {/* 👇 Bottoni modifica quantità / rimuovi */}
+                            <div className="d-flex align-items-center gap-2">
+                              <button
+                                className="btn btn-outline-secondary btn-sm"
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity - 1)
+                                }
+                                disabled={item.quantity <= 1}
+                              >
+                                −
+                              </button>
+                              <button
+                                className="btn btn-outline-secondary btn-sm"
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity + 1)
+                                }
+                              >
+                                +
+                              </button>
+                              <button
+                                className="btn btn-outline-danger btn-sm ms-2"
+                                onClick={() => removeFromCart(item.id)}
+                              >
+                                Rimuovi
+                              </button>
+                            </div>
                           </div>
 
-                   
+                          {/* Prezzo */}
                           <div className="col-md-4 col-12 text-md-end mt-3 mt-md-0">
                             {hasDiscount ? (
                               <div>
@@ -215,12 +244,14 @@ export default function CartPage() {
                               </div>
                             )}
                           </div>
+
                         </div>
                       </div>
                       {index < cartItems.length - 1 && <hr className="m-0" />}
                     </div>
                   );
                 })}
+
               </div>
             </div>
           </div>
@@ -235,7 +266,7 @@ export default function CartPage() {
               <div className="card-body">
                 {!showCheckoutForm ? (
                   <>
-                 
+
                     <div className="d-flex justify-content-between mb-2">
                       <span>Subtotale prodotti:</span>
                       <span>€{subtotal.toFixed(2)}</span>
@@ -247,24 +278,24 @@ export default function CartPage() {
                       <span>€{shippingCost.toFixed(2)}</span>
                     </div>
 
-         
+
                     {validPromo && appliedPromoPercentage > 0 && (
-                        <div className="d-flex justify-content-between mb-2 text-success fw-bold">
-                            <span>Sconto promo:</span>
-                            {/* Formula corretta per mostrare l'importo dello sconto */}
-                            <span>-€{(subtotal * appliedPromoPercentage / 100).toFixed(2)}</span>
-                        </div>
+                      <div className="d-flex justify-content-between mb-2 text-success fw-bold">
+                        <span>Sconto promo:</span>
+                        {/* Formula corretta per mostrare l'importo dello sconto */}
+                        <span>-€{(subtotal * appliedPromoPercentage / 100).toFixed(2)}</span>
+                      </div>
                     )}
 
                     <hr />
 
-             
+
                     <div className="d-flex justify-content-between mb-4">
                       <span className="h5 fw-bold">Totale:</span>
                       <span className="h5 fw-bold">€{total.toFixed(2)}</span>
                     </div>
 
-   
+
                     <div className="mb-4">
                       <label className="form-label small fw-semibold">
                         Codice Sconto
@@ -285,7 +316,7 @@ export default function CartPage() {
                             Applica
                           </button>
                         </div>
-                       
+
                         {promoMessage && (
                           <small className={`form-text ${validPromo ? "text-success" : "text-danger"}`}>
                             {promoMessage}
@@ -294,7 +325,7 @@ export default function CartPage() {
                       </form>
                     </div>
 
-             
+
                     <div className="d-grid">
                       <button
                         onClick={() => setShowCheckoutForm(true)}

@@ -24,8 +24,20 @@ function CartProvider({ children }) {
         });
     };
 
+    const removeFromCart = (productId) => {
+        setCartItems(prev => prev.filter(item => item.id !== productId));
+    };
+
+    const updateQuantity = (productId, quantity) => {
+        setCartItems(prev =>
+            prev.map(item =>
+                item.id === productId ? { ...item, quantity: Math.max(1, quantity) } : item
+            )
+        );
+    };
+
     return (
-        <CartContext.Provider value={{ cartItems, addToCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity }}>
             {children}
         </CartContext.Provider>
     );
