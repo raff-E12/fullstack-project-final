@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import "../style/SingleProductPage.css";
 import { useNavigate } from "react-router-dom";
+import Accordion from "../components/Accordion";
 
 export default function SingleProductPage() {
   const { slug } = useParams();
@@ -70,23 +71,23 @@ export default function SingleProductPage() {
             <div className="prod-review">
               {isDiscountActive && <p className="sale-prod">{discount} %</p>}
               <div className="img-prod-add">
-                <div id="carouselExample" class="carousel slide">
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img src={image_url} class="d-block w-100" alt={name} />
+                <div id="carouselExample" className="carousel slide">
+                  <div className="carousel-inner">
+                    <div className="carousel-item active">
+                      <img src={image_url} className="d-block w-100" alt={name} />
                     </div>
-                    <div class="carousel-item">
-                      <img src={image_url} class="d-block w-100" alt={name} />
+                    <div className="carousel-item">
+                      <img src={image_url} className="d-block w-100" alt={name} />
                     </div>
-                    <div class="carousel-item">
-                      <img src={image_url} class="d-block w-100" alt={name} />
+                    <div className="carousel-item">
+                      <img src={image_url} className="d-block w-100" alt={name} />
                     </div>
                   </div>
                   <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                   </button>
-                  <button className="carousel-control-next" type="button" classNameName="" data-bs-target="#carouselExample" data-bs-slide="next">
+                  <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                   </button>
@@ -95,14 +96,12 @@ export default function SingleProductPage() {
             </div>
             <div className="prod-descriptions">
               <div className="text-prod">
-                <p id="text-dec">- Descrizione Prodotti</p>
+                <p className="name-brand">{brand}</p>
                 <h1>{name}</h1>
                 <h4 id="price">€{price}</h4>
               </div>
               <div className="extra-prod">
-                <h5>Descrizione:</h5>
-                <p>{fabric}</p>
-                <p>{category_name}</p>
+                <h5>Descrizione prodotto:</h5>
                 <p>{description}</p>
               </div>
               <button
@@ -113,9 +112,11 @@ export default function SingleProductPage() {
                 Aggiungi al carrello{" "}
               </button>
               <button onClick={handleGoBack} className="btn btn-secondary">
-                torna alla pagina precedente
+                Torna alla pagina precedente
               </button>
+              < Accordion material={fabric} sku={sku_order_code} />
             </div>
+
           </div>
         ) : (
           <div className="container-lg p-2 d-flex sections-prod">
@@ -123,47 +124,8 @@ export default function SingleProductPage() {
             <b>Loading...</b>{" "}
           </div>
         )}
-        <div className="desc-prod">
-          <div className="box-desc review">
-            <div className="review-number rv-number">
-              <h2 id="percents-rv">4.3</h2>
-              <a id="links-hovering">
-                <p>
-                  Vedi le recensioni <i class="bi bi-arrow-right-short"></i>
-                </p>
-              </a>
-            </div>
-            <div className="review-number rv-parph">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et
-                commodo ex. In consequat ac lacus ut semper, interdum ac orci.
-              </p>
-            </div>
-          </div>
-          <div className="box-desc desc">
-            <div className="list-desc">
-              <ul>
-                <li>
-                  <p>
-                    <b>Sku:</b> {sku_order_code}
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <b>Material: </b>
-                    {fabric}
-                  </p>
-                </li>
-                <li>
-                  <p>
-                    <b>Brand:</b> {brand}
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
       </div>
+
     </>
   );
 }
