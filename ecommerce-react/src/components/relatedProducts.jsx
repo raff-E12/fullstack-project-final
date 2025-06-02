@@ -32,7 +32,9 @@ const RelatedProducts = ({ category }) => {
                             <div className="card-body text-center">
                                 <h5 className="card-title">{product.name}</h5>
                                 <p className="text-success fw-bold">€{product.price}</p>
-                                <button className="btn btn-primary">Vedi prodotto</button>
+                                <Link to={`/products/${product.slug}`} className="btn btn-primary">
+                                    Vedi prodotto
+                                </Link>
                             </div>
                         </div>
                     </div>
