@@ -1,0 +1,80 @@
+/* ProductsPage.css - Stili per la pagina lista prodotti */
+
+/* Product Cards Customizzazioni */
+.product-card {
+    transition: all 0.3s ease;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(3, 66, 49, 0.15) !important;
+}
+
+.product-image {
+    border-radius: 0.375rem 0.375rem 0 0;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+/* Sale Badge */
+.sale-badge {
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    transform: rotate(-10deg);
+}
+
+.sale-badge .badge {
+    font-size: 0.7rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: rotate(-10deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(-10deg) scale(1.1);
+    }
+
+    100% {
+        transform: rotate(-10deg) scale(1);
+    }
+}
+
+/* Form di ricerca/filtri */
+.form-prod {
+    background-color: #ffffff;
+    border: 2px solid rgba(3, 66, 49, 0.45);
+    border-radius: 0.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-prod:focus-within {
+    border-color: #034231;
+    box-shadow: 0 0 0 0.2rem rgba(3, 66, 49, 0.25);
+}
+
+/* Responsive miglioramenti */
+@media (max-width: 768px) {
+    .product-card {
+        margin-bottom: 1rem;
+    }
+
+    .sale-badge .badge {
+        width: 40px;
+        height: 40px;
+        font-size: 0.6rem;
+    }
+}

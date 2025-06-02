@@ -66,7 +66,7 @@ export default function Sliders() {
                     <h3>LEATHER CAPSULE </h3>
                     <p>Spring 2026</p>
                     <Link to={"/products"}>
-                      <button className="btn-slider">Shop Now</button>
+                      <button className=" btn-slider">Shop Now</button>
                     </Link>
                   </div>
                 </div>
@@ -78,10 +78,10 @@ export default function Sliders() {
           <div className="container d-flex justify-content-between align-items-end">
             <div className="swiper-pagination"></div>
             <div className="btns-slider">
-              <div className="swiper-button-prev">
+              <div className="swiper-button-prev btn-slider">
                 <i className="bi bi-arrow-left"></i>
               </div>
-              <div className="swiper-button-next">
+              <div className="swiper-button-next btn-slider">
                 <i className="bi bi-arrow-right"></i>
               </div>
             </div>

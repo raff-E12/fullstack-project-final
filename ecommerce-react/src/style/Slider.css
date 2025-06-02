@@ -161,6 +161,11 @@
     opacity: 1;
 }
 
+
+.btn-slider {
+    background-color: white;
+}
+
 /* Media queries per controllo fine */
 @media (max-width: 768px) {
     .img-box {
