@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import "../style/SingleProductPage.css";
 import { useNavigate } from "react-router-dom";
-import Accordion from "../components/Accordion";
 
 export default function SingleProductPage() {
   const { slug } = useParams();
@@ -114,7 +113,7 @@ export default function SingleProductPage() {
               <button onClick={handleGoBack} className="btn btn-secondary">
                 Torna alla pagina precedente
               </button>
-              < Accordion material={fabric} sku={sku_order_code} />
+
             </div>
 
           </div>
@@ -124,7 +123,43 @@ export default function SingleProductPage() {
             <b>Loading...</b>{" "}
           </div>
         )}
+
+        <div className="desc-prod">
+          <div className="box-desc col-4">
+            <div className=" rv-parph">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et
+                commodo ex. In consequat ac lacus ut semper, interdum ac orci.
+              </p>
+            </div>
+          </div>
+          <div className="box-desc desc col-4">
+            <div className="list-desc">
+              <ul>
+                <li>
+                  <p>
+                    <b>Sku:</b> {sku_order_code}
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <b>Material: </b>
+                    {fabric}
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <b>Brand:</b> {brand}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
+
+
+
 
     </>
   );
