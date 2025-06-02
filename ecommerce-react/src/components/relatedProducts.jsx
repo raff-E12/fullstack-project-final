@@ -21,7 +21,7 @@ const RelatedProducts = ({ category }) => {
             <div className="row">
                 {relatedProducts.map((product) => (
                     <div key={product.id} className="col-md-4">
-                        <div className="card shadow-sm">
+                        <div className="card shadow-sm mt-4">
                             <img
                                 src={product.image_url}
                                 className="card-img-top"
