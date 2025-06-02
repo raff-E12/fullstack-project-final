@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import "../style/SingleProductPage.css";
+import RelatedProducts from "../components/relatedProducts";
 
 export default function SingleProductPage() {
   const { slug } = useParams();
@@ -241,6 +242,9 @@ export default function SingleProductPage() {
             </div>
           </div>
 
+
+
+
           {/* Sezione Dettagli Prodotto */}
           <div className="col-lg-6">
             <div className="product-details h-100">
@@ -285,9 +289,8 @@ export default function SingleProductPage() {
                     <button
                       key={size}
                       type="button"
-                      className={`btn ${
-                        selectedSize === size ? "btn-dark" : "btn-outline-dark"
-                      } size-btn`}
+                      className={`btn ${selectedSize === size ? "btn-dark" : "btn-outline-dark"
+                        } size-btn`}
                       onClick={() => setSelectedSize(size)}
                     >
                       {size}
@@ -428,6 +431,29 @@ export default function SingleProductPage() {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Sezione prodotti correlati */}
+        <div className="accordion mt-5" id="relatedProductsAccordion">
+          <div className="accordion-item">
+            <h2 className="accordion-header">
+              <button
+                className="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#relatedProducts"
+                aria-expanded="false"
+                aria-controls="relatedProducts"
+              >
+                🔗 Vedi prodotti correlati
+              </button>
+            </h2>
+            <div id="relatedProducts" className="accordion-collapse collapse">
+              <div className="accordion-body">
+                <RelatedProducts category={category_name} />
               </div>
             </div>
           </div>
