@@ -53,7 +53,6 @@
 
 .text-slider p {
     font-weight: 670;
-    font-family: var(--font-lato);
     text-transform: uppercase;
     font-size: clamp(1.2rem, 3vw, 1.7rem);
     /* Responsive font size */

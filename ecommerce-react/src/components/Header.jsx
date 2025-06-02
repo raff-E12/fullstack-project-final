@@ -20,7 +20,7 @@ export default function Header() {
 
   return (
     <header
-      className={`header-sc py-3 position-fixed w-100 ${
+      className={`header-sc py-3 w-100 ${
         isHomepage ? "homepage-header" : "page-header"
       }`}
       style={{ top: 0, zIndex: 999 }}

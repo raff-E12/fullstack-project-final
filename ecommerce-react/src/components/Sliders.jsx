@@ -62,9 +62,8 @@ export default function Sliders() {
               >
                 <div className="bg-retro"></div>
                 <div className="container h-100 d-flex align-items-center justify-content-start">
-                  <div className="text-slider">
+                  <div className="text-slider text-white">
                     <h3>LEATHER CAPSULE </h3>
-                    <p>Spring 2026</p>
                     <Link to={"/products"}>
                       <button className=" btn-slider">Shop Now</button>
                     </Link>
