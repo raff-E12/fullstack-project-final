@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import "../style/SingleProductPage.css";
-import RelatedProducts from "../components/relatedProducts";
+import RelatedProducts from "../components/RelatedProducts";
 
 export default function SingleProductPage() {
   const { slug } = useParams();
@@ -286,9 +286,8 @@ export default function SingleProductPage() {
                     <button
                       key={size}
                       type="button"
-                      className={`btn ${
-                        selectedSize === size ? "btn-dark" : "btn-outline-dark"
-                      } size-btn`}
+                      className={`btn ${selectedSize === size ? "btn-dark" : "btn-outline-dark"
+                        } size-btn`}
                       onClick={() => setSelectedSize(size)}
                     >
                       {size}
