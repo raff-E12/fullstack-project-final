@@ -118,6 +118,15 @@ export default function FilterSection({ defaultProducts }) {
       <div className="container-fluid">
         <div className="filter-header">
           <div className="controls-section">
+
+             <button
+              type="button"
+              className="filter-toggle"
+              onClick={() => setFilterVisible((prev) => !prev)}
+            >
+              Filtri {isFilterVisible ? "−" : "+"}
+            </button>
+            
             <select
               className="order-select"
               onChange={(e) => setOrder(e.target.value)}
@@ -131,13 +140,7 @@ export default function FilterSection({ defaultProducts }) {
               <option value="latest">Novità</option>
             </select>
 
-            <button
-              type="button"
-              className="filter-toggle"
-              onClick={() => setFilterVisible((prev) => !prev)}
-            >
-              Filtri {isFilterVisible ? "−" : "+"}
-            </button>
+           
           </div>
         </div>
 
