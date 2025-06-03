@@ -42,6 +42,7 @@ export default function SingleProductPage() {
     description,
     price,
     image_url,
+    image_still_life_url,
     fabric,
     discount,
     category_name,
@@ -172,16 +173,22 @@ export default function SingleProductPage() {
               )}
               <div id="productCarousel" className="carousel slide shadow-lg rounded overflow-hidden">
                 <div className="carousel-inner">
-                  {[1, 2, 3].map((_, idx) => (
-                    <div className={`carousel-item ${idx === 0 ? "active" : ""}`} key={idx}>
-                      <img
-                        src={image_url}
-                        className="d-block w-100 product-main-image"
-                        alt={name}
-                        style={{ height: "500px", objectFit: "cover" }}
-                      />
-                    </div>
-                  ))}
+                  <div className="carousel-item active">
+                    <img
+                      src={image_url}
+                      className="d-block w-100 product-main-image"
+                      alt={name}
+                      style={{ height: "500px", objectFit: "cover" }}
+                    />
+                  </div>
+                  <div className="carousel-item">
+                    <img
+                      src={image_still_life_url}
+                      className="d-block w-100 product-main-image"
+                      alt={name}
+                      style={{ height: "500px", objectFit: "cover" }}
+                    />
+                  </div>
                 </div>
                 <button className="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
                   <span className="carousel-control-prev-icon" aria-hidden="true"></span>
