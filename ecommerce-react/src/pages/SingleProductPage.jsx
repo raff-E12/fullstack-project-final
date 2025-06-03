@@ -15,6 +15,7 @@ export default function SingleProductPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
+  const [quantity, setQuantity] = useState(1); // Aggiunto quantity state
 
   useEffect(() => {
     getProductsSlug();
@@ -49,7 +50,7 @@ export default function SingleProductPage() {
     end_discount,
     sku_order_code,
     brand,
-    variations
+    variations,
   } = productSlug;
 
   const today = new Date();
@@ -70,27 +71,69 @@ export default function SingleProductPage() {
     navigate(-1);
   }
 
+  // FUNZIONE AGGIORNATA per il nuovo CartContext
   function handleAddToCart() {
     if (!selectedSize) {
       alert("Seleziona una taglia prima di aggiungere al carrello");
       return;
     }
 
-    const productWithSize = { ...productSlug, selectedSize };
-    addToCart(productWithSize);
+    try {
+      // Chiama addToCart con i 3 parametri richiesti dal nuovo CartContext
+      addToCart(productSlug, selectedSize, quantity);
 
-    const btn = document.querySelector(".btn-add-cart");
-    btn.innerHTML = '<i class="bi bi-check-lg me-2"></i>Aggiunto!';
-    btn.classList.add("btn-success");
-    setTimeout(() => {
-      btn.innerHTML =
-        '<i class="bi bi-cart-plus me-2"></i>Aggiungi al carrello';
-      btn.classList.remove("btn-success");
-    }, 2000);
+      // Feedback visivo del pulsante
+      const btn = document.querySelector(".btn-add-cart");
+      btn.innerHTML = '<i class="bi bi-check-lg me-2"></i>Aggiunto!';
+      btn.classList.add("btn-success");
+      setTimeout(() => {
+        btn.innerHTML =
+          '<i class="bi bi-cart-plus me-2"></i>Aggiungi al carrello';
+        btn.classList.remove("btn-success");
+      }, 2000);
+
+      console.log(
+        `Aggiunto al carrello: ${name}, Taglia: ${selectedSize}, Quantità: ${quantity}`
+      );
+    } catch (error) {
+      console.error("Errore aggiunta al carrello:", error);
+      alert("Errore durante l'aggiunta al carrello");
+    }
   }
 
-  const availableSizes = variations?.filter(variation => variation.quantity > 0) || [];
+  // Funzione per gestire il cambio quantità
+  const handleQuantityChange = (newQuantity) => {
+    if (newQuantity < 1) return;
+
+    // Controlla che non superi la quantità disponibile per la taglia selezionata
+    if (selectedSize) {
+      const selectedVariation = variations?.find(
+        (v) => v.size === selectedSize
+      );
+      if (selectedVariation && newQuantity > selectedVariation.quantity) {
+        alert(
+          `Disponibili solo ${selectedVariation.quantity} pezzi per la taglia ${selectedSize}`
+        );
+        return;
+      }
+    }
+
+    setQuantity(newQuantity);
+  };
+
+  const availableSizes =
+    variations?.filter((variation) => variation.quantity > 0) || [];
   const isSoldOut = availableSizes.length === 0;
+
+  // Ottieni la quantità disponibile per la taglia selezionata
+  const getAvailableQuantityForSize = (size) => {
+    const variation = variations?.find((v) => v.size === size);
+    return variation ? variation.quantity : 0;
+  };
+
+  const selectedSizeQuantity = selectedSize
+    ? getAvailableQuantityForSize(selectedSize)
+    : 0;
 
   if (isLoading) {
     return (
@@ -98,9 +141,15 @@ export default function SingleProductPage() {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "400px" }}>
+              <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ minHeight: "400px" }}
+              >
                 <div className="text-center">
-                  <div className="spinner-border text-primary-green mb-3" role="status">
+                  <div
+                    className="spinner-border text-primary-green mb-3"
+                    role="status"
+                  >
                     <span className="visually-hidden">Loading...</span>
                   </div>
                   <h4 className="text-muted">Caricamento prodotto...</h4>
@@ -164,16 +213,25 @@ export default function SingleProductPage() {
           <div className="col-lg-6">
             <div className="position-relative">
               {isDiscountActive && (
-                <div className="position-absolute top-0 start-0 m-3" style={{ zIndex: 10 }}>
+                <div
+                  className="position-absolute top-0 start-0 m-3"
+                  style={{ zIndex: 10 }}
+                >
                   <span className="badge bg-danger fs-6 p-3 rounded-circle sale-badge">
                     -{discount}%
                   </span>
                 </div>
               )}
-              <div id="productCarousel" className="carousel slide shadow-lg rounded overflow-hidden">
+              <div
+                id="productCarousel"
+                className="carousel slide shadow-lg rounded overflow-hidden"
+              >
                 <div className="carousel-inner">
                   {[1, 2, 3].map((_, idx) => (
-                    <div className={`carousel-item ${idx === 0 ? "active" : ""}`} key={idx}>
+                    <div
+                      className={`carousel-item ${idx === 0 ? "active" : ""}`}
+                      key={idx}
+                    >
                       <img
                         src={image_url}
                         className="d-block w-100 product-main-image"
@@ -183,12 +241,28 @@ export default function SingleProductPage() {
                     </div>
                   ))}
                 </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-                  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                <button
+                  className="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#productCarousel"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    className="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
                   <span className="visually-hidden">Previous</span>
                 </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-                  <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                <button
+                  className="carousel-control-next"
+                  type="button"
+                  data-bs-target="#productCarousel"
+                  data-bs-slide="next"
+                >
+                  <span
+                    className="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
                   <span className="visually-hidden">Next</span>
                 </button>
               </div>
@@ -199,13 +273,19 @@ export default function SingleProductPage() {
           <div className="col-lg-6">
             <div className="product-details h-100">
               <div className="mb-4">
-                <p className="name-brand text-primary-green fw-bold mb-2">{brand}</p>
+                <p className="name-brand text-primary-green fw-bold mb-2">
+                  {brand}
+                </p>
                 <h1 className="display-5 fw-bold text-dark mb-3">{name}</h1>
                 <div className="price-section mb-4">
                   {isDiscountActive ? (
                     <div>
-                      <span className="text-decoration-line-through text-muted fs-4 me-3">€{price}</span>
-                      <span className="text-success fs-2 fw-bold">€{finalPrice}</span>
+                      <span className="text-decoration-line-through text-muted fs-4 me-3">
+                        €{price}
+                      </span>
+                      <span className="text-success fs-2 fw-bold">
+                        €{finalPrice}
+                      </span>
                       <span className="badge bg-danger ms-2">
                         Risparmia €{(price - finalPrice).toFixed(2)}
                       </span>
@@ -225,15 +305,30 @@ export default function SingleProductPage() {
                 <h6 className="fw-bold mb-3">Seleziona la taglia:</h6>
                 <div className="d-flex gap-2 flex-wrap">
                   {availableSizes.length > 0 ? (
-                    variations.map((sizes, index) => (
+                    variations.map((sizes, index) =>
                       sizes.quantity > 0 ? (
                         <button
                           key={index}
                           type="button"
-                          className={`btn ${selectedSize === sizes.size ? "btn-dark" : "btn-outline-dark"} size-btn`}
-                          onClick={() => setSelectedSize(sizes.size)}
+                          className={`btn ${
+                            selectedSize === sizes.size
+                              ? "btn-dark"
+                              : "btn-outline-dark"
+                          } size-btn position-relative`}
+                          onClick={() => {
+                            setSelectedSize(sizes.size);
+                            // Reset quantità quando cambia taglia
+                            setQuantity(1);
+                          }}
+                          title={`${sizes.size} - ${sizes.quantity} disponibili`}
                         >
                           {sizes.size}
+                          {/* Mostra quantità disponibile sotto la taglia */}
+                          {sizes.quantity <= 5 && (
+                            <small className="d-block text-xs">
+                              Solo {sizes.quantity}
+                            </small>
+                          )}
                         </button>
                       ) : (
                         <button
@@ -241,11 +336,13 @@ export default function SingleProductPage() {
                           type="button"
                           className="btn text-danger btn-outline-dark size-btn"
                           disabled
+                          title={`${sizes.size} - Esaurita`}
                         >
                           {sizes.size}
+                          <small className="d-block text-xs">Esaurita</small>
                         </button>
                       )
-                    ))
+                    )
                   ) : (
                     <div className="text-danger fs-5">PRODOTTO ESAURITO</div>
                   )}
@@ -253,20 +350,66 @@ export default function SingleProductPage() {
                 {selectedSize && (
                   <small className="text-success mt-2 d-block">
                     <i className="bi bi-check-circle me-1"></i>
-                    Taglia {selectedSize} selezionata
+                    Taglia {selectedSize} selezionata ({selectedSizeQuantity}{" "}
+                    disponibili)
                   </small>
                 )}
               </div>
+
+              {/* SEZIONE QUANTITÀ - AGGIUNTA */}
+              {selectedSize && (
+                <div className="mb-4">
+                  <h6 className="fw-bold mb-3">Quantità:</h6>
+                  <div className="d-flex align-items-center gap-3">
+                    <div className="d-flex align-items-center border rounded">
+                      <button
+                        type="button"
+                        className="btn btn-sm px-3"
+                        onClick={() => handleQuantityChange(quantity - 1)}
+                        disabled={quantity <= 1}
+                      >
+                        <i className="bi bi-dash"></i>
+                      </button>
+                      <span className="px-3 py-2 bg-light border-start border-end">
+                        {quantity}
+                      </span>
+                      <button
+                        type="button"
+                        className="btn btn-sm px-3"
+                        onClick={() => handleQuantityChange(quantity + 1)}
+                        disabled={quantity >= selectedSizeQuantity}
+                      >
+                        <i className="bi bi-plus"></i>
+                      </button>
+                    </div>
+                    <small className="text-muted">
+                      Totale: €{(finalPrice * quantity).toFixed(2)}
+                    </small>
+                  </div>
+                  {quantity >= selectedSizeQuantity && (
+                    <small className="text-warning d-block mt-2">
+                      <i className="bi bi-exclamation-triangle me-1"></i>
+                      Hai raggiunto la quantità massima disponibile
+                    </small>
+                  )}
+                </div>
+              )}
 
               {/* Bottone Aggiungi al carrello */}
               <div className="d-grid gap-3 mb-4">
                 <button
                   className="btn btn-lg bg-primary-green text-white fw-bold btn-add-cart"
                   onClick={handleAddToCart}
-                  disabled={isSoldOut}
+                  disabled={isSoldOut || !selectedSize}
                 >
                   <i className="bi bi-cart-plus me-2"></i>
-                  {isSoldOut ? "Non disponibile" : "Aggiungi al carrello"}
+                  {isSoldOut
+                    ? "Non disponibile"
+                    : !selectedSize
+                    ? "Seleziona una taglia"
+                    : `Aggiungi al carrello ${
+                        quantity > 1 ? `(${quantity})` : ""
+                      }`}
                 </button>
               </div>
 
