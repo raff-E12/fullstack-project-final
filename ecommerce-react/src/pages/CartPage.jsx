@@ -6,6 +6,7 @@ import { useInventory } from "../hooks/useInventory";
 import CheckoutForm from "../components/CheckOutForm.jsx";
 import AvailabilityWarning from "../components/AvailabilityWarning.jsx";
 import OrderConfirmationModal from "../components/OrderConfirmationModal.jsx";
+import "../style/CartPage.css";
 
 // Componente principale CartPage
 export default function CartPage() {
@@ -198,10 +199,8 @@ export default function CartPage() {
   };
 
   return (
-    <div className="container py-4">
-      <h1 className="h2 fw-bold text-center text-md-start mb-4">
-        Il tuo Carrello
-      </h1>
+    <div className="container cart-container">
+      <h1 className="cart-title">Il tuo Carrello</h1>
 
       {/* Modal di conferma ordine */}
       <OrderConfirmationModal
@@ -211,20 +210,18 @@ export default function CartPage() {
       />
 
       {cartItems.length === 0 ? (
-        <div className="text-center py-5">
-          <i className="bi bi-cart-x display-1 text-muted mb-4" />
-          <h3 className="text-muted mb-3">Il carrello è vuoto</h3>
-          <p className="text-muted mb-4">
-            Aggiungi alcuni prodotti per iniziare
-          </p>
-          <Link to="/products" className="btn btn-primary btn-lg">
+        <div className="empty-cart">
+          <i className="bi bi-cart-x empty-cart-icon" />
+          <h3>Il carrello è vuoto</h3>
+          <p>Aggiungi alcuni prodotti per iniziare</p>
+          <Link to="/products" className="btn continue-shopping-btn">
             Continua lo Shopping
           </Link>
         </div>
       ) : (
         <div className="row">
           {/* Lista prodotti */}
-          <div className="col-lg-8">
+          <div className="col-lg-8 cart-items-section">
             {/* Warning per disponibilità */}
             <AvailabilityWarning
               unavailableItems={availabilityStatus.unavailableItems}
@@ -233,112 +230,97 @@ export default function CartPage() {
 
             {/* Indicatore controllo disponibilità */}
             {isCheckingAvailability && (
-              <div className="alert alert-info mb-4">
+              <div className="availability-checking">
                 <div className="d-flex align-items-center">
-                  <span className="spinner-border spinner-border-sm me-3"></span>
+                  <span className="spinner-border spinner-border-sm"></span>
                   Controllo disponibilità prodotti...
                 </div>
               </div>
             )}
 
-            <div className="card shadow-sm mb-4">
-              <div className="card-body p-0">
-                {cartItems.map((item, index) => {
-                  const price = parseFloat(item.price);
-                  const quantity = parseInt(item.quantity);
-                  const start = new Date(item.start_discount);
-                  const end = new Date(item.end_discount);
+            <div className="cart-item-wrapper">
+              {cartItems.map((item, index) => {
+                const price = parseFloat(item.price);
+                const quantity = parseInt(item.quantity);
+                const start = new Date(item.start_discount);
+                const end = new Date(item.end_discount);
 
-                  let finalPrice = price;
-                  let hasDiscount = false;
-                  if (
-                    item.is_visible_prod === 1 &&
-                    today >= start &&
-                    today <= end &&
-                    item.discount
-                  ) {
-                    const discount = parseFloat(item.discount);
-                    finalPrice = price - (price * discount) / 100;
-                    hasDiscount = true;
-                  }
+                let finalPrice = price;
+                let hasDiscount = false;
+                if (
+                  item.is_visible_prod === 1 &&
+                  today >= start &&
+                  today <= end &&
+                  item.discount
+                ) {
+                  const discount = parseFloat(item.discount);
+                  finalPrice = price - (price * discount) / 100;
+                  hasDiscount = true;
+                }
 
-                  // Trova se questo item ha problemi di disponibilità
-                  const availabilityIssue =
-                    availabilityStatus.unavailableItems.find(
-                      (unavailable) =>
-                        unavailable.productId === item.id &&
-                        unavailable.size === item.selectedSize
-                    );
+                // Trova se questo item ha problemi di disponibilità
+                const availabilityIssue =
+                  availabilityStatus.unavailableItems.find(
+                    (unavailable) =>
+                      unavailable.productId === item.id &&
+                      unavailable.size === item.selectedSize
+                  );
 
-                  return (
-                    <div key={`${item.id}_${item.selectedSize}`}>
-                      <div
-                        className={`p-4 cart-item-card ${
-                          availabilityIssue ? "border-warning" : ""
-                        }`}
-                        style={{
-                          transition: "all 0.2s ease",
-                          border: availabilityIssue
-                            ? "1px solid #ffc107"
-                            : "1px solid #e9ecef",
-                        }}
-                      >
-                        <div className="row align-items-center">
-                          <div className="col-md-3 col-4">
-                            <div className="position-relative">
-                              <img
-                                src={item.image_url}
-                                alt={item.name}
-                                className="img-fluid rounded"
-                                style={{
-                                  maxHeight: "120px",
-                                  objectFit: "cover",
-                                  width: "100%",
-                                }}
-                              />
-                              {availabilityIssue && (
-                                <span className="position-absolute top-0 start-0 badge bg-warning text-dark">
-                                  <i className="bi bi-exclamation-triangle"></i>
-                                </span>
-                              )}
-                            </div>
+                return (
+                  <div key={`${item.id}_${item.selectedSize}`}>
+                    <div
+                      className={`cart-item ${
+                        availabilityIssue ? "unavailable" : ""
+                      }`}
+                    >
+                      <div className="row align-items-center">
+                        <div className="col-md-3 col-4">
+                          <div className="cart-item-image">
+                            <img src={item.image_url} alt={item.name} />
+                            {availabilityIssue && (
+                              <span className="availability-badge">
+                                <i className="bi bi-exclamation-triangle"></i>
+                              </span>
+                            )}
                           </div>
+                        </div>
 
-                          <div className="col-md-5 col-8">
+                        <div className="col-md-5 col-8">
+                          <div className="product-info">
                             <Link
                               to={`/products/${item.slug}`}
                               className="text-decoration-none text-dark"
                             >
-                              <h5 className="fw-bold mb-2">{item.name}</h5>
-                              <p className="text-muted small mb-2">
+                              <h5>{item.name}</h5>
+                              <p className="product-description">
                                 {item.description}
                               </p>
                             </Link>
 
-                            <div className="d-flex align-items-center mb-2 flex-wrap gap-2">
-                              <span className="badge bg-light text-dark border">
+                            <div className="product-badges">
+                              <span className="badge product-badge">
                                 Taglia: {item.selectedSize}
                               </span>
-                              <span className="badge bg-light text-dark border">
+                              <span className="badge product-badge">
                                 Qty: {quantity}
                               </span>
                               {hasDiscount && (
-                                <span className="badge bg-success">
+                                <span className="badge product-badge discount-badge">
                                   -{item.discount}%
                                 </span>
                               )}
                             </div>
 
                             {availabilityIssue && (
-                              <div className="alert alert-warning py-2 px-3 mb-2 small">
+                              <div className="availability-issue">
                                 <i className="bi bi-exclamation-triangle me-1"></i>
                                 {availabilityIssue.message}
                               </div>
                             )}
 
-                            <div className="d-flex gap-2 quantity-controls">
+                            <div className="quantity-controls">
                               <button
-                                className="btn btn-outline-secondary btn-sm"
+                                className="btn quantity-btn"
                                 onClick={() =>
                                   updateQuantity(
                                     item.id,
@@ -348,22 +330,14 @@ export default function CartPage() {
                                 }
                                 disabled={item.quantity <= 1}
                                 title="Diminuisci quantità"
-                                style={{
-                                  minWidth: "35px",
-                                  height: "35px",
-                                  padding: "0",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}
                               >
                                 −
                               </button>
-                              <span className="d-flex align-items-center px-3 bg-light border rounded">
+                              <span className="quantity-display">
                                 {item.quantity}
                               </span>
                               <button
-                                className="btn btn-outline-secondary btn-sm"
+                                className="btn quantity-btn"
                                 onClick={() =>
                                   updateQuantity(
                                     item.id,
@@ -372,109 +346,71 @@ export default function CartPage() {
                                   )
                                 }
                                 title="Aumenta quantità"
-                                style={{
-                                  minWidth: "35px",
-                                  height: "35px",
-                                  padding: "0",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}
                               >
                                 +
                               </button>
                               <button
-                                className="btn btn-outline-danger btn-sm ms-2"
+                                className="btn quantity-btn remove-btn"
                                 onClick={() =>
                                   removeFromCart(item.id, item.selectedSize)
                                 }
                                 title="Rimuovi dal carrello"
-                                style={{
-                                  minWidth: "35px",
-                                  height: "35px",
-                                  padding: "0",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}
                               >
                                 <i className="bi bi-trash3"></i>
                               </button>
                             </div>
                           </div>
+                        </div>
 
-                          <div className="col-md-4 text-md-end mt-3 mt-md-0">
-                            {hasDiscount ? (
-                              <>
-                                <div className="text-muted text-decoration-line-through small">
-                                  €{price.toFixed(2)}
-                                </div>
-                                <div className="h5 fw-bold text-success mb-0">
-                                  €{finalPrice.toFixed(2)}
-                                </div>
-                                <div className="small text-muted">
-                                  Totale: €{(finalPrice * quantity).toFixed(2)}
-                                </div>
-                              </>
-                            ) : (
-                              <>
-                                <div className="h5 fw-bold mb-0">
-                                  €{price.toFixed(2)}
-                                </div>
-                                <div className="small text-muted">
-                                  Totale: €{(price * quantity).toFixed(2)}
-                                </div>
-                              </>
-                            )}
-                          </div>
+                        <div className="col-md-4 price-section">
+                          {hasDiscount ? (
+                            <>
+                              <div className="original-price">
+                                €{price.toFixed(2)}
+                              </div>
+                              <div className="current-price">
+                                €{finalPrice.toFixed(2)}
+                              </div>
+                              <div className="total-price">
+                                Totale: €{(finalPrice * quantity).toFixed(2)}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="regular-price">
+                                €{price.toFixed(2)}
+                              </div>
+                              <div className="total-price">
+                                Totale: €{(price * quantity).toFixed(2)}
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
-                      {index < cartItems.length - 1 && <hr className="m-0" />}
                     </div>
-                  );
-                })}
-              </div>
+                    {index < cartItems.length - 1 && (
+                      <hr className="item-separator" />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
           {/* Riepilogo ordine */}
-          <div className="col-lg-4 mt-4 mt-lg-0">
-            <div className="card shadow-sm">
-              <div>
-                <h5
-                  className="fw-bold mb-0"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                    color: "white",
-                    borderRadius: "12px",
-                    padding: "1rem",
-                    margin: "-2rem 0 -1rem",
-                  }}
-                >
-                  {showCheckoutForm ? "Checkout" : "Riepilogo Ordine"}
-                </h5>
+          <div className="col-lg-4 order-summary">
+            <div className="summary-card">
+              <div className="summary-header">
+                {showCheckoutForm ? "Checkout" : "Riepilogo Ordine"}
               </div>
-              <div className="card-body">
+              <div className="summary-body">
                 {!showCheckoutForm ? (
                   <>
-                    <div
-                      className="d-flex justify-content-between mb-2 summary-row"
-                      style={{
-                        borderBottom: "1px solid #dee2e6",
-                        paddingBottom: "0.5rem",
-                      }}
-                    >
+                    <div className="summary-row">
                       <span>Subtotale prodotti:</span>
                       <span>€{subtotal.toFixed(2)}</span>
                     </div>
-                    <div
-                      className="d-flex justify-content-between mb-2 summary-row"
-                      style={{
-                        borderBottom: "1px solid #dee2e6",
-                        paddingBottom: "0.5rem",
-                      }}
-                    >
+                    <div className="summary-row">
                       <span>Spedizione:</span>
                       <span>
                         {shippingCost === 0
@@ -484,13 +420,7 @@ export default function CartPage() {
                     </div>
 
                     {validPromo && appliedPromoPercentage > 0 && (
-                      <div
-                        className="d-flex justify-content-between mb-2 text-success fw-bold summary-row"
-                        style={{
-                          borderBottom: "1px solid #dee2e6",
-                          paddingBottom: "0.5rem",
-                        }}
-                      >
+                      <div className="summary-row discount-row">
                         <span>Sconto promo:</span>
                         <span>
                           -€
@@ -503,47 +433,31 @@ export default function CartPage() {
                       </div>
                     )}
 
-                    <hr />
-
-                    <div
-                      className="d-flex justify-content-between mb-4 summary-row"
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: "1.2rem",
-                        marginTop: "0.5rem",
-                        paddingTop: "1rem",
-                        borderTop: "2px solid #dee2e6",
-                      }}
-                    >
-                      <span className="h5 fw-bold">Totale:</span>
-                      <span className="h5 fw-bold">€{total.toFixed(2)}</span>
+                    <div className="summary-row total-row">
+                      <span>Totale:</span>
+                      <span>€{total.toFixed(2)}</span>
                     </div>
 
-                    <div className="mb-4">
-                      <label className="form-label small fw-semibold">
-                        Codice Sconto
-                      </label>
+                    <div className="discount-section">
+                      <label className="discount-label">Codice Sconto</label>
                       <form onSubmit={handleDiscountSubmit}>
-                        <div className="input-group mb-2">
+                        <div className="discount-input-group">
                           <input
                             type="text"
-                            className="form-control"
+                            className="discount-input"
                             placeholder="Inserisci codice"
                             value={discountCode}
                             onChange={(e) => setDiscountCode(e.target.value)}
                           />
-                          <button
-                            className="btn btn-outline-secondary"
-                            type="submit"
-                          >
+                          <button className="discount-btn" type="submit">
                             Applica
                           </button>
                         </div>
 
                         {promoMessage && (
                           <small
-                            className={`form-text ${
-                              validPromo ? "text-success" : "text-danger"
+                            className={`discount-message ${
+                              validPromo ? "discount-success" : "discount-error"
                             }`}
                           >
                             {promoMessage}
@@ -552,10 +466,12 @@ export default function CartPage() {
                       </form>
                     </div>
 
-                    <div className="d-grid">
+                    <div className="checkout-btn-wrapper">
                       <button
                         onClick={handleProceedToCheckout}
-                        className="btn btn-primary btn-lg"
+                        className={`btn checkout-btn ${
+                          !availabilityStatus.allAvailable ? "unavailable" : ""
+                        } ${isCheckingAvailability ? "checking" : ""}`}
                         disabled={
                           !availabilityStatus.allAvailable ||
                           isCheckingAvailability
@@ -563,30 +479,25 @@ export default function CartPage() {
                       >
                         {!availabilityStatus.allAvailable ? (
                           <>
-                            <i className="bi bi-exclamation-triangle me-2"></i>
+                            <i className="bi bi-exclamation-triangle"></i>
                             Risolvi Problemi Disponibilità
                           </>
                         ) : isCheckingAvailability ? (
                           <>
-                            <span className="spinner-border spinner-border-sm me-2"></span>
+                            <span className="spinner-border spinner-border-sm"></span>
                             Controllo...
                           </>
                         ) : (
                           <>
-                            <i className="bi bi-credit-card me-2"></i>
+                            <i className="bi bi-credit-card"></i>
                             Procedi al Checkout
                           </>
                         )}
                       </button>
                     </div>
 
-                    <div className="text-center mt-3">
-                      <Link
-                        to="/products"
-                        className="text-decoration-none small text-dark"
-                      >
-                        ← Continua lo Shopping
-                      </Link>
+                    <div className="continue-shopping-link">
+                      <Link to="/products">← Continua lo Shopping</Link>
                     </div>
                   </>
                 ) : (
