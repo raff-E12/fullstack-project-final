@@ -1,3 +1,5 @@
+import '../style/OrderConfirmationModal.css'
+
 function OrderConfirmationModal({ isOpen, onClose, orderCode }) {
     if (!isOpen) return null
 
