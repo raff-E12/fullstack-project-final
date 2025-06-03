@@ -1,264 +1,359 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { NavLink, Link } from "react-router-dom";
 import axios from "axios";
-import emailjs from "@emailjs/browser";
+import { useCart } from "../context/CartContext";
+import { useInventory } from "../hooks/useInventory";
 
-export default function CheckOutForm({ amount, onSuccess, onCancel }) {
-  const endpoint = "http://localhost:3000/checkout";
+const endPointDiscount = "http://localhost:3000/checkout/discount-code";
 
-  const standardFormData = {
+// Componente per il form di checkout integrato (SEMPLIFICATO)
+const CheckoutForm = ({
+  cartItems,
+  totalAmount,
+  onOrderSuccess,
+  onCancel,
+  discountInfo,
+}) => {
+  const [formData, setFormData] = useState({
     name: "",
     surname: "",
     email: "",
     phone: "",
-    amount: amount,
     billing_address: "",
     shipping_address: "",
-    country: "",
-  };
+    country: "italia",
+    same_address: true,
+  });
 
-  const [formData, setFormData] = useState(standardFormData);
+  const [formErrors, setFormErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { processOrder } = useInventory();
+  const { clearCart } = useCart();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+
+    // Rimuovi errore quando l'utente corregge
+    if (formErrors[name]) {
+      setFormErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
   };
 
-  const sendConfirmationEmail = () => {
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          name: formData.name,
-          surname: formData.surname,
-          email: formData.email,
-          phone: formData.phone,
-          amount: formData.amount,
-          billing_address: formData.billing_address,
-          shipping_address: formData.shipping_address,
-          country: formData.country,
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-      .then((result) => {
-        console.log("Email inviata con successo!", result.text);
-      })
-      .catch((error) => {
-        console.error("Errore nell'invio dell'email:", error);
-      });
+  const validateForm = () => {
+    const errors = {};
+
+    // Nome e cognome
+    if (!formData.name || formData.name.length < 3) {
+      errors.name = "Il nome deve essere di almeno 3 caratteri";
+    }
+    if (!formData.surname || formData.surname.length < 3) {
+      errors.surname = "Il cognome deve essere di almeno 3 caratteri";
+    }
+
+    // Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email || !emailRegex.test(formData.email)) {
+      errors.email = "Inserisci un indirizzo email valido";
+    }
+
+    // Telefono
+    if (
+      !formData.phone ||
+      formData.phone.length < 7 ||
+      formData.phone.length > 20
+    ) {
+      errors.phone = "Il telefono deve essere tra 7 e 20 cifre";
+    }
+
+    // Indirizzo fatturazione
+    if (!formData.billing_address || formData.billing_address.length < 10) {
+      errors.billing_address = "L'indirizzo deve essere di almeno 10 caratteri";
+    }
+
+    // Indirizzo spedizione (se diverso)
+    if (!formData.same_address) {
+      if (!formData.shipping_address || formData.shipping_address.length < 10) {
+        errors.shipping_address =
+          "L'indirizzo di spedizione deve essere di almeno 10 caratteri";
+      }
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      sendConfirmationEmail();
+      // Prepara i dati dell'ordine
+      const orderInfo = {
+        ...formData,
+        amount: totalAmount,
+        shipping_address: formData.same_address
+          ? formData.billing_address
+          : formData.shipping_address,
+        discount_applied: discountInfo.validPromo
+          ? discountInfo.appliedPromoPercentage
+          : 0,
+        discount_code: discountInfo.discountCode || null,
+        items_count: cartItems.length,
+        total_quantity: cartItems.reduce((sum, item) => sum + item.quantity, 0),
+        order_date: new Date().toISOString(),
+      };
 
-      const response = await axios.post(endpoint, formData);
-      console.log("Ordine inviato con successo:", response.data);
+      // Processa l'ordine (aggiorna inventory)
+      const result = await processOrder(cartItems, orderInfo);
 
-      setFormData(standardFormData);
+      if (result.success) {
+        // Svuota il carrello
+        clearCart();
 
-      // Callback per notificare il successo al componente padre
-      if (onSuccess) {
-        onSuccess(response.data);
+        // Notifica successo
+        onOrderSuccess(result);
+      } else {
+        throw new Error(
+          result.message || "Errore nel processamento dell'ordine"
+        );
       }
     } catch (error) {
-      console.error("Errore nell'invio dell'ordine:", error);
+      console.error("Errore invio ordine:", error);
+      setFormErrors({
+        submit:
+          error.message || "Errore nel processamento dell'ordine. Riprova.",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* Riepilogo rapido */}
-      <div className="bg-light p-3 rounded mb-4">
-        <div className="d-flex justify-content-between">
-          <span className="fw-semibold">Totale da pagare:</span>
-          <span className="fw-bold">€{amount?.toFixed(2)}</span>
-        </div>
-      </div>
-
-      {/* Nome e Cognome in riga */}
-      <div className="row mb-3">
-        <div className="col-6">
-          <label htmlFor="name" className="form-label small fw-semibold">
-            Nome*
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            minLength={3}
-            placeholder="Nome"
-            disabled={isSubmitting}
-          />
-        </div>
-        <div className="col-6">
-          <label htmlFor="surname" className="form-label small fw-semibold">
-            Cognome*
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="surname"
-            name="surname"
-            value={formData.surname}
-            onChange={handleChange}
-            required
-            minLength={3}
-            placeholder="Cognome"
-            disabled={isSubmitting}
-          />
-        </div>
-      </div>
-
-      {/* Email */}
-      <div className="mb-3">
-        <label htmlFor="email" className="form-label small fw-semibold">
-          Email*
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          placeholder="email@esempio.com"
-          disabled={isSubmitting}
-        />
-      </div>
-
-      {/* Telefono */}
-      <div className="mb-3">
-        <label htmlFor="phone" className="form-label small fw-semibold">
-          Telefono*
-        </label>
-        <input
-          type="tel"
-          className="form-control"
-          id="phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-          minLength={7}
-          maxLength={20}
-          placeholder="+39 123 456 7890"
-          disabled={isSubmitting}
-        />
-        <small className="text-muted">7-20 cifre</small>
-      </div>
-
-      {/* Indirizzo Fatturazione */}
-      <div className="mb-3">
-        <label
-          htmlFor="billing_address"
-          className="form-label small fw-semibold"
-        >
-          Indirizzo Fatturazione*
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="billing_address"
-          name="billing_address"
-          value={formData.billing_address}
-          onChange={handleChange}
-          required
-          minLength={10}
-          maxLength={200}
-          placeholder="Via, Numero, CAP, Città"
-          disabled={isSubmitting}
-        />
-        <small className="text-muted">10-200 caratteri</small>
-      </div>
-
-      {/* Indirizzo Spedizione */}
-      <div className="mb-3">
-        <label
-          htmlFor="shipping_address"
-          className="form-label small fw-semibold"
-        >
-          Indirizzo Spedizione*
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="shipping_address"
-          name="shipping_address"
-          value={formData.shipping_address}
-          onChange={handleChange}
-          required
-          minLength={10}
-          maxLength={200}
-          placeholder="Via, Numero, CAP, Città"
-          disabled={isSubmitting}
-        />
-        <small className="text-muted">10-200 caratteri</small>
-      </div>
-
-      {/* Paese */}
-      <div className="mb-4">
-        <label htmlFor="country" className="form-label small fw-semibold">
-          Paese*
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="country"
-          name="country"
-          value={formData.country}
-          onChange={handleChange}
-          required
-          list="countries-list"
-          placeholder="Italia"
-          disabled={isSubmitting}
-        />
-      </div>
-
-      {/* Pulsanti */}
-      <div className="d-grid gap-2">
+    <div
+      className="checkout-form-container"
+      style={{
+        backgroundColor: "#f8f9fa",
+        borderRadius: "12px",
+        padding: "1.5rem",
+        border: "2px solid #e9ecef",
+      }}
+    >
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h5 className="fw-bold mb-0">Completa il tuo ordine</h5>
         <button
-          type="submit"
-          className="btn btn-primary"
+          type="button"
+          className="btn-close"
+          onClick={onCancel}
           disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <>
-              <span
-                className="spinner-border spinner-border-sm me-2"
-                role="status"
-              ></span>
-              Elaborazione...
-            </>
-          ) : (
-            `Completa Ordine - €${amount?.toFixed(2)}`
+        ></button>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        {/* Informazioni personali */}
+        <div className="row mb-4">
+          <div className="col-12">
+            <h6 className="fw-semibold mb-3 text-primary">
+              Informazioni Personali
+            </h6>
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Nome *</label>
+            <input
+              type="text"
+              name="name"
+              className={`form-control ${formErrors.name ? "is-invalid" : ""}`}
+              value={formData.name}
+              onChange={handleInputChange}
+              disabled={isSubmitting}
+              placeholder="Il tuo nome"
+            />
+            {formErrors.name && (
+              <div className="invalid-feedback">{formErrors.name}</div>
+            )}
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Cognome *</label>
+            <input
+              type="text"
+              name="surname"
+              className={`form-control ${
+                formErrors.surname ? "is-invalid" : ""
+              }`}
+              value={formData.surname}
+              onChange={handleInputChange}
+              disabled={isSubmitting}
+              placeholder="Il tuo cognome"
+            />
+            {formErrors.surname && (
+              <div className="invalid-feedback">{formErrors.surname}</div>
+            )}
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Email *</label>
+            <input
+              type="email"
+              name="email"
+              className={`form-control ${formErrors.email ? "is-invalid" : ""}`}
+              value={formData.email}
+              onChange={handleInputChange}
+              disabled={isSubmitting}
+              placeholder="la-tua-email@esempio.com"
+            />
+            {formErrors.email && (
+              <div className="invalid-feedback">{formErrors.email}</div>
+            )}
+          </div>
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Telefono *</label>
+            <input
+              type="tel"
+              name="phone"
+              className={`form-control ${formErrors.phone ? "is-invalid" : ""}`}
+              value={formData.phone}
+              onChange={handleInputChange}
+              disabled={isSubmitting}
+              placeholder="+39 123 456 7890"
+            />
+            {formErrors.phone && (
+              <div className="invalid-feedback">{formErrors.phone}</div>
+            )}
+          </div>
+        </div>
+
+        {/* Indirizzi */}
+        <div className="row mb-4">
+          <div className="col-12">
+            <h6 className="fw-semibold mb-3 text-primary">Indirizzi</h6>
+          </div>
+          <div className="col-12 mb-3">
+            <label className="form-label">Indirizzo di Fatturazione *</label>
+            <textarea
+              name="billing_address"
+              className={`form-control ${
+                formErrors.billing_address ? "is-invalid" : ""
+              }`}
+              value={formData.billing_address}
+              onChange={handleInputChange}
+              disabled={isSubmitting}
+              rows="3"
+              placeholder="Via, numero civico, città, CAP, provincia"
+            />
+            {formErrors.billing_address && (
+              <div className="invalid-feedback">
+                {formErrors.billing_address}
+              </div>
+            )}
+          </div>
+
+          <div className="col-12 mb-3">
+            <div className="form-check">
+              <input
+                type="checkbox"
+                name="same_address"
+                className="form-check-input"
+                checked={formData.same_address}
+                onChange={handleInputChange}
+                disabled={isSubmitting}
+              />
+              <label className="form-check-label">
+                L'indirizzo di spedizione è uguale a quello di fatturazione
+              </label>
+            </div>
+          </div>
+
+          {!formData.same_address && (
+            <div className="col-12 mb-3">
+              <label className="form-label">Indirizzo di Spedizione *</label>
+              <textarea
+                name="shipping_address"
+                className={`form-control ${
+                  formErrors.shipping_address ? "is-invalid" : ""
+                }`}
+                value={formData.shipping_address}
+                onChange={handleInputChange}
+                disabled={isSubmitting}
+                rows="3"
+                placeholder="Via, numero civico, città, CAP, provincia"
+              />
+              {formErrors.shipping_address && (
+                <div className="invalid-feedback">
+                  {formErrors.shipping_address}
+                </div>
+              )}
+            </div>
           )}
-        </button>
-        {onCancel && (
+
+          <div className="col-md-6 mb-3">
+            <label className="form-label">Paese *</label>
+            <select
+              name="country"
+              className="form-select"
+              value={formData.country}
+              onChange={handleInputChange}
+              disabled={isSubmitting}
+            >
+              <option value="italia">Italia</option>
+              <option value="francia">Francia</option>
+              <option value="germania">Germania</option>
+              <option value="spagna">Spagna</option>
+              <option value="austria">Austria</option>
+              <option value="svizzera">Svizzera</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Errore generale */}
+        {formErrors.submit && (
+          <div className="alert alert-danger mb-4">
+            <i className="bi bi-exclamation-triangle me-2"></i>
+            {formErrors.submit}
+          </div>
+        )}
+
+        {/* Buttons */}
+        <div className="d-flex gap-3">
           <button
             type="button"
-            onClick={onCancel}
             className="btn btn-outline-secondary"
+            onClick={onCancel}
             disabled={isSubmitting}
           >
-            ← Torna al Riepilogo
+            Torna al Carrello
           </button>
-        )}
-      </div>
-    </form>
+          <button
+            type="submit"
+            className="btn btn-primary flex-grow-1"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2"></span>
+                Processando...
+              </>
+            ) : (
+              <>
+                <i className="bi bi-credit-card me-2"></i>
+                Conferma Ordine - €{totalAmount.toFixed(2)}
+              </>
+            )}
+          </button>
+        </div>
+      </form>
+    </div>
   );
-}
+};
+
+export default CheckoutForm;
