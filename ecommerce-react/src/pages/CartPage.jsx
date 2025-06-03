@@ -427,8 +427,8 @@ Riceverai una email di conferma.`);
           <div className="col-lg-4 mt-4 mt-lg-0">
             <div className="card shadow-sm">
               <div className="card-header " style={{
-                "border-bottom": "none",
-                "background-color": "#FFFFFF",
+                borderBottom: "none",
+                backgroundColor: "#FFFFFF",
               }}>
                 <h5
                   className="fw-bold mb-0"
