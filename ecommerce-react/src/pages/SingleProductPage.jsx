@@ -21,7 +21,7 @@ export default function SingleProductPage() {
     axios
       .get(endPoint)
       .then((res) => {
-        setProductSlug(res.data.products[0] || {});
+        setProductSlug(res.data.products || {});
         setError(null);
       })
       .catch((error) => {
@@ -49,8 +49,7 @@ export default function SingleProductPage() {
     end_discount,
     sku_order_code,
     brand,
-    size,
-    quantity
+    variations
   } = productSlug;
 
   // Calcolo sconto attivo
@@ -67,7 +66,7 @@ export default function SingleProductPage() {
   const finalPrice = isDiscountActive
     ? (price * (1 - discount / 100)).toFixed(2)
     : price;
-  const sizes = ["S", "M", "L", "XL", "XXL"];
+
 
   function handleGoBack() {
     navigate(-1);
@@ -284,15 +283,15 @@ export default function SingleProductPage() {
               <div className="mb-4">
                 <h6 className="fw-bold mb-3">Seleziona la taglia:</h6>
                 <div className="d-flex gap-2 flex-wrap">
-                  {sizes.map((size) => (
+                  {variations.map((sizes, index) => (
                     <button
-                      key={size}
+                      key={index}
                       type="button"
-                      className={`btn ${selectedSize === size ? "btn-dark" : "btn-outline-dark"
+                      className={`btn ${selectedSize === sizes.size ? "btn-dark" : "btn-outline-dark"
                         } size-btn`}
-                      onClick={() => setSelectedSize(size)}
+                      onClick={() => setSelectedSize(sizes.size)}
                     >
-                      {size}
+                      {sizes.size}
                     </button>
                   ))}
                 </div>

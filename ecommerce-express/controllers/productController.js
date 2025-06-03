@@ -5,10 +5,7 @@ const index = (req, res) => {
   let sql = `SELECT
     products.*,
     categories.name AS category_name,
-    categories.slug AS category_slug,
-    deposit_product.size,
-    deposit_product.quantity,
-    deposit_product.color
+    categories.slug AS category_slug
   FROM
     products
   JOIN
@@ -93,6 +90,9 @@ const index = (req, res) => {
 
 const show = (req, res) => {
   const { slug } = req.params;
+  const filterProduct = {};
+  const variation = [];
+
   const sql = `SELECT
     products.*,
     categories.name AS category_name,
@@ -106,13 +106,35 @@ JOIN
     deposit_product ON deposit_product.product_id = products.id
 WHERE products.slug = ?`;
   connection.query(sql, [slug], (error, result) => {
+    result.map((product) => {
+      filterProduct.id = product.id;
+      filterProduct.name = product.name;
+      filterProduct.slug = product.slug;
+      filterProduct.description = product.description;
+      filterProduct.price = product.price;
+      filterProduct.discount = product.discount;
+      filterProduct.start_discount = product.start_discount;
+      filterProduct.end_discount = product.end_discount;
+      filterProduct.image_url = product.image_url;
+      filterProduct.image_still_life_url = product.image_still_life_url;
+      filterProduct.category_name = product.category_name;
+      filterProduct.category_slug = product.category_slug;
+
+      variation.push({
+        size: product.size,
+        quantity: product.quantity
+      });
+    })
+
+    const allSizeProduct = { ...result[0], variations: variation };
+
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });
     }
     if (result.length === 0) {
       return res.status(404).json({ msg: "Non è stato possibile trovare risultati", code: 404 });
     }
-    return res.status(200).json({ msg: "Benvenuto nell' API", code: 200, products: result });
+    return res.status(200).json({ msg: "Benvenuto nell' API", code: 200, products: allSizeProduct });
   })
 }
 
@@ -123,13 +145,12 @@ const indexProductCategory = (req, res) => {
     products.*,
     categories.name AS category_name,
     categories.slug AS category_slug
-
 FROM
     products
 JOIN
     categories ON categories.id = products.category_id
 WHERE
-    categories.slug = ?;`
+    categories.slug = ?`
   connection.query(sql, [categorySlug], (error, result) => {
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });
