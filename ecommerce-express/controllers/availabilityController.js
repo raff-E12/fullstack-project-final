@@ -2,11 +2,11 @@ const connection = require("../data/db");
 
 // Ottieni disponibilità per un prodotto (tutte le taglie)
 const getProductAvailability = (req, res) => {
-    const { productId } = req.params;
+  const { productId } = req.params;
 
-    console.log(`Richiesta disponibilità per prodotto ID: ${productId}`);
+  console.log(`Richiesta disponibilità per prodotto ID: ${productId}`);
 
-    const sql = `
+  const sql = `
     SELECT 
       deposit_product.size,
       deposit_product.quantity,
@@ -27,321 +27,329 @@ const getProductAvailability = (req, res) => {
       END
   `;
 
-    connection.query(sql, [productId], (error, results) => {
-        if (error) {
-            console.error("Errore recupero disponibilità:", error);
-            return res.status(500).json({
-                success: false,
-                message: "Errore del database",
-                error: error.message,
-            });
-        }
+  connection.query(sql, [productId], (error, results) => {
+    if (error) {
+      console.error("Errore recupero disponibilità:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Errore del database",
+        error: error.message,
+      });
+    }
 
-        const availability = results.map((item) => ({
-            size: item.size,
-            quantity: item.quantity,
-            available: item.quantity > 0,
-            productName: item.product_name,
-            price: item.price,
-        }));
+    const availability = results.map((item) => ({
+      size: item.size,
+      quantity: item.quantity,
+      available: item.quantity > 0,
+      productName: item.product_name,
+      price: item.price,
+    }));
 
-        res.json({
-            success: true,
-            productId: parseInt(productId),
-            availability: availability,
-        });
+    res.json({
+      success: true,
+      productId: parseInt(productId),
+      availability: availability,
     });
+  });
 };
 
 // Controlla disponibilità specifica prodotto + taglia
 const checkProductAvailability = (req, res) => {
-    const { productId, size } = req.params;
-    const requestedQuantity = parseInt(req.query.quantity) || 1;
+  const { productId, size } = req.params;
+  const requestedQuantity = parseInt(req.query.quantity) || 1;
 
-    console.log(
-        `Controllo disponibilità: Prodotto ${productId}, Taglia ${size}, Quantità ${requestedQuantity}`
-    );
+  console.log(
+    `Controllo disponibilità: Prodotto ${productId}, Taglia ${size}, Quantità ${requestedQuantity}`
+  );
 
-    const sql = `
+  const sql = `
     SELECT quantity 
     FROM deposit_product 
     WHERE product_id = ? AND size = ?
   `;
 
-    connection.query(sql, [productId, size], (error, results) => {
-        if (error) {
-            console.error("Errore controllo disponibilità:", error);
-            return res.status(500).json({
-                success: false,
-                message: "Errore del database",
-            });
-        }
+  connection.query(sql, [productId, size], (error, results) => {
+    if (error) {
+      console.error("Errore controllo disponibilità:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Errore del database",
+      });
+    }
 
-        if (results.length === 0) {
-            return res.json({
-                success: false,
-                available: false,
-                currentStock: 0,
-                requestedQuantity: requestedQuantity,
-                message: "Prodotto/taglia non trovata",
-            });
-        }
+    if (results.length === 0) {
+      return res.json({
+        success: false,
+        available: false,
+        currentStock: 0,
+        requestedQuantity: requestedQuantity,
+        message: "Prodotto/taglia non trovata",
+      });
+    }
 
-        const currentStock = results[0].quantity;
-        const isAvailable = currentStock >= requestedQuantity;
+    const currentStock = results[0].quantity;
+    const isAvailable = currentStock >= requestedQuantity;
 
-        res.json({
-            success: true,
-            available: isAvailable,
-            currentStock: currentStock,
-            requestedQuantity: requestedQuantity,
-            message: isAvailable
-                ? "Prodotto disponibile"
-                : `Stock insufficiente. Disponibili: ${currentStock}, richiesti: ${requestedQuantity}`,
-        });
+    res.json({
+      success: true,
+      available: isAvailable,
+      currentStock: currentStock,
+      requestedQuantity: requestedQuantity,
+      message: isAvailable
+        ? "Prodotto disponibile"
+        : `Stock insufficiente. Disponibili: ${currentStock}, richiesti: ${requestedQuantity}`,
     });
+  });
 };
 
 // Controlla disponibilità multipla (carrello)
 const checkCartAvailability = (req, res) => {
-    const { items } = req.body;
+  const { items } = req.body;
 
-    if (!Array.isArray(items) || items.length === 0) {
-        return res.status(400).json({
-            success: false,
-            message: "Items array richiesto",
-        });
-    }
-
-    const placeholders = items
-        .map(() => "(product_id = ? AND size = ?)")
-        .join(" OR ");
-    const queryParams = [];
-
-    items.forEach((item) => {
-        queryParams.push(item.productId, item.size);
+  if (!Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: "Items array richiesto",
     });
+  }
 
-    const sql = `
+  const placeholders = items
+    .map(() => "(product_id = ? AND size = ?)")
+    .join(" OR ");
+  const queryParams = [];
+
+  items.forEach((item) => {
+    queryParams.push(item.productId, item.size);
+  });
+
+  const sql = `
     SELECT product_id, size, quantity 
     FROM deposit_product 
     WHERE ${placeholders}
   `;
 
-    connection.query(sql, queryParams, (error, results) => {
-        if (error) {
-            console.error("Errore controllo carrello:", error);
-            return res.status(500).json({
-                success: false,
-                message: "Errore del database",
-            });
-        }
+  connection.query(sql, queryParams, (error, results) => {
+    if (error) {
+      console.error("Errore controllo carrello:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Errore del database",
+      });
+    }
 
-        const checkResults = [];
-        let allAvailable = true;
+    const checkResults = [];
+    let allAvailable = true;
 
-        items.forEach((item) => {
-            const inventoryRecord = results.find(
-                (r) => r.product_id === item.productId && r.size === item.size
-            );
+    items.forEach((item) => {
+      const inventoryRecord = results.find(
+        (r) => r.product_id === item.productId && r.size === item.size
+      );
 
-            const currentStock = inventoryRecord ? inventoryRecord.quantity : 0;
-            const isAvailable = currentStock >= item.quantity;
+      const currentStock = inventoryRecord ? inventoryRecord.quantity : 0;
+      const isAvailable = currentStock >= item.quantity;
 
-            if (!isAvailable) {
-                allAvailable = false;
-            }
+      if (!isAvailable) {
+        allAvailable = false;
+      }
 
-            checkResults.push({
-                productId: item.productId,
-                size: item.size,
-                requestedQuantity: item.quantity,
-                currentStock: currentStock,
-                available: isAvailable,
-                message: isAvailable
-                    ? "Disponibile"
-                    : `Stock insufficiente (disponibili: ${currentStock})`,
-            });
-        });
-
-        res.json({
-            success: true,
-            allAvailable: allAvailable,
-            items: checkResults,
-            unavailableCount: checkResults.filter((r) => !r.available).length,
-        });
+      checkResults.push({
+        productId: item.productId,
+        size: item.size,
+        requestedQuantity: item.quantity,
+        currentStock: currentStock,
+        available: isAvailable,
+        message: isAvailable
+          ? "Disponibile"
+          : `Stock insufficiente (disponibili: ${currentStock})`,
+      });
     });
+
+    res.json({
+      success: true,
+      allAvailable: allAvailable,
+      items: checkResults,
+      unavailableCount: checkResults.filter((r) => !r.available).length,
+    });
+  });
 };
 
 // Processa ordine (aggiorna stock)
 const processOrder = (req, res) => {
-    const { items, orderInfo } = req.body;
+  const { items, orderInfo } = req.body;
 
-    if (!Array.isArray(items) || items.length === 0) {
-        return res.status(400).json({
-            success: false,
-            message: "Items array richiesto",
-        });
+  if (!Array.isArray(items) || items.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: "Items array richiesto",
+    });
+  }
+
+  connection.beginTransaction((transactionError) => {
+    if (transactionError) {
+      console.error("Errore inizio transazione:", transactionError);
+      return res.status(500).json({
+        success: false,
+        message: "Errore transazione",
+      });
     }
 
-    connection.beginTransaction((transactionError) => {
-        if (transactionError) {
-            console.error("Errore inizio transazione:", transactionError);
-            return res.status(500).json({
-                success: false,
-                message: "Errore transazione",
-            });
-        }
-
-        const processItems = (itemIndex = 0) => {
-            if (itemIndex >= items.length) {
-                // Tutti gli articoli sono stati elaborati, inseriamo l'ordine nella tabella
-                const insertOrderSql = `
+    const processItems = (itemIndex = 0) => {
+      if (itemIndex >= items.length) {
+        // Tutti gli articoli sono stati elaborati, inseriamo l'ordine nella tabella
+        const insertOrderSql = `
           INSERT INTO orders 
           (amount, order_date, order_status, sku_code, free_delivery, promo_id, slug) 
           VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
 
-                // 👇 Prepariamo i dati per l'ordine (prendiamo il primo SKU per semplicità)
-                const skuCode = items[0].productId || 'SKU000'; // puoi personalizzare
-                const amount = orderInfo.amount || 0;
-                const orderDate = new Date(); // data odierna
-                const orderStatus = 'Processing'; // puoi cambiare se serve
-                const freeDelivery = 0; // default
-                const promoId = null; // se serve
-                const slug = `ml-${Date.now()}`;
+        // 👇 Prepariamo i dati per l'ordine (prendiamo il primo SKU per semplicità)
 
-                connection.query(
-                    insertOrderSql,
-                    [
-                        amount,
-                        orderDate,
-                        orderStatus,
-                        skuCode,
-                        freeDelivery,
-                        promoId,
-                        slug,
-                    ],
-                    (insertError, insertResult) => {
-                        if (insertError) {
-                            return connection.rollback(() => {
-                                res.status(500).json({
-                                    success: false,
-                                    message: "Errore inserimento ordine",
-                                });
-                            });
-                        }
+        numberSkuCode = items
+          .map((item) => {
+            return item.productId;
+          })
+          .join("");
 
-                        const orderId = insertResult.insertId;
+        const skuCode = `SKU00${numberSkuCode}` || "SKU000"; // puoi personalizzare
+        const amount = orderInfo.amount || 0;
+        const orderDate = new Date();
+        const orderStatus = "Processing";
+        const freeDelivery = 0;
+        const promoId = null;
+        const slug = `ml-${Date.now()}`;
 
-                        connection.commit((commitError) => {
-                            if (commitError) {
-                                return connection.rollback(() => {
-                                    res.status(500).json({
-                                        success: false,
-                                        message: "Errore commit transazione",
-                                    });
-                                });
-                            }
-
-                            res.json({
-                                success: true,
-                                message: "Ordine processato con successo",
-                                orderId: orderId,
-                                itemsProcessed: items.length,
-                                totalAmount: amount,
-                            });
-                        });
-                    }
-                );
-                return;
-            }
-
-            const item = items[itemIndex];
-
-            if (!item.productId || !item.size || !item.quantity) {
-                return connection.rollback(() => {
-                    res.status(400).json({
-                        success: false,
-                        message: `Item ${itemIndex + 1} non valido: mancano productId, size o quantity`,
-                    });
+        connection.query(
+          insertOrderSql,
+          [
+            amount,
+            orderDate,
+            orderStatus,
+            skuCode,
+            freeDelivery,
+            promoId,
+            slug,
+          ],
+          (insertError, insertResult) => {
+            if (insertError) {
+              return connection.rollback(() => {
+                res.status(500).json({
+                  success: false,
+                  message: "Errore inserimento ordine",
                 });
+              });
             }
 
-            const checkSql = `
+            const orderId = insertResult.insertId;
+
+            connection.commit((commitError) => {
+              if (commitError) {
+                return connection.rollback(() => {
+                  res.status(500).json({
+                    success: false,
+                    message: "Errore commit transazione",
+                  });
+                });
+              }
+
+              res.json({
+                success: true,
+                message: "Ordine processato con successo",
+                orderId: orderId,
+                itemsProcessed: items.length,
+                totalAmount: amount,
+              });
+            });
+          }
+        );
+        return;
+      }
+
+      const item = items[itemIndex];
+
+      if (!item.productId || !item.size || !item.quantity) {
+        return connection.rollback(() => {
+          res.status(400).json({
+            success: false,
+            message: `Item ${
+              itemIndex + 1
+            } non valido: mancano productId, size o quantity`,
+          });
+        });
+      }
+
+      const checkSql = `
         SELECT quantity 
         FROM deposit_product 
         WHERE product_id = ? AND size = ?
         FOR UPDATE
       `;
 
-            connection.query(
-                checkSql,
-                [item.productId, item.size],
-                (checkError, checkResults) => {
-                    if (checkError) {
-                        return connection.rollback(() => {
-                            res.status(500).json({
-                                success: false,
-                                message: "Errore controllo stock",
-                            });
-                        });
-                    }
+      connection.query(
+        checkSql,
+        [item.productId, item.size],
+        (checkError, checkResults) => {
+          if (checkError) {
+            return connection.rollback(() => {
+              res.status(500).json({
+                success: false,
+                message: "Errore controllo stock",
+              });
+            });
+          }
 
-                    if (checkResults.length === 0) {
-                        return connection.rollback(() => {
-                            res.status(400).json({
-                                success: false,
-                                message: `Prodotto ${item.productId} taglia ${item.size} non trovato nell'inventario`,
-                            });
-                        });
-                    }
+          if (checkResults.length === 0) {
+            return connection.rollback(() => {
+              res.status(400).json({
+                success: false,
+                message: `Prodotto ${item.productId} taglia ${item.size} non trovato nell'inventario`,
+              });
+            });
+          }
 
-                    const currentStock = checkResults[0].quantity;
+          const currentStock = checkResults[0].quantity;
 
-                    if (currentStock < item.quantity) {
-                        return connection.rollback(() => {
-                            res.status(400).json({
-                                success: false,
-                                message: `Stock insufficiente per prodotto ${item.productId} taglia ${item.size}. Disponibili: ${currentStock}, richiesti: ${item.quantity}`,
-                            });
-                        });
-                    }
+          if (currentStock < item.quantity) {
+            return connection.rollback(() => {
+              res.status(400).json({
+                success: false,
+                message: `Stock insufficiente per prodotto ${item.productId} taglia ${item.size}. Disponibili: ${currentStock}, richiesti: ${item.quantity}`,
+              });
+            });
+          }
 
-                    const updateSql = `
+          const updateSql = `
             UPDATE deposit_product 
             SET quantity = quantity - ? 
             WHERE product_id = ? AND size = ?
           `;
 
-                    connection.query(
-                        updateSql,
-                        [item.quantity, item.productId, item.size],
-                        (updateError) => {
-                            if (updateError) {
-                                return connection.rollback(() => {
-                                    res.status(500).json({
-                                        success: false,
-                                        message: "Errore aggiornamento stock",
-                                    });
-                                });
-                            }
+          connection.query(
+            updateSql,
+            [item.quantity, item.productId, item.size],
+            (updateError) => {
+              if (updateError) {
+                return connection.rollback(() => {
+                  res.status(500).json({
+                    success: false,
+                    message: "Errore aggiornamento stock",
+                  });
+                });
+              }
 
-                            processItems(itemIndex + 1);
-                        }
-                    );
-                }
-            );
-        };
+              processItems(itemIndex + 1);
+            }
+          );
+        }
+      );
+    };
 
-        processItems();
-    });
+    processItems();
+  });
 };
 
-
 module.exports = {
-    getProductAvailability,
-    checkProductAvailability,
-    checkCartAvailability,
-    processOrder,
+  getProductAvailability,
+  checkProductAvailability,
+  checkCartAvailability,
+  processOrder,
 };
