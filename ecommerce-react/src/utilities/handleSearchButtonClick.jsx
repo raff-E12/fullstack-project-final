@@ -39,7 +39,7 @@ export default function SearchComponent({ isMobile = false, closeMenus }) {
           type="button"
           className="nav-link btn p-0 d-block mb-2"
           onClick={handleSearchButtonClick}
-        >
+        id="btn-search">
           Ricerca
         </button>
 
@@ -80,8 +80,7 @@ export default function SearchComponent({ isMobile = false, closeMenus }) {
       <button
         type="button"
         className="nav-link btn p-0"
-        onClick={handleSearchButtonClick}
-      >
+        onClick={handleSearchButtonClick}>
         Ricerca
       </button>
     </div>

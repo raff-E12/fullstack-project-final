@@ -25,7 +25,7 @@ export default function Header() {
       }`}
       style={{ top: 0, zIndex: 999 }}
     >
-      <div className="container">
+      <div className="container-xl pl-2 pr-2">
         {/* Desktop Header */}
         <div className="row align-items-center d-none d-md-flex">
           {/* Left */}
@@ -58,31 +58,34 @@ export default function Header() {
         </div>
 
         {/* Mobile Header */}
-        <div className="d-flex d-md-none justify-content-between align-items-center">
+        <div className="d-flex d-md-none justify-content-between align-items-center" id="op-hd">
           <h1 className="m-0 text-white fw-bold text-uppercase" id="text-hd">
             Nome
           </h1>
-          <button
-            className="mobile-menu-btn btn p-2 d-flex flex-column justify-content-center align-items-center"
-            type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle navigation"
-          >
-            <span
-              className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}
-            ></span>
-            <span
-              className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}
-            ></span>
-            <span
-              className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}
-            ></span>
-          </button>
+          <div id="btn-options">
+            <button
+              className="mobile-menu-btn btn p-2 d-flex flex-column justify-content-center align-items-center"
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle navigation"
+            >
+              <span
+                className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}
+              ></span>
+              <span
+                className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}
+              ></span>
+              <span
+                className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}
+              ></span>
+            </button>
+            <CartDropdown isMobile={true} closeMenus={closeMenus} MobileOpen={setIsMobileMenuOpen} MobOpen={isMobileMenuOpen}/>
+          </div>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="d-md-none mt-3 mobile-nav-menu text-start ps-3">
+          <div className="d-md-none mt-3 mobile-nav-menu text-start ps-3" id="hd-menu-op">
             <NavLink to="/" className="nav-link d-block" onClick={closeMenus}>
               Homepage
             </NavLink>
@@ -97,12 +100,12 @@ export default function Header() {
             <button
               className="nav-link btn btn-link text-start p-0 d-block"
               onClick={() => setIsMobileCategoriesOpen(!isMobileCategoriesOpen)}
-            >
-              Categories {isMobileCategoriesOpen ? "▲" : "▼"}
+            id="btn-categories" >
+              <p>Categories <b>{isMobileCategoriesOpen ? "▲" : "▼"}</b></p>
             </button>
 
             {isMobileCategoriesOpen && (
-              <div className="ms-3">
+              <div className="ms-3" id="open-menu-hd">
                 <NavLink
                   to="/categories/polo-&-t-shirt"
                   className="nav-link d-block"
@@ -150,7 +153,6 @@ export default function Header() {
 
             <div className="mobile-search-and-cart mt-3">
               <SearchComponent isMobile={true} closeMenus={closeMenus} />
-              <CartDropdown isMobile={true} closeMenus={closeMenus} />
             </div>
           </div>
         )}

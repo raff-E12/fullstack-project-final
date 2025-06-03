@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
-export default function CartDropdown({ isMobile = false, closeMenus }) {
+export default function CartDropdown({ isMobile = false, closeMenus, MobileOpen, MobOpen }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { cartItems } = useCart();
   const navigate = useNavigate();
@@ -31,6 +31,11 @@ export default function CartDropdown({ isMobile = false, closeMenus }) {
 
   const handleCartToggle = () => {
     setIsCartOpen(!isCartOpen);
+    if (MobOpen !== !isCartOpen || !isCartOpen === MobOpen || !MobileOpen) {
+      MobileOpen(false);
+    } else {
+      MobileOpen(true);
+    }
   };
 
   const handleGoToCart = () => {
@@ -43,25 +48,32 @@ export default function CartDropdown({ isMobile = false, closeMenus }) {
     <>
       <div className="mini-cart-items-list flex-fill overflow-auto">
         {cartItems.map((item, index) => (
-          <div key={index} className="mini-cart-item d-flex align-items-start">
+          <div key={index} className="mini-cart-item d-flex align-items-start justify-content-center">
             <img
               src={item.image_url}
               alt={item.name}
               width={40}
               className="flex-shrink-0 rounded"
+              id="img-prod"
             />
-            <div
-              className="mini-cart-item-info flex-grow-1 ms-3"
-              style={{ minWidth: 0 }}
-            >
-              <span className="d-block fw-medium mb-1 text-truncate">
-                {item.name}
-              </span>
-              <div className="mini-cart-item-details d-flex justify-content-between align-items-center small">
-                <span>x{item.quantity}</span>
-                <strong>{item.price} €</strong>
+           <div className="container-fluid d-flex flex-column gap-2">
+              <div
+                className="mini-cart-item-info flex-grow-1 ms-3"
+                style={{ minWidth: 0 }}
+              >
+                <span className="d-block fw-medium mb-1 text-truncate">
+                  {item.name}
+                </span>
+                <div className="mini-cart-item-details d-flex justify-content-between align-items-center small">
+                  <span>x{item.quantity}</span>
+                  <strong>{item.price} €</strong>
+                </div>
               </div>
-            </div>
+              <div className="container-fluid d-flex flex-row gap-2">
+                <button className="btn btns-quantity btn-success"><b>+</b></button>
+                <button className="btn btns-quantity btn-success"><b>-</b></button>
+              </div>
+           </div>
           </div>
         ))}
       </div>
@@ -89,28 +101,28 @@ export default function CartDropdown({ isMobile = false, closeMenus }) {
   );
 
   if (isMobile) {
-    return (
+    return (<>
       <div className="mobile-cart-container">
         <button
           type="button"
           className="nav-link btn p-0 d-inline-flex align-items-center mb-2"
           onClick={handleCartToggle}
+          id="btn-shop"
         >
-          Carrello
+          <i class="bi bi-bag"></i>
           {cartItemCount > 0 && (
             <span className="cart-badge position-relative ms-2 d-flex align-items-center justify-content-center fw-semibold">
               {cartItemCount}
             </span>
           )}
         </button>
-
-        {isCartOpen && (
+      </div>
+      {isCartOpen && (
           <div className="mobile-mini-cart d-flex flex-column mt-2 ms-3">
             {cartItems.length > 0 ? renderCartItems() : renderEmptyCart()}
           </div>
-        )}
-      </div>
-    );
+      )}
+    </>);
   }
 
   return (
