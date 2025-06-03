@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "../style/SizeSelector.css"; // Importa il file CSS
 
 const SizeSelector = ({
   productId,
@@ -53,15 +54,7 @@ const SizeSelector = ({
         <div className="d-flex gap-2">
           {[1, 2, 3, 4, 5].map((i) => (
             <div key={i} className="placeholder-glow">
-              <span
-                className="placeholder size-placeholder bg-secondary"
-                style={{
-                  width: "50px",
-                  height: "50px",
-                  borderRadius: "8px",
-                  display: "inline-block",
-                }}
-              ></span>
+              <span className="placeholder size-placeholder"></span>
             </div>
           ))}
         </div>
@@ -102,29 +95,9 @@ const SizeSelector = ({
                   : sizeInfo.size
                 : `${sizeInfo.size} - Non disponibile`
             }
-            style={{
-              minWidth: "50px",
-              height: "50px",
-              borderRadius: "8px",
-              fontWeight: "600",
-              transition: "all 0.2s ease",
-              opacity: !sizeInfo.available ? "0.4" : "1",
-              cursor: !sizeInfo.available ? "not-allowed" : "pointer",
-            }}
           >
             {sizeInfo.size}
-            {showStock && sizeInfo.available && (
-              <small
-                className="d-block"
-                style={{
-                  fontSize: "0.7rem",
-                  lineHeight: "1",
-                  marginTop: "2px",
-                }}
-              >
-                {sizeInfo.quantity <= 5 ? `Solo ${sizeInfo.quantity}` : "✓"}
-              </small>
-            )}
+            {/* Rimosso il messaggio di allerta delle poche quantità */}
           </button>
         ))}
       </div>

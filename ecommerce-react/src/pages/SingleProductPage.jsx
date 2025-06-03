@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import SizeSelector from "../components/SizeSelector"; // Importa il componente SizeSelector
 import "../style/SingleProductPage.css";
 import RelatedProducts from "../components/RelatedProducts";
 
@@ -15,7 +16,7 @@ export default function SingleProductPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
-  const [quantity, setQuantity] = useState(1); // Aggiunto quantity state
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     getProductsSlug();
@@ -39,6 +40,7 @@ export default function SingleProductPage() {
   }
 
   const {
+    id,
     name,
     description,
     price,
@@ -71,6 +73,12 @@ export default function SingleProductPage() {
   function handleGoBack() {
     navigate(-1);
   }
+
+  // Funzione per gestire la selezione della taglia dal SizeSelector
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+    setQuantity(1); // Reset quantità quando cambia taglia
+  };
 
   // FUNZIONE AGGIORNATA per il nuovo CartContext
   function handleAddToCart() {
@@ -302,62 +310,20 @@ export default function SingleProductPage() {
                 <p className="text-muted lh-lg">{description}</p>
               </div>
 
-              <div className="mb-4">
-                <h6 className="fw-bold mb-3">Seleziona la taglia:</h6>
-                <div className="d-flex gap-2 flex-wrap">
-                  {availableSizes.length > 0 ? (
-                    variations.map((sizes, index) =>
-                      sizes.quantity > 0 ? (
-                        <button
-                          key={index}
-                          type="button"
-                          className={`btn ${
-                            selectedSize === sizes.size
-                              ? "btn-dark"
-                              : "btn-outline-dark"
-                          } size-btn position-relative`}
-                          onClick={() => {
-                            setSelectedSize(sizes.size);
-                            // Reset quantità quando cambia taglia
-                            setQuantity(1);
-                          }}
-                          title={`${sizes.size} - ${sizes.quantity} disponibili`}
-                        >
-                          {sizes.size}
-                          {/* Mostra quantità disponibile sotto la taglia */}
-                          {sizes.quantity <= 5 && (
-                            <small className="d-block text-xs">
-                              Solo {sizes.quantity}
-                            </small>
-                          )}
-                        </button>
-                      ) : (
-                        <button
-                          key={index}
-                          type="button"
-                          className="btn text-danger btn-outline-dark size-btn"
-                          disabled
-                          title={`${sizes.size} - Esaurita`}
-                        >
-                          {sizes.size}
-                          <small className="d-block text-xs">Esaurita</small>
-                        </button>
-                      )
-                    )
-                  ) : (
-                    <div className="text-danger fs-5">PRODOTTO ESAURITO</div>
-                  )}
+              {/* INTEGRAZIONE DEL COMPONENTE SIZESELECTOR */}
+              {id && (
+                <div className="mb-4">
+                  <SizeSelector
+                    productId={id}
+                    onSizeSelect={handleSizeSelect}
+                    selectedSize={selectedSize}
+                    disabled={isSoldOut}
+                    showStock={true}
+                  />
                 </div>
-                {selectedSize && (
-                  <small className="text-success mt-2 d-block">
-                    <i className="bi bi-check-circle me-1"></i>
-                    Taglia {selectedSize} selezionata ({selectedSizeQuantity}{" "}
-                    disponibili)
-                  </small>
-                )}
-              </div>
+              )}
 
-              {/* SEZIONE QUANTITÀ - AGGIUNTA */}
+              {/* SEZIONE QUANTITÀ */}
               {selectedSize && (
                 <div className="mb-4">
                   <h6 className="fw-bold mb-3">Quantità:</h6>
