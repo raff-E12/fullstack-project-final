@@ -144,12 +144,6 @@ const CheckoutForm = ({
   return (
     <div
       className="checkout-form-container"
-      style={{
-        backgroundColor: "#f8f9fa",
-        borderRadius: "12px",
-        padding: "1.5rem",
-        border: "2px solid #e9ecef",
-      }}
     >
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h5 className="fw-bold mb-0">Completa il tuo ordine</h5>
@@ -189,9 +183,8 @@ const CheckoutForm = ({
             <input
               type="text"
               name="surname"
-              className={`form-control ${
-                formErrors.surname ? "is-invalid" : ""
-              }`}
+              className={`form-control ${formErrors.surname ? "is-invalid" : ""
+                }`}
               value={formData.surname}
               onChange={handleInputChange}
               disabled={isSubmitting}
@@ -242,9 +235,8 @@ const CheckoutForm = ({
             <label className="form-label">Indirizzo di Fatturazione *</label>
             <textarea
               name="billing_address"
-              className={`form-control ${
-                formErrors.billing_address ? "is-invalid" : ""
-              }`}
+              className={`form-control ${formErrors.billing_address ? "is-invalid" : ""
+                }`}
               value={formData.billing_address}
               onChange={handleInputChange}
               disabled={isSubmitting}
@@ -279,9 +271,8 @@ const CheckoutForm = ({
               <label className="form-label">Indirizzo di Spedizione *</label>
               <textarea
                 name="shipping_address"
-                className={`form-control ${
-                  formErrors.shipping_address ? "is-invalid" : ""
-                }`}
+                className={`form-control ${formErrors.shipping_address ? "is-invalid" : ""
+                  }`}
                 value={formData.shipping_address}
                 onChange={handleInputChange}
                 disabled={isSubmitting}

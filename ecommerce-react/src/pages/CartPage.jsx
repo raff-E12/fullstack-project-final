@@ -260,9 +260,8 @@ Riceverai una email di conferma.`);
                   return (
                     <div key={`${item.id}_${item.selectedSize}`}>
                       <div
-                        className={`p-4 cart-item-card ${
-                          availabilityIssue ? "border-warning" : ""
-                        }`}
+                        className={`p-4 cart-item-card ${availabilityIssue ? "border-warning" : ""
+                          }`}
                         style={{
                           transition: "all 0.2s ease",
                           border: availabilityIssue
@@ -427,7 +426,10 @@ Riceverai una email di conferma.`);
           {/* Riepilogo ordine */}
           <div className="col-lg-4 mt-4 mt-lg-0">
             <div className="card shadow-sm">
-              <div className="card-header">
+              <div className="card-header " style={{
+                "border-bottom": "none",
+                "background-color": "#FFFFFF",
+              }}>
                 <h5
                   className="fw-bold mb-0"
                   style={{
@@ -529,9 +531,8 @@ Riceverai una email di conferma.`);
 
                         {promoMessage && (
                           <small
-                            className={`form-text ${
-                              validPromo ? "text-success" : "text-danger"
-                            }`}
+                            className={`form-text ${validPromo ? "text-success" : "text-danger"
+                              }`}
                           >
                             {promoMessage}
                           </small>
@@ -594,7 +595,8 @@ Riceverai una email di conferma.`);
             </div>
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }
