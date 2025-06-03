@@ -39,10 +39,7 @@ export default function SingleCategoryProductPage() {
     <div className="container mb-3">
       <div className="row">
         <div className="col-12">
-          <div className="mb-3">
-            <span className="invisible">.</span>
-          </div>
-          <h1 className="mt-5">{categoryName}</h1>
+          <h1 className="mt-3">{categoryName}</h1>
           <p>
             {" "}
             Eleganza, comfort e qualità in ogni dettaglio, Scopri la nostra
