@@ -27,37 +27,37 @@ export default function CheckOutForm({ amount, onSuccess, onCancel }) {
     });
   };
 
-  // const sendConfirmationEmail = () => {
-  //   emailjs
-  //     .send(
-  //       import.meta.env.VITE_EMAILJS_SERVICE_ID,
-  //       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-  //       {
-  //         name: formData.name,
-  //         surname: formData.surname,
-  //         email: formData.email,
-  //         phone: formData.phone,
-  //         amount: formData.amount,
-  //         billing_address: formData.billing_address,
-  //         shipping_address: formData.shipping_address,
-  //         country: formData.country,
-  //       },
-  //       import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-  //     )
-  //     .then((result) => {
-  //       console.log("Email inviata con successo!", result.text);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Errore nell'invio dell'email:", error);
-  //     });
-  // };
+  const sendConfirmationEmail = () => {
+    emailjs
+      .send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          name: formData.name,
+          surname: formData.surname,
+          email: formData.email,
+          phone: formData.phone,
+          amount: formData.amount,
+          billing_address: formData.billing_address,
+          shipping_address: formData.shipping_address,
+          country: formData.country,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then((result) => {
+        console.log("Email inviata con successo!", result.text);
+      })
+      .catch((error) => {
+        console.error("Errore nell'invio dell'email:", error);
+      });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      // sendConfirmationEmail();
+      sendConfirmationEmail();
 
       const response = await axios.post(endpoint, formData);
       console.log("Ordine inviato con successo:", response.data);
