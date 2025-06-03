@@ -16,6 +16,10 @@ export default function SingleProductPage() {
   const [error, setError] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
 
+  useEffect(() => {
+    getProductsSlug();
+  }, [slug]);
+
   function getProductsSlug() {
     setIsLoading(true);
     axios
@@ -33,10 +37,6 @@ export default function SingleProductPage() {
       });
   }
 
-  useEffect(() => {
-    getProductsSlug();
-  }, [slug]);
-
   const {
     name,
     description,
@@ -52,7 +52,6 @@ export default function SingleProductPage() {
     variations
   } = productSlug;
 
-  // Calcolo sconto attivo
   const today = new Date();
   const start = start_discount ? new Date(start_discount) : null;
   const end = end_discount ? new Date(end_discount) : null;
@@ -67,7 +66,6 @@ export default function SingleProductPage() {
     ? (price * (1 - discount / 100)).toFixed(2)
     : price;
 
-
   function handleGoBack() {
     navigate(-1);
   }
@@ -81,7 +79,6 @@ export default function SingleProductPage() {
     const productWithSize = { ...productSlug, selectedSize };
     addToCart(productWithSize);
 
-    // Feedback visivo
     const btn = document.querySelector(".btn-add-cart");
     btn.innerHTML = '<i class="bi bi-check-lg me-2"></i>Aggiunto!';
     btn.classList.add("btn-success");
@@ -92,22 +89,18 @@ export default function SingleProductPage() {
     }, 2000);
   }
 
-  // Loading State
+  const availableSizes = variations?.filter(variation => variation.quantity > 0) || [];
+  const isSoldOut = availableSizes.length === 0;
+
   if (isLoading) {
     return (
       <div className="container-fluid py-5">
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <div
-                className="d-flex justify-content-center align-items-center"
-                style={{ minHeight: "400px" }}
-              >
+              <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "400px" }}>
                 <div className="text-center">
-                  <div
-                    className="spinner-border text-primary-green mb-3"
-                    role="status"
-                  >
+                  <div className="spinner-border text-primary-green mb-3" role="status">
                     <span className="visually-hidden">Loading...</span>
                   </div>
                   <h4 className="text-muted">Caricamento prodotto...</h4>
@@ -120,7 +113,6 @@ export default function SingleProductPage() {
     );
   }
 
-  // Error State
   if (error) {
     return (
       <div className="container-fluid py-5">
@@ -171,72 +163,32 @@ export default function SingleProductPage() {
           {/* Sezione Immagini */}
           <div className="col-lg-6">
             <div className="position-relative">
-              {/* Sale Badge */}
               {isDiscountActive && (
-                <div
-                  className="position-absolute top-0 start-0 m-3"
-                  style={{ zIndex: 10 }}
-                >
+                <div className="position-absolute top-0 start-0 m-3" style={{ zIndex: 10 }}>
                   <span className="badge bg-danger fs-6 p-3 rounded-circle sale-badge">
                     -{discount}%
                   </span>
                 </div>
               )}
-
-              {/* Carousel */}
-              <div
-                id="productCarousel"
-                className="carousel slide shadow-lg rounded overflow-hidden"
-              >
+              <div id="productCarousel" className="carousel slide shadow-lg rounded overflow-hidden">
                 <div className="carousel-inner">
-                  <div className="carousel-item active">
-                    <img
-                      src={image_url}
-                      className="d-block w-100 product-main-image"
-                      alt={name}
-                      style={{ height: "500px", objectFit: "cover" }}
-                    />
-                  </div>
-                  <div className="carousel-item">
-                    <img
-                      src={image_url}
-                      className="d-block w-100 product-main-image"
-                      alt={name}
-                      style={{ height: "500px", objectFit: "cover" }}
-                    />
-                  </div>
-                  <div className="carousel-item">
-                    <img
-                      src={image_url}
-                      className="d-block w-100 product-main-image"
-                      alt={name}
-                      style={{ height: "500px", objectFit: "cover" }}
-                    />
-                  </div>
+                  {[1, 2, 3].map((_, idx) => (
+                    <div className={`carousel-item ${idx === 0 ? "active" : ""}`} key={idx}>
+                      <img
+                        src={image_url}
+                        className="d-block w-100 product-main-image"
+                        alt={name}
+                        style={{ height: "500px", objectFit: "cover" }}
+                      />
+                    </div>
+                  ))}
                 </div>
-
-                <button
-                  className="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#productCarousel"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    className="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
+                <button className="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span className="visually-hidden">Previous</span>
                 </button>
-                <button
-                  className="carousel-control-next"
-                  type="button"
-                  data-bs-target="#productCarousel"
-                  data-bs-slide="next"
-                >
-                  <span
-                    className="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
+                <button className="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                  <span className="carousel-control-next-icon" aria-hidden="true"></span>
                   <span className="visually-hidden">Next</span>
                 </button>
               </div>
@@ -246,23 +198,14 @@ export default function SingleProductPage() {
           {/* Sezione Dettagli Prodotto */}
           <div className="col-lg-6">
             <div className="product-details h-100">
-              {/* Header Prodotto */}
               <div className="mb-4">
-                <p className="name-brand text-primary-green fw-bold mb-2">
-                  {brand}
-                </p>
+                <p className="name-brand text-primary-green fw-bold mb-2">{brand}</p>
                 <h1 className="display-5 fw-bold text-dark mb-3">{name}</h1>
-
-                {/* Prezzo */}
                 <div className="price-section mb-4">
                   {isDiscountActive ? (
                     <div>
-                      <span className="text-decoration-line-through text-muted fs-4 me-3">
-                        €{price}
-                      </span>
-                      <span className="text-success fs-2 fw-bold">
-                        €{finalPrice}
-                      </span>
+                      <span className="text-decoration-line-through text-muted fs-4 me-3">€{price}</span>
+                      <span className="text-success fs-2 fw-bold">€{finalPrice}</span>
                       <span className="badge bg-danger ms-2">
                         Risparmia €{(price - finalPrice).toFixed(2)}
                       </span>
@@ -273,41 +216,39 @@ export default function SingleProductPage() {
                 </div>
               </div>
 
-              {/* Descrizione */}
               <div className="mb-4">
                 <h5 className="fw-bold mb-3">Descrizione prodotto:</h5>
                 <p className="text-muted lh-lg">{description}</p>
               </div>
 
-              {/* Selezione Taglia */}
               <div className="mb-4">
                 <h6 className="fw-bold mb-3">Seleziona la taglia:</h6>
                 <div className="d-flex gap-2 flex-wrap">
-                  {
-                    variations.filter(variation => variation.quantity > 0).length > 0 ? (
-                      variations.map((sizes, index) => (
-                        sizes.quantity > 0 ? (
-                          <button
-                            key={index}
-                            type="button"
-                            className={`btn ${selectedSize === sizes.size ? "btn-dark" : "btn-outline-dark"} size-btn`}
-                            onClick={() => setSelectedSize(sizes.size)}
-                          >
-                            {sizes.size}
-                          </button>
-                        ) : (
-                          <button
-                            key={index}
-                            type="button"
-                            className={`btn text-danger ${selectedSize === sizes.size ? "btn-dark" : "btn-outline-dark"} size-btn`}
-                            disabled
-                          >
-                            {sizes.size}
-                          </button>
-                        )
-                      ))
-                    ) : <div className="text-danger fs-5"> PRODOTTO ESAURITO</div>
-                  }
+                  {availableSizes.length > 0 ? (
+                    variations.map((sizes, index) => (
+                      sizes.quantity > 0 ? (
+                        <button
+                          key={index}
+                          type="button"
+                          className={`btn ${selectedSize === sizes.size ? "btn-dark" : "btn-outline-dark"} size-btn`}
+                          onClick={() => setSelectedSize(sizes.size)}
+                        >
+                          {sizes.size}
+                        </button>
+                      ) : (
+                        <button
+                          key={index}
+                          type="button"
+                          className="btn text-danger btn-outline-dark size-btn"
+                          disabled
+                        >
+                          {sizes.size}
+                        </button>
+                      )
+                    ))
+                  ) : (
+                    <div className="text-danger fs-5">PRODOTTO ESAURITO</div>
+                  )}
                 </div>
                 {selectedSize && (
                   <small className="text-success mt-2 d-block">
@@ -317,14 +258,15 @@ export default function SingleProductPage() {
                 )}
               </div>
 
-              {/* Azioni */}
+              {/* Bottone Aggiungi al carrello */}
               <div className="d-grid gap-3 mb-4">
                 <button
                   className="btn btn-lg bg-primary-green text-white fw-bold btn-add-cart"
                   onClick={handleAddToCart}
+                  disabled={isSoldOut}
                 >
                   <i className="bi bi-cart-plus me-2"></i>
-                  Aggiungi al carrello
+                  {isSoldOut ? "Non disponibile" : "Aggiungi al carrello"}
                 </button>
               </div>
 
