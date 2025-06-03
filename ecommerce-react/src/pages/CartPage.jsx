@@ -5,6 +5,7 @@ import { useCart } from "../context/CartContext";
 import { useInventory } from "../hooks/useInventory";
 import CheckoutForm from "../components/CheckOutForm.jsx";
 import AvailabilityWarning from "../components/AvailabilityWarning.jsx";
+import OrderConfirmationModal from "../components/OrderConfirmationModal.jsx";
 
 // Componente principale CartPage
 export default function CartPage() {
@@ -18,6 +19,10 @@ export default function CartPage() {
   const [promoMessage, setPromoMessage] = useState("");
 
   const endPointDiscount = "http://localhost:3000/checkout/discount-code";
+
+  // Stati per OrderConfirmationModal
+  const [showOrderConfirmation, setShowOrderConfirmation] = useState(false);
+  const [orderCode, setOrderCode] = useState("");
 
   const [availabilityStatus, setAvailabilityStatus] = useState({
     checked: false,
@@ -168,15 +173,14 @@ export default function CartPage() {
       });
   };
 
+  // Funzione modificata per mostrare il modal invece dell'alert
   const handleCheckoutSuccess = (orderData) => {
     console.log("Ordine completato:", orderData);
     setShowCheckoutForm(false);
 
-    // Mostra messaggio di successo
-    alert(`Ordine completato con successo! 
-Numero ordine: ${orderData.orderId || "N/A"}
-Totale: €${orderData.totalAmount || total.toFixed(2)}
-Riceverai una email di conferma.`);
+    // Mostra il modal di conferma invece dell'alert
+    setOrderCode(orderData.orderId || "N/A");
+    setShowOrderConfirmation(true);
   };
 
   const handleCheckoutCancel = () => {
@@ -198,6 +202,13 @@ Riceverai una email di conferma.`);
       <h1 className="h2 fw-bold text-center text-md-start mb-4">
         Il tuo Carrello
       </h1>
+
+      {/* Modal di conferma ordine */}
+      <OrderConfirmationModal
+        isOpen={showOrderConfirmation}
+        onClose={() => setShowOrderConfirmation(false)}
+        orderCode={orderCode}
+      />
 
       {cartItems.length === 0 ? (
         <div className="text-center py-5">
