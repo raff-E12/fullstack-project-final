@@ -7,28 +7,28 @@ function CartProvider({ children }) {
 
     const addToCart = (product) => {
         setCartItems((prev) => {
-            // Verifica se il prodotto è già nel carrello
-            const existingProduct = prev.find(item => item.id === product.id);
+            // Verifica se il prodotto (con la stessa taglia) è già nel carrello
+            const existingProduct = prev.find(
+                item => item.id === product.id && item.selectedSize === product.selectedSize
+            );
 
             if (existingProduct) {
-
                 return prev.map(item =>
-                    item.id === product.id
+                    item.id === product.id && item.selectedSize === product.selectedSize
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 );
             } else {
-
                 return [...prev, { ...product, quantity: 1 }];
             }
         });
     };
 
-    const removeFromCart = (productId) => {
+    const removeFromCart = (productId) => { // This should ideally also consider selectedSize
         setCartItems(prev => prev.filter(item => item.id !== productId));
     };
 
-    const updateQuantity = (productId, quantity) => {
+    const updateQuantity = (productId, quantity) => { // This should ideally also consider selectedSize
         setCartItems(prev =>
             prev.map(item =>
                 item.id === productId ? { ...item, quantity: Math.max(1, quantity) } : item

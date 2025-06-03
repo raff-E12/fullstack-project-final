@@ -137,12 +137,12 @@ export default function CartPage() {
                               className="img-fluid rounded"
                               style={{ maxHeight: "120px", objectFit: "cover", width: "100%" }}
                             />
-                            <div> {selectedSize} </div>
                           </div>
 
                           <div className="col-md-5 col-8">
                             <Link to={`/products/${item.slug}`} className="text-decoration-none text-dark">
                               <h5 className="fw-bold mb-2">{item.name}</h5>
+                              <div>size: <span className="fs-5 fw-bolder">{selectedSize}</span></div>
                               <p className="text-muted small mb-2">{item.description}</p>
                             </Link>
 
