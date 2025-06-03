@@ -116,6 +116,7 @@ export default function CartPage() {
                   const start = new Date(item.start_discount);
                   const end = new Date(item.end_discount);
                   const isValid = item.is_valid;
+                  const selectedSize = item.selectedSize
 
                   let finalPrice = price;
                   let hasDiscount = false;
@@ -136,6 +137,7 @@ export default function CartPage() {
                               className="img-fluid rounded"
                               style={{ maxHeight: "120px", objectFit: "cover", width: "100%" }}
                             />
+                            <div> {selectedSize} </div>
                           </div>
 
                           <div className="col-md-5 col-8">
@@ -295,6 +297,7 @@ export default function CartPage() {
                     amount={total}
                     onSuccess={handleCheckoutSuccess}
                     onCancel={handleCheckoutCancel}
+                    cartItems={cartItems}
                   />
                 )}
               </div>

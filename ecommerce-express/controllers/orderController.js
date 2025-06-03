@@ -18,15 +18,29 @@ const show = (req, res) => {
 }
 
 const checkoutProcess = (req, res) => {
-  const { name, surname, email, billing_address, shipping_address, phone, country, amount } = req.body;
+  const {
+    name,
+    surname,
+    email,
+    billing_address,
+    shipping_address,
+    phone,
+    country,
+    amount,
+    cartProducts
+  } = req.body;
 
-  const getinitials = (name, surname) => {
+  const { quantity, id, selectedSize } = cartProducts[0];
+
+  console.log(req.body);
+
+  const getInitials = (name, surname) => {
     const firstInitial = name ? name.charAt(0).toUpperCase() : '';
     const lastInitial = surname ? surname.charAt(0).toUpperCase() : '';
     return firstInitial + lastInitial;
-  }
+  };
 
-  const initials = getinitials(name, surname);
+  const initials = getInitials(name, surname);
   const order_status = "Processing";
   const slugTmp = "temp"; // slug temporaneo per inserimento
 
@@ -55,39 +69,57 @@ const checkoutProcess = (req, res) => {
         (name, surname, email, billing_address, shipping_address, phone, country, order_id)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `;
-      connection.query(insertCustomerSQL, [name, surname, email, billing_address, shipping_address, phone, country, orderId], (error, customerResult) => {
-        if (error) {
-          console.error("Errore inserimento cliente:", error);
-          return res.status(500).json({ msg: "Errore database (cliente)", code: 500 });
-        }
+      connection.query(
+        insertCustomerSQL,
+        [name, surname, email, billing_address, shipping_address, phone, country, orderId],
+        (error, customerResult) => {
+          if (error) {
+            console.error("Errore inserimento cliente:", error);
+            return res.status(500).json({ msg: "Errore database (cliente)", code: 500 });
+          }
 
-        return res.status(200).json({
-          msg: "Ordine completato con successo",
-          code: 200,
-          slug: slug, // puoi usarlo per redirect o conferma
-        });
-      });
+          // 4. Aggiorna quantità taglia selezionata
+          const updateSizeSQL = `
+            UPDATE deposit_product
+            SET quantity = quantity - ?
+            WHERE product_id = ? AND size = ?
+          `;
+          connection.query(updateSizeSQL, [quantity, id, selectedSize], (error, sizeResult) => {
+            if (error) {
+              console.error("Errore aggiornamento quantità prodotto:", error);
+              return res.status(500).json({ msg: "Errore database (quantità prodotto)", code: 500 });
+            }
+
+            return res.status(200).json({
+              msg: "Ordine completato con successo",
+              code: 200,
+              slug: slug, // puoi usarlo per redirect o conferma
+            });
+          });
+        }
+      );
     });
   });
 };
 
 
-const indexDiscountCode = (req, res)=>{
+
+const indexDiscountCode = (req, res) => {
   const dicountCodeSql = `SELECT * 
   FROM promos`
 
- connection.query(dicountCodeSql, (error, result) => {
-          if (error) {
-            console.log(error);
-            return res.status(500).json({ msg: "Errore del database", code: 500 });
-          }
-          if (result.affectedRows === 0) {
-            return res.status(404).json({ msg: "Non è stato possibile aggiornare lo slug dell'ordine", code: 404 });
-          }
+  connection.query(dicountCodeSql, (error, result) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json({ msg: "Errore del database", code: 500 });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ msg: "Non è stato possibile aggiornare lo slug dell'ordine", code: 404 });
+    }
 
-          return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, promos: result });
-        }
-        )
+    return res.status(200).json({ msg: "Benvenuto nell'API di Orders", code: 200, promos: result });
+  }
+  )
 
 }
 
