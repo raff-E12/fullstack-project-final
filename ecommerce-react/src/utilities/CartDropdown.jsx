@@ -88,7 +88,7 @@ export default function CartDropdown({ isMobile = false, closeMenus, MobileOpen,
           €
         </div>
         <button className="btn btn-primary w-100" onClick={handleGoToCart}>
-          Vai al Carrello
+          Checkout
         </button>
       </div>
     </>
