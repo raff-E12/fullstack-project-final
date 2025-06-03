@@ -78,22 +78,31 @@ const checkoutProcess = (req, res) => {
             return res.status(500).json({ msg: "Errore database (cliente)", code: 500 });
           }
 
-          // 4. Aggiorna quantità taglia selezionata
+          const quantityUpdatePromises = cartProducts.map(item => {
+        return new Promise((resolve, reject) => {
+          const { quantity, id, selectedSize } = item;
           const updateSizeSQL = `
             UPDATE deposit_product
             SET quantity = quantity - ?
             WHERE product_id = ? AND size = ?
           `;
-          connection.query(updateSizeSQL, [quantity, id, selectedSize], (error, sizeResult) => {
-            if (error) {
-              console.error("Errore aggiornamento quantità prodotto:", error);
-              return res.status(500).json({ msg: "Errore database (quantità prodotto)", code: 500 });
+          connection.query(updateSizeSQL, [quantity, id, selectedSize], (err, sizeResult) => {
+            if (err) {
+              console.error(`Errore aggiornamento quantità prodotto (ID: ${id}, Size: ${selectedSize}):`, err);
+              return reject(new Error(`Fallimento aggiornamento quantità per prodotto ID: ${id}, Size: ${selectedSize}`));
             }
+            resolve(); // Risolvi la promessa per questo elemento
+          });
+        });
+      });
 
-            return res.status(200).json({
-              msg: "Ordine completato con successo",
-              code: 200,
-              slug: slug, // puoi usarlo per redirect o conferma
+      // Aspetta che tutte le promesse di aggiornamento siano risolte
+      Promise.all(quantityUpdatePromises)
+        .then(() => {
+          return res.status(200).json({
+            msg: "Ordine completato con successo",
+            code: 200,
+            slug: slug,
             });
           });
         }
