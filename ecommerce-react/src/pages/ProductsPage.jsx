@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import FilterSection from "../components/FilterSection.jsx";
 import ProductCard from "../components/ProductCard.jsx"; // Import del nuovo componente
+import {useSearch} from "../context/SearchContext.jsx"
 import axios from "axios";
 
 import "../style/ProductsPage.css";
 
 export default function ProductPage() {
+  const {searchTerm, searchSubmitted} = useSearch();
   const [products, setProducts] = useState([]);
   const [defaultProducts, setDefaultProducts] = useState([]);
 
@@ -64,12 +66,14 @@ export default function ProductPage() {
     getdefaultProducts();
   }, []);
 
+  const currentSearchTerm = new URLSearchParams(location.search).get("search");
+
   return (
     <div className="container-fluid py-5">
       <div className="container">
         {/* Passa i parametri di default */}
         <FilterSection defaultProducts={defaultProducts} />
-
+        {currentSearchTerm && <div className="m-3 text-center fs-4">Prodotti Cercati: <span className="fw-bolder">{currentSearchTerm}</span></div>}
         {/* Products Grid */}
         <div className="row g-4 mt-3">
           {products.length > 0 ? (

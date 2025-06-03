@@ -5,7 +5,7 @@ import { useSearch } from "../context/SearchContext";
 
 export default function SearchComponent({ isMobile = false, closeMenus }) {
   const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
-  const { searchTerm, setSearchTerm } = useSearch();
+  const { searchTerm, setSearchTerm, setSearchSubmitted } = useSearch();
   const navigate = useNavigate();
 
   const performSearch = () => {
@@ -21,6 +21,7 @@ export default function SearchComponent({ isMobile = false, closeMenus }) {
 
   const handleSearchFormSubmit = (e) => {
     e.preventDefault();
+    setSearchSubmitted(true);
     performSearch();
   };
 
