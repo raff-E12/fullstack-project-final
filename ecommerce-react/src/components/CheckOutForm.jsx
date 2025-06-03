@@ -4,7 +4,7 @@ import axios from "axios";
 import { useCart } from "../context/CartContext";
 import { useInventory } from "../hooks/useInventory";
 
-const endPointDiscount = "http://localhost:3000/checkout/discount-code";
+
 
 // Componente per il form di checkout integrato (SEMPLIFICATO)
 const CheckoutForm = ({
