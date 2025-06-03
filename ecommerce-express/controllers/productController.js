@@ -13,8 +13,6 @@ const index = (req, res) => {
     products
   JOIN
     categories ON products.category_id = categories.id
-  JOIN 
-    deposit_product ON deposit_product.product_id = products.id
   WHERE 1=1`;
 
   const arrayParams = [];
@@ -97,11 +95,16 @@ const show = (req, res) => {
   const { slug } = req.params;
   const sql = `SELECT
     products.*,
-    categories.name AS category_name
+    categories.name AS category_name,
+    deposit_product.size,
+    deposit_product.quantity
 FROM
     products
 JOIN
-    categories ON products.category_id = categories.id WHERE products.slug = ?`;
+    categories ON products.category_id = categories.id 
+JOIN 
+    deposit_product ON deposit_product.product_id = products.id
+WHERE products.slug = ?`;
   connection.query(sql, [slug], (error, result) => {
     if (error) {
       return res.status(500).json({ msg: "Errore del database", code: 500 });
@@ -120,15 +123,11 @@ const indexProductCategory = (req, res) => {
     products.*,
     categories.name AS category_name,
     categories.slug AS category_slug
-    deposit_product.size,
-    deposit_product.quantity,
-    deposit_product.color
+
 FROM
     products
 JOIN
     categories ON categories.id = products.category_id
-JOIN 
-    deposit_product ON deposit_product.product_id = products.id
 WHERE
     categories.slug = ?;`
   connection.query(sql, [categorySlug], (error, result) => {

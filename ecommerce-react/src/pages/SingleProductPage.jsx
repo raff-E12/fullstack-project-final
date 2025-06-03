@@ -49,6 +49,8 @@ export default function SingleProductPage() {
     end_discount,
     sku_order_code,
     brand,
+    size,
+    quantity
   } = productSlug;
 
   // Calcolo sconto attivo
