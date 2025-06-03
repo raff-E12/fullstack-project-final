@@ -29,7 +29,7 @@ export default function CategoriesDropdown({ closeMenus }) {
   return (
     <div className="dropdown position-relative" ref={dropdownRef}>
       <button
-        className="dropdown-toggle btn p-0"
+        className="dropdown-toggle btn nav-link"
         type="button"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         aria-expanded={isDropdownOpen}
