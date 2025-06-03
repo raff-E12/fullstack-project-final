@@ -195,24 +195,66 @@ const processOrder = (req, res) => {
 
         const processItems = (itemIndex = 0) => {
             if (itemIndex >= items.length) {
-                return connection.commit((commitError) => {
-                    if (commitError) {
-                        return connection.rollback(() => {
-                            res.status(500).json({
-                                success: false,
-                                message: "Errore commit transazione",
+                // Tutti gli articoli sono stati elaborati, inseriamo l'ordine nella tabella
+                const insertOrderSql = `
+          INSERT INTO orders 
+          (amount, order_date, order_status, sku_code, free_delivery, promo_id, slug) 
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `;
+
+                // 👇 Prepariamo i dati per l'ordine (prendiamo il primo SKU per semplicità)
+                const skuCode = items[0].productId || 'SKU000'; // puoi personalizzare
+                const amount = orderInfo.amount || 0;
+                const orderDate = new Date(); // data odierna
+                const orderStatus = 'Processing'; // puoi cambiare se serve
+                const freeDelivery = 0; // default
+                const promoId = null; // se serve
+                const slug = `ml-${Date.now()}`;
+
+                connection.query(
+                    insertOrderSql,
+                    [
+                        amount,
+                        orderDate,
+                        orderStatus,
+                        skuCode,
+                        freeDelivery,
+                        promoId,
+                        slug,
+                    ],
+                    (insertError, insertResult) => {
+                        if (insertError) {
+                            return connection.rollback(() => {
+                                res.status(500).json({
+                                    success: false,
+                                    message: "Errore inserimento ordine",
+                                });
+                            });
+                        }
+
+                        const orderId = insertResult.insertId;
+
+                        connection.commit((commitError) => {
+                            if (commitError) {
+                                return connection.rollback(() => {
+                                    res.status(500).json({
+                                        success: false,
+                                        message: "Errore commit transazione",
+                                    });
+                                });
+                            }
+
+                            res.json({
+                                success: true,
+                                message: "Ordine processato con successo",
+                                orderId: orderId,
+                                itemsProcessed: items.length,
+                                totalAmount: amount,
                             });
                         });
                     }
-
-                    res.json({
-                        success: true,
-                        message: "Ordine processato con successo",
-                        orderId: Date.now(),
-                        itemsProcessed: items.length,
-                        totalAmount: orderInfo.amount || 0,
-                    });
-                });
+                );
+                return;
             }
 
             const item = items[itemIndex];
@@ -221,8 +263,7 @@ const processOrder = (req, res) => {
                 return connection.rollback(() => {
                     res.status(400).json({
                         success: false,
-                        message: `Item ${itemIndex + 1
-                            } non valido: mancano productId, size o quantity`,
+                        message: `Item ${itemIndex + 1} non valido: mancano productId, size o quantity`,
                     });
                 });
             }
@@ -296,6 +337,7 @@ const processOrder = (req, res) => {
         processItems();
     });
 };
+
 
 module.exports = {
     getProductAvailability,
