@@ -35,7 +35,7 @@ export default function ProductCard({
           {/* Badge Sconto */}
           {isDiscountActive && (
             <div className="discount-badge">
-              <span className="discount-percentage">-{discount}%</span>
+              <span className="discount-percentage">-{parseInt(discount)}%</span>
             </div>
           )}
 
