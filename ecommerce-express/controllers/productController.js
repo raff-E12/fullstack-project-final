@@ -5,14 +5,19 @@ const index = (req, res) => {
   let sql = `SELECT
     products.*,
     categories.name AS category_name,
-    categories.slug AS category_slug
+    categories.slug AS category_slug,
+    deposit_product.size,
+    deposit_product.quantity,
+    deposit_product.color
   FROM
     products
   JOIN
     categories ON products.category_id = categories.id
+  JOIN 
+    deposit_product ON deposit_product.product_id = products.id
   WHERE 1=1`;
 
-   const arrayParams = [];
+  const arrayParams = [];
 
   // Added 'discount' to destructuring
   const { q, search, brand, fabric, min_price, max_price, sort_by, discount } = req.query;
@@ -115,10 +120,15 @@ const indexProductCategory = (req, res) => {
     products.*,
     categories.name AS category_name,
     categories.slug AS category_slug
+    deposit_product.size,
+    deposit_product.quantity,
+    deposit_product.color
 FROM
     products
 JOIN
     categories ON categories.id = products.category_id
+JOIN 
+    deposit_product ON deposit_product.product_id = products.id
 WHERE
     categories.slug = ?;`
   connection.query(sql, [categorySlug], (error, result) => {
@@ -131,8 +141,8 @@ WHERE
     return res.status(200).json({ msg: "Benvenuto nell' API", code: 200, products: result });
   })
 }
-  
-  const indexHome = (req, res) => {
+
+const indexHome = (req, res) => {
   // Query for New Arrivals (e.g., ordered by creation date)
   let newArrivalsSql = `SELECT
     products.*,
