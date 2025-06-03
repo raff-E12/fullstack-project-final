@@ -283,17 +283,31 @@ export default function SingleProductPage() {
               <div className="mb-4">
                 <h6 className="fw-bold mb-3">Seleziona la taglia:</h6>
                 <div className="d-flex gap-2 flex-wrap">
-                  {variations.map((sizes, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      className={`btn ${selectedSize === sizes.size ? "btn-dark" : "btn-outline-dark"
-                        } size-btn`}
-                      onClick={() => setSelectedSize(sizes.size)}
-                    >
-                      {sizes.size}
-                    </button>
-                  ))}
+                  {
+                    variations.filter(variation => variation.quantity > 0).length > 0 ? (
+                      variations.map((sizes, index) => (
+                        sizes.quantity > 0 ? (
+                          <button
+                            key={index}
+                            type="button"
+                            className={`btn ${selectedSize === sizes.size ? "btn-dark" : "btn-outline-dark"} size-btn`}
+                            onClick={() => setSelectedSize(sizes.size)}
+                          >
+                            {sizes.size}
+                          </button>
+                        ) : (
+                          <button
+                            key={index}
+                            type="button"
+                            className={`btn text-danger ${selectedSize === sizes.size ? "btn-dark" : "btn-outline-dark"} size-btn`}
+                            disabled
+                          >
+                            {sizes.size}
+                          </button>
+                        )
+                      ))
+                    ) : <div className="text-danger fs-5"> PRODOTTO ESAURITO</div>
+                  }
                 </div>
                 {selectedSize && (
                   <small className="text-success mt-2 d-block">
