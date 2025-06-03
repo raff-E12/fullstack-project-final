@@ -15,7 +15,7 @@ export const useInventory = () => {
       }));
 
       const response = await axios.post(
-        "http://localhost:3000/api/inventory/check-cart",
+        "http://localhost:3000/availability/check-cart",
         { items }
       );
 
@@ -44,7 +44,7 @@ export const useInventory = () => {
       }));
 
       const response = await axios.post(
-        "http://localhost:3000/api/inventory/process-order",
+        "http://localhost:3000/api/availability/process-order",
         { items, orderInfo }
       );
 

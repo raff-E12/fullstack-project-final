@@ -17,6 +17,8 @@ export default function CartPage() {
   const [appliedPromoPercentage, setAppliedPromoPercentage] = useState(0);
   const [promoMessage, setPromoMessage] = useState("");
 
+  const endPointDiscount = "http://localhost:3000/checkout/discount-code";
+
   const [availabilityStatus, setAvailabilityStatus] = useState({
     checked: false,
     allAvailable: true,
