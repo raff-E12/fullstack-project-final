@@ -126,20 +126,20 @@ export default function FilterSection({ defaultProducts }) {
             >
               Filtri {isFilterVisible ? "−" : "+"}
             </button>
-            
             <select
               className="order-select"
+              id="order-select"
               onChange={(e) => setOrder(e.target.value)}
               value={order}
             >
-              <option value="">Ordina</option>
+              <option value="">Ordina per</option>
               <option value="name_asc">A-Z</option>
               <option value="name_desc">Z-A</option>
               <option value="price_asc">Prezzo ↑</option>
               <option value="price_desc">Prezzo ↓</option>
               <option value="latest">Novità</option>
             </select>
-
+            
            
           </div>
         </div>

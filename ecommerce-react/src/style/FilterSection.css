@@ -1,10 +1,9 @@
 /* FilterSection.css */
 
 .filter-wrapper {
-    border: 1px solid #333;
     border-radius: 8px;
-    padding: 20px;
-    margin: 20px 0;
+    padding: 20px 20px 0;
+    margin: 20px 0 0;
 }
 
 /* Header */
@@ -16,19 +15,7 @@
     margin-bottom: 20px;
 }
 
-.search-section {
-    flex: 1;
-    min-width: 200px;
-}
 
-.search-input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #333;
-    border-radius: 6px;
-    color: #333;
-    font-size: 14px;
-}
 
 .search-input::placeholder {
     color: #888;
@@ -48,12 +35,17 @@
 }
 
 .order-select {
+    all:unset;
+    cursor: pointer;
+    font-weight: bolder;
     padding: 12px 16px;
-    border: 1px solid #333;
     border-radius: 6px;
     color: #333;
     font-size: 1rem;
     min-width: 120px;
+}
+.order-select:hover {
+    transform: scale(1.1);
 }
 
 .order-select:focus {
@@ -62,13 +54,18 @@
 }
 
 .filter-toggle {
+    all:unset;
     padding: 12px 20px;
-    border: 1px solid #333;
+    font-weight: bolder;
     border-radius: 6px;
     color: #333;
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+.filter-toggle:hover {
+    transform: scale(1.1);
 }
 
 
@@ -154,7 +151,7 @@
     display: flex;
     gap: 12px;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin: 20px 0 20px;
     padding-top: 16px;
     border-top: 1px solid #333;
 }
