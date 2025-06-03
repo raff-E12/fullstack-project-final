@@ -102,8 +102,8 @@ export default function Footer() {
 
           {/* DESTRA: Subscribe + Follow Us */}
           <div className="col-12 col-md-6">
-
             <Newsletter />
+
             <div>
               <h5 className="mb-3">Follow Us</h5>
               <div className="d-flex gap-3">
