@@ -77,7 +77,7 @@ export default function Header() {
           </div>
 
           <div className="col-4 d-flex justify-content-center">
-            <img src="/img/logo-white.png" alt="URBN WAY" />
+            <img src="/img/logo.png" alt="URBN WAY" width="150" />
           </div>
 
           <div className="col-4 d-flex justify-content-end">
