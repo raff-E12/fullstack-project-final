@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const RelatedProducts = ({ category }) => {
+const RelatedProducts = ({ category_slug }) => {
     const [relatedProducts, setRelatedProducts] = useState([]);
 
     useEffect(() => {
         axios
-            .get(`http://127.0.0.1:3000/products?category=${category}`)
+            .get(`http://localhost:3000/products/category/${category_slug}`)
             .then((res) => {
-                setRelatedProducts(res.data.products);
+                setRelatedProducts(res.data.products.splice(0, 6))
             })
             .catch((error) => {
                 console.error("Errore nel recupero dei prodotti correlati:", error);
             });
-    }, [category]);
+    }, [category_slug]);
 
     return (
         <div className="container mt-5">

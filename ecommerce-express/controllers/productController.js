@@ -1,4 +1,3 @@
-
 const connection = require("../data/db");
 
 const index = (req, res) => {
@@ -96,6 +95,7 @@ const show = (req, res) => {
   const sql = `SELECT
     products.*,
     categories.name AS category_name,
+    categories.slug AS category_slug,
     deposit_product.size,
     deposit_product.quantity
 FROM
