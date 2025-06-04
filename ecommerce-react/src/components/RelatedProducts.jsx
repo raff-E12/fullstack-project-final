@@ -7,9 +7,9 @@ const RelatedProducts = ({ category }) => {
 
     useEffect(() => {
         axios
-            .get(`http://127.0.0.1:3000/products?category=${category}`)
+            .get(`http://localhost:3000/products/category/${category}`)
             .then((res) => {
-                setRelatedProducts(res.data.products);
+                setRelatedProducts(res.data.products.splice(0, 6))
             })
             .catch((error) => {
                 console.error("Errore nel recupero dei prodotti correlati:", error);

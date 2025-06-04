@@ -53,6 +53,8 @@ export default function SingleProductPage() {
     sku_order_code,
     brand,
     variations,
+    category_slug,
+
   } = productSlug;
 
   const today = new Date();
@@ -372,9 +374,8 @@ export default function SingleProductPage() {
                   {isSoldOut
                     ? "Non disponibile"
                     : !selectedSize
-                    ? "Seleziona una taglia"
-                    : `Aggiungi al carrello ${
-                        quantity > 1 ? `(${quantity})` : ""
+                      ? "Seleziona una taglia"
+                      : `Aggiungi al carrello ${quantity > 1 ? `(${quantity})` : ""
                       }`}
                 </button>
               </div>
@@ -561,7 +562,7 @@ export default function SingleProductPage() {
             </h2>
             <div id="relatedProducts" className="accordion-collapse collapse">
               <div className="accordion-body">
-                <RelatedProducts category={category_name} />
+                <RelatedProducts category={category_slug} />
               </div>
             </div>
           </div>
