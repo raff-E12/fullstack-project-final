@@ -60,9 +60,8 @@ CREATE TABLE `customers` (
   `phone` varchar(50) DEFAULT NULL,
   `country` varchar(100) DEFAULT NULL,
   `order_id` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +70,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Mario','Rossi','mario.rossi@example.com','Via Roma 10, 00100 Roma','Via Roma 10, 00100 Roma','3331234567','Italy',6),(2,'Laura','Bianchi','laura.bianchi@example.com','Piazza Duomo 1, 20100 Milano','Piazza Duomo 1, 20100 Milano','3457654321','Italy',2),(3,'Giovanni','Verdi','giovanni.verdi@example.com','Corso Francia 5, 10100 Torino','Via Garibaldi 20, 10100 Torino','3209876543','Italy',3),(4,'Anna','Neri','anna.neri@example.com','Viale Colombo 8, 80100 Napoli','Viale Colombo 8, 80100 Napoli','3381122334','Italy',4);
+INSERT INTO `customers` VALUES (1,'Mario','Rossi','mario.rossi@example.com','Via Roma 10, 00100 Roma','Via Roma 10, 00100 Roma','3331234567','Italy',6),(2,'Laura','Bianchi','laura.bianchi@example.com','Piazza Duomo 1, 20100 Milano','Piazza Duomo 1, 20100 Milano','3457654321','Italy',2),(3,'Giovanni','Verdi','giovanni.verdi@example.com','Corso Francia 5, 10100 Torino','Via Garibaldi 20, 10100 Torino','3209876543','Italy',3),(4,'Anna','Neri','anna.neri@example.com','Viale Colombo 8, 80100 Napoli','Viale Colombo 8, 80100 Napoli','3381122334','Italy',4),(9,'Simone','Burrai','burrai.s98@gmail.com','Carrer Mestre Monforte, 20, 14','Carrer Mestre Monforte, 20, 14','+393475719627','italia',21),(10,'SSFASA','Burrai','burrai.s98@gmail.com','Carrer Mestre Monforte, 20, 14','Carrer Mestre Monforte, 20, 14','+393475719627','italia',28),(11,'Simone','Burrai','burrai.s98@gmail.com','Carrer Mestre Monforte, 20, 14','Carrer Mestre Monforte, 20, 14','+393475719627','italia',29),(12,'SSFASA','Burrai','burrai.s98@gmail.com','Carrer Mestre Monforte, 20, 14','Carrer Mestre Monforte, 20, 14','+393475719627','italia',30),(13,'Simone','Burrai','burrai.s98@gmail.com','Carrer Mestre Monforte, 20, 14','Carrer Mestre Monforte, 20, 14','+393475719627','italia',31),(14,'Simone','Burrai','burrai.s98@gmail.com','Carrer Mestre Monforte, 20, 14','Carrer Mestre Monforte, 20, 14','+393475719627','italia',32),(15,'Simone','Burrai','burrai.s98@gmail.com','Carrer Mestre Monforte, 20, 14','Carrer Mestre Monforte, 20, 14','+393475719627','italia',33),(16,'Simone','Burrai','burrai.s98@gmail.com','Carrer Mestre Monforte, 20, 14','Carrer Mestre Monforte, 20, 14','+393475719627','italia',34);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,12 +85,11 @@ CREATE TABLE `deposit_product` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `product_id` bigint NOT NULL,
   `size` varchar(50) DEFAULT NULL,
-  `color` varchar(50) DEFAULT NULL,
   `quantity` tinyint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`),
   CONSTRAINT `deposit_product_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +98,7 @@ CREATE TABLE `deposit_product` (
 
 LOCK TABLES `deposit_product` WRITE;
 /*!40000 ALTER TABLE `deposit_product` DISABLE KEYS */;
-INSERT INTO `deposit_product` VALUES (59,1,'M','Navy',14),(60,1,'L','White',30),(61,1,'S','Navy',22),(62,1,'XL','Black',4),(63,2,'M','Black',11),(64,2,'L','Navy',34),(65,2,'XL','Grey',2),(66,3,'S','White',5),(67,3,'M','Black',14),(68,3,'L','Grey',23),(69,4,'M','Black',2),(70,4,'L','Navy',32),(71,5,'32','Beige',2),(72,5,'34','Navy',3),(73,5,'36','Black',5),(74,6,'42','White/Blue',6),(75,6,'43','Grey/White',4),(76,6,'41','Black/White',2),(77,7,'M','Olive',7),(78,7,'L','Black',3),(79,8,'S','White',12),(80,8,'M','Navy',14),(81,8,'L','Red',23),(82,9,'M','White',22),(83,9,'L','Blue',11),(84,10,'S','Black',8),(85,10,'M','White',21),(86,11,'M','Navy',20),(88,12,'M','Black',25),(89,12,'L','White',15),(90,13,'M','Grey',18),(91,13,'L','Navy',12),(92,14,'42','White',30),(93,14,'43','Black',20),(94,15,'L','Green',8),(95,15,'XL','Black',5),(96,16,'M','Beige',10),(97,16,'L','Black',7),(98,17,'S','Navy',20),(99,17,'M','White',25),(100,18,'M','Grey',15),(101,18,'L','Black',10),(104,20,'32','Olive',13),(105,20,'34','Black',9);
+INSERT INTO `deposit_product` VALUES (1,1,'M',12),(2,1,'L',27),(3,1,'S',19),(4,1,'XL',2),(5,2,'M',10),(6,2,'L',3),(7,2,'XL',1),(8,3,'S',4),(9,3,'M',14),(10,3,'L',22),(11,4,'M',1),(12,4,'L',29),(13,5,'32',2),(14,5,'34',3),(15,5,'36',5),(16,6,'42',6),(17,6,'43',3),(18,6,'41',1),(19,7,'M',7),(20,7,'L',2),(21,8,'S',8),(22,8,'M',8),(23,8,'L',23),(24,9,'M',22),(25,9,'L',11),(26,10,'S',8),(27,10,'M',21),(28,11,'M',20),(29,12,'M',25),(30,12,'L',15),(31,13,'M',18),(32,13,'L',12),(33,14,'42',30),(34,14,'43',20),(35,15,'L',8),(36,15,'XL',5),(37,16,'M',10),(38,16,'L',7),(39,17,'S',19),(40,17,'M',25),(41,18,'M',15),(42,18,'L',10),(43,20,'32',11),(44,20,'34',7);
 /*!40000 ALTER TABLE `deposit_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,6 +113,7 @@ CREATE TABLE `order_product` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `order_id` bigint NOT NULL,
   `product_id` bigint NOT NULL,
+  `size` varchar(10) DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
   `quantity` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -122,7 +121,7 @@ CREATE TABLE `order_product` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `order_product_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `order_product_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +130,7 @@ CREATE TABLE `order_product` (
 
 LOCK TABLES `order_product` WRITE;
 /*!40000 ALTER TABLE `order_product` DISABLE KEYS */;
-INSERT INTO `order_product` VALUES (1,1,1,89.99,1),(2,1,8,89.99,2),(3,2,3,129.99,2),(4,3,5,149.99,4),(5,4,4,299.99,2),(6,5,8,99.99,1),(9,6,12,79.99,1),(10,6,14,119.99,2),(11,7,1,89.99,3),(12,7,3,129.99,1),(13,8,8,99.99,5);
+INSERT INTO `order_product` VALUES (1,1,1,NULL,89.99,1),(2,1,8,NULL,89.99,2),(3,2,3,NULL,129.99,2),(4,3,5,NULL,149.99,4),(5,4,4,NULL,299.99,2),(6,5,8,NULL,99.99,1),(9,6,12,NULL,79.99,1),(10,6,14,NULL,119.99,2),(11,7,1,NULL,89.99,3),(12,7,3,NULL,129.99,1),(13,8,8,NULL,99.99,5),(14,28,2,NULL,159.99,1),(15,29,2,NULL,159.99,10),(16,30,3,NULL,129.99,1),(17,31,3,NULL,129.99,1),(18,32,4,NULL,299.99,1),(19,33,4,NULL,299.99,2),(20,34,2,NULL,159.99,1);
 /*!40000 ALTER TABLE `order_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +151,7 @@ CREATE TABLE `orders` (
   `promo_id` bigint DEFAULT NULL,
   `slug` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -161,7 +160,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,179.98,'2025-05-20 10:30:00','Completed','SKU001',0,NULL,'20250520_1'),(2,129.99,'2025-05-21 14:00:00','Processing','SKU002',1,NULL,'20250521_2'),(3,149.99,'2025-05-21 16:45:00','Processing','SKU003',0,NULL,'20250521_3'),(4,299.99,'2025-05-22 09:00:00','Processing','SKU004',1,NULL,'20250522_4'),(5,99.99,'2025-05-22 11:15:00','Completed','SKU005',0,NULL,'20250522_5'),(6,309.97,'2025-05-28 10:00:00','Processing','SKU006',0,NULL,'20250528_6'),(7,250.00,'2025-05-30 11:00:00','Completed','SKU007',0,NULL,'20250530_7'),(8,150.00,'2025-05-30 14:00:00','Processing','SKU008',1,NULL,'20250530_8');
+INSERT INTO `orders` VALUES (1,179.98,'2025-05-20 10:30:00','Completed','SKU001',0,NULL,'20250520_1'),(2,129.99,'2025-05-21 14:00:00','Processing','SKU002',1,NULL,'20250521_2'),(3,149.99,'2025-05-21 16:45:00','Processing','SKU003',0,NULL,'20250521_3'),(4,299.99,'2025-05-22 09:00:00','Processing','SKU004',1,NULL,'20250522_4'),(5,99.99,'2025-05-22 11:15:00','Completed','SKU005',0,NULL,'20250522_5'),(6,309.97,'2025-05-28 10:00:00','Processing','SKU006',0,NULL,'20250528_6'),(7,250.00,'2025-05-30 11:00:00','Completed','SKU007',0,NULL,'20250530_7'),(8,150.00,'2025-05-30 14:00:00','Processing','SKU008',1,NULL,'20250530_8'),(9,715.94,'2025-05-31 17:46:45','Processing',NULL,NULL,NULL,'sb-1748706405802-9'),(10,1169.87,'2025-06-03 20:47:07','Processing',NULL,NULL,NULL,'sb-1748976427789-10'),(11,1169.87,'2025-06-03 20:47:33','Processing',NULL,NULL,NULL,'sb-1748976453230-11'),(14,535.46,'2025-06-04 12:09:15','Processing','SKU00817',0,NULL,'ml-1749031755201'),(15,3359.79,'2025-06-04 12:24:29','Processing','SKU002',0,NULL,'ml-1749032669341'),(16,299.99,'2025-06-04 12:33:49','Processing','SKU004',0,NULL,'ml-1749033229385'),(17,179.99,'2025-06-04 12:34:23','Processing','SKU007',0,NULL,'ml-1749033262515'),(18,509.95,'2025-06-04 14:32:13','Processing','SKU008',0,NULL,'ml-1749040333192'),(21,259.98,'2025-06-04 21:05:21','Processing','SKU003',0,NULL,'ml-1749063921261'),(28,135.99,'2025-06-04 21:28:45','Processing','SKU002',0,NULL,'ml-1749065324754'),(29,1359.92,'2025-06-04 21:30:46','Processing','SKU002',0,NULL,'ml-1749065445916'),(30,129.99,'2025-06-04 22:20:44','Processing','SKU003',0,NULL,'ml-1749068443518'),(31,129.99,'2025-06-04 22:23:22','Processing','SKU003',0,NULL,'ml-1749068602235'),(32,299.99,'2025-06-04 22:28:50','Processing','SKU004',0,NULL,'ml-1749068930296'),(33,599.98,'2025-06-04 22:29:27','Processing','SKU004',0,NULL,'ml-1749068967156'),(34,159.99,'2025-06-04 22:34:41','Processing','SKU002',0,NULL,'ml-1749069281363');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,4 +245,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-31 17:33:08
+-- Dump completed on 2025-06-04 22:37:54
