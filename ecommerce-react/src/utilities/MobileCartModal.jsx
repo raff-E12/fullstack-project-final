@@ -7,7 +7,7 @@ import "../style/MobileCartModal.css";
 
 export default function MobileCartModal({ isMobile = true, closeMenus }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { cartItems } = useCart();
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
   const navigate = useNavigate();
 
   const cartItemCount = cartItems.reduce(
@@ -62,6 +62,44 @@ export default function MobileCartModal({ isMobile = true, closeMenus }) {
                 <span className="text-muted">Quantità: {item.quantity}</span>
                 <strong className="fs-5">{item.price} €</strong>
               </div>
+              <div className="quantity-controls">
+                  <button
+                    className="btn quantity-btn"
+                    onClick={() =>
+                      updateQuantity(
+                        item.id,
+                        item.selectedSize,
+                        item.quantity - 1
+                      )
+                    }
+                    disabled={item.quantity <= 1}
+                    title="Diminuisci quantità"
+                  >
+                    −
+                  </button>
+                  <button
+                    className="btn quantity-btn"
+                    onClick={() =>
+                      updateQuantity(
+                        item.id,
+                        item.selectedSize,
+                        item.quantity + 1
+                      )
+                    }
+                    title="Aumenta quantità"
+                  >
+                    +
+                  </button>
+                  <button
+                    className="btn quantity-btn remove-btn"
+                    onClick={() =>
+                      removeFromCart(item.id, item.selectedSize)
+                    }
+                    title="Rimuovi dal carrello"
+                  >
+                    <i className="bi bi-trash3"></i>
+                  </button>
+                </div>
             </div>
           </div>
         ))}
