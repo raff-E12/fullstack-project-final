@@ -42,9 +42,7 @@ export default function Header() {
 
           {/* Center */}
           <div className="col-4 text-center">
-            <h1 className="m-0 text-white fw-bold text-uppercase" id="text-hd">
-              Nome
-            </h1>
+            <img src="/img/logo.png" alt="URBN WAY" class width="150"/>
           </div>
 
           {/* Right */}
@@ -80,12 +78,7 @@ export default function Header() {
           </div>
 
           <div className="col-4 d-flex justify-content-center">
-            <h1
-              className="m-0 text-white fw-bold text-uppercase text-center"
-              id="text-hd"
-            >
-              Nome
-            </h1>
+           <img src="/img/logo-white.png" alt="URBN WAY" />
           </div>
 
           <div className="col-4 d-flex justify-content-end">
