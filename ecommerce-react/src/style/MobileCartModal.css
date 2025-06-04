@@ -1,0 +1,63 @@
+/* MobileCartModal.css */
+
+/* Backdrop del modal */
+.mobile-cart-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    height: 80vh;
+    width: 100vw;
+}
+
+/* Container principale del modal */
+.mobile-cart-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 9999;
+    height: 80vh;
+    width: 100vw;
+}
+
+/* Lista dei prodotti nel carrello */
+.mobile-cart-items-container {
+    flex: 1;
+    overflow: auto;
+    padding: 0 1rem;
+}
+
+/* Item del carrello - testo troncato */
+.mobile-cart-item-text {
+    min-width: 0;
+}
+
+/* Container principale per il fallback */
+.mobile-cart-fallback {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 1050;
+}
+
+/* Backdrop per il fallback */
+.mobile-cart-fallback-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998; }
