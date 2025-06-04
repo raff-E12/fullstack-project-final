@@ -7,23 +7,23 @@ const getProductAvailability = (req, res) => {
   console.log(`Richiesta disponibilità per prodotto ID: ${productId}`);
 
   const sql = `
-    SELECT 
+    SELECT
       deposit_product.size,
       deposit_product.quantity,
       products.name as product_name,
       products.price
-    FROM deposit_product 
-    JOIN products ON deposit_product.product_id = products.id 
+    FROM deposit_product
+    JOIN products ON deposit_product.product_id = products.id
     WHERE deposit_product.product_id = ?
-    ORDER BY 
-      CASE deposit_product.size 
-        WHEN 'XS' THEN 1 
-        WHEN 'S' THEN 2 
-        WHEN 'M' THEN 3 
-        WHEN 'L' THEN 4 
-        WHEN 'XL' THEN 5 
-        WHEN 'XXL' THEN 6 
-        ELSE 7 
+    ORDER BY
+      CASE deposit_product.size
+        WHEN 'XS' THEN 1
+        WHEN 'S' THEN 2
+        WHEN 'M' THEN 3
+        WHEN 'L' THEN 4
+        WHEN 'XL' THEN 5
+        WHEN 'XXL' THEN 6
+        ELSE 7
       END
   `;
 
@@ -63,8 +63,8 @@ const checkProductAvailability = (req, res) => {
   );
 
   const sql = `
-    SELECT quantity 
-    FROM deposit_product 
+    SELECT quantity
+    FROM deposit_product
     WHERE product_id = ? AND size = ?
   `;
 
@@ -123,8 +123,8 @@ const checkCartAvailability = (req, res) => {
   });
 
   const sql = `
-    SELECT product_id, size, quantity 
-    FROM deposit_product 
+    SELECT product_id, size, quantity
+    FROM deposit_product
     WHERE ${placeholders}
   `;
 
@@ -175,7 +175,24 @@ const checkCartAvailability = (req, res) => {
 
 // Processa ordine (aggiorna stock)
 const processOrder = (req, res) => {
-  const { items, orderInfo } = req.body;
+  console.log("Request Body Received (Backend):", req.body);
+
+  const {
+    items,
+    name,
+    surname,
+    email,
+    billing_address,
+    shipping_address,
+    phone,
+    country,
+    amount,
+    discount_applied,
+    discount_code,
+    items_count,
+    total_quantity,
+    order_date,
+  } = req.body;
 
   if (!Array.isArray(items) || items.length === 0) {
     return res.status(400).json({
@@ -193,157 +210,200 @@ const processOrder = (req, res) => {
       });
     }
 
-    const processItems = (itemIndex = 0) => {
+    // Step 1: Update deposit_product quantities
+    const updateStock = (itemIndex = 0) => {
       if (itemIndex >= items.length) {
-        // Tutti gli articoli sono stati elaborati, inseriamo l'ordine nella tabella
-        const insertOrderSql = `
-          INSERT INTO orders 
-          (amount, order_date, order_status, sku_code, free_delivery, promo_id, slug) 
-          VALUES (?, ?, ?, ?, ?, ?, ?)
-        `;
-
-        // 👇 Prepariamo i dati per l'ordine (prendiamo il primo SKU per semplicità)
-
-        numberSkuCode = items
-          .map((item) => {
-            return item.productId;
-          })
-          .join("");
-
-        const skuCode = `SKU00${numberSkuCode}` || "SKU000"; // puoi personalizzare
-        const amount = orderInfo.amount || 0;
-        const orderDate = new Date();
-        const orderStatus = "Processing";
-        const freeDelivery = 0;
-        const promoId = null;
-        const slug = `ml-${Date.now()}`;
-
-        connection.query(
-          insertOrderSql,
-          [
-            amount,
-            orderDate,
-            orderStatus,
-            skuCode,
-            freeDelivery,
-            promoId,
-            slug,
-          ],
-          (insertError, insertResult) => {
-            if (insertError) {
-              return connection.rollback(() => {
-                res.status(500).json({
-                  success: false,
-                  message: "Errore inserimento ordine",
-                });
-              });
-            }
-
-            const orderId = insertResult.insertId;
-
-            connection.commit((commitError) => {
-              if (commitError) {
-                return connection.rollback(() => {
-                  res.status(500).json({
-                    success: false,
-                    message: "Errore commit transazione",
-                  });
-                });
-              }
-
-              res.json({
-                success: true,
-                message: "Ordine processato con successo",
-                orderId: orderId,
-                itemsProcessed: items.length,
-                totalAmount: amount,
-              });
-            });
-          }
-        );
+        // All stock updates are done, proceed to insert order
+        insertOrder();
         return;
       }
 
       const item = items[itemIndex];
+      const { productId, size, quantity } = item;
 
-      if (!item.productId || !item.size || !item.quantity) {
-        return connection.rollback(() => {
-          res.status(400).json({
-            success: false,
-            message: `Item ${
-              itemIndex + 1
-            } non valido: mancano productId, size o quantity`,
-          });
-        });
-      }
-
-      const checkSql = `
-        SELECT quantity 
-        FROM deposit_product 
-        WHERE product_id = ? AND size = ?
-        FOR UPDATE
+      const sql = `
+        UPDATE deposit_product
+        SET quantity = quantity - ?
+        WHERE product_id = ? AND size = ? AND quantity >= ?
       `;
 
       connection.query(
-        checkSql,
-        [item.productId, item.size],
-        (checkError, checkResults) => {
-          if (checkError) {
+        sql,
+        [quantity, productId, size, quantity],
+        (error, results) => {
+          if (error) {
             return connection.rollback(() => {
+              console.error("Errore aggiornamento stock:", error);
               res.status(500).json({
                 success: false,
-                message: "Errore controllo stock",
+                message: `Errore aggiornamento stock per prodotto ${productId}, taglia ${size}`,
               });
             });
           }
 
-          if (checkResults.length === 0) {
+          if (results.affectedRows === 0) {
             return connection.rollback(() => {
-              res.status(400).json({
+              console.error(
+                `Stock insufficiente o prodotto non trovato per ID: ${productId}, Taglia: ${size}`
+              );
+              res.status(409).json({
                 success: false,
-                message: `Prodotto ${item.productId} taglia ${item.size} non trovato nell'inventario`,
+                message: `Stock insufficiente per il prodotto ${productId}, taglia ${size}. Riprova l'ordine con quantità disponibili.`,
               });
             });
           }
 
-          const currentStock = checkResults[0].quantity;
-
-          if (currentStock < item.quantity) {
-            return connection.rollback(() => {
-              res.status(400).json({
-                success: false,
-                message: `Stock insufficiente per prodotto ${item.productId} taglia ${item.size}. Disponibili: ${currentStock}, richiesti: ${item.quantity}`,
-              });
-            });
-          }
-
-          const updateSql = `
-            UPDATE deposit_product 
-            SET quantity = quantity - ? 
-            WHERE product_id = ? AND size = ?
-          `;
-
-          connection.query(
-            updateSql,
-            [item.quantity, item.productId, item.size],
-            (updateError) => {
-              if (updateError) {
-                return connection.rollback(() => {
-                  res.status(500).json({
-                    success: false,
-                    message: "Errore aggiornamento stock",
-                  });
-                });
-              }
-
-              processItems(itemIndex + 1);
-            }
-          );
+          // Move to the next item
+          updateStock(itemIndex + 1);
         }
       );
     };
 
-    processItems();
+    // Step 2: Insert into orders table
+    const insertOrder = () => {
+      const insertOrderSql = `
+        INSERT INTO orders
+        (amount, order_date, order_status, sku_code, free_delivery, promo_id, slug)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `;
+
+      let numberSkuCode = items
+        .map((item) => {
+          return item.productId;
+        })
+        .join("");
+
+      const skuCode = `SKU00${numberSkuCode}` || "SKU000";
+      const orderAmount = amount || 0;
+      const orderDate = new Date();
+      const orderStatus = "Processing";
+      const freeDelivery = 0;
+      const promoId = null;
+      const slug = `ml-${Date.now()}`;
+
+      connection.query(
+        insertOrderSql,
+        [
+          orderAmount,
+          orderDate,
+          orderStatus,
+          skuCode,
+          freeDelivery,
+          promoId,
+          slug,
+        ],
+        (insertError, insertResult) => {
+          if (insertError) {
+            return connection.rollback(() => {
+              console.error("Errore inserimento ordine:", insertError);
+              res.status(500).json({
+                success: false,
+                message: "Errore inserimento ordine",
+              });
+            });
+          }
+
+          const orderId = insertResult.insertId;
+          console.log("Generated Order ID:", orderId);
+
+          // Step 3: Insert into order_product table for each item
+          const insertOrderProducts = (itemIndex = 0) => {
+            if (itemIndex >= items.length) {
+              // All order_product items are inserted, proceed to insert customer
+              insertCustomer(orderId);
+              return;
+            }
+
+            const item = items[itemIndex];
+            // Destructure selectedSize, quantity, and price from the item
+            const { productId, selectedSize, quantity, price } = item;
+
+            // **FIXED HERE: The VALUES clause now has 5 '?' placeholders.**
+            const insertOrderProductSql = `
+              INSERT INTO order_product
+              (order_id, product_id, size, quantity, price)
+              VALUES (?, ?, ?, ?, ?)
+            `;
+
+            connection.query(
+              insertOrderProductSql,
+              [orderId, productId, selectedSize, quantity, price], // Pass selectedSize here
+              (orderProductInsertError) => {
+                if (orderProductInsertError) {
+                  return connection.rollback(() => {
+                    console.error("Errore inserimento order_product:", orderProductInsertError);
+                    res.status(500).json({
+                      success: false,
+                      message: `Errore inserimento dettaglio ordine per prodotto ${productId}`,
+                    });
+                  });
+                }
+                insertOrderProducts(itemIndex + 1); // Process next item
+              }
+            );
+          };
+
+          // Step 4: Insert into customers table
+          const insertCustomer = (orderId) => {
+            const insertCustomerSQL = `
+              INSERT INTO customers
+              (name, surname, email, billing_address, shipping_address, phone, country, order_id)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            `;
+
+            console.log("Attempting to insert customer with values:", {
+              name, surname, email, billing_address, shipping_address, phone, country, orderId
+            });
+
+            connection.query(
+              insertCustomerSQL,
+              [name, surname, email, billing_address, shipping_address, phone, country, orderId],
+              (customerInsertError, customerResult) => {
+                if (customerInsertError) {
+                  return connection.rollback(() => {
+                    console.error("ERRORE DETTAGLIATO INSERIMENTO CLIENTE:", customerInsertError);
+                    return res.status(500).json({
+                      success: false,
+                      message: "Errore database (cliente)",
+                    });
+                  });
+                }
+
+                const customerId = customerResult.insertId;
+
+                // Step 5: Commit the transaction
+                connection.commit((commitError) => {
+                  if (commitError) {
+                    return connection.rollback(() => {
+                      console.error("Errore commit transazione:", commitError);
+                      res.status(500).json({
+                        success: false,
+                        message: "Errore commit transazione",
+                      });
+                    });
+                  }
+
+                  res.json({
+                    success: true,
+                    message: "Ordine e cliente processati con successo",
+                    orderId: orderId,
+                    customerId: customerId,
+                    itemsProcessed: items.length,
+                    totalAmount: orderAmount,
+                  });
+                });
+              }
+            );
+          };
+
+          // Start inserting order products
+          insertOrderProducts();
+        }
+      );
+    };
+
+    // Start updating stock
+    updateStock();
   });
 };
 
