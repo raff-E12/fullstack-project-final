@@ -3,6 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import axios from "axios";
 import { useCart } from "../context/CartContext";
 import { useInventory } from "../hooks/useInventory";
+import emailjs from "@emailjs/browser";
 
 // Componente per il form di checkout integrato (SEMPLIFICATO)
 const CheckoutForm = ({
@@ -89,7 +90,7 @@ const CheckoutForm = ({
   };
 
 
-   const sendConfirmationEmail = () => {
+  const sendConfirmationEmail = () => {
     emailjs
       .send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
@@ -98,11 +99,9 @@ const CheckoutForm = ({
           name: formData.name,
           surname: formData.surname,
           email: formData.email,
-          phone: formData.phone,
           amount: formData.amount,
           billing_address: formData.billing_address,
           shipping_address: formData.shipping_address,
-          country: formData.country,
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
@@ -206,9 +205,8 @@ const CheckoutForm = ({
             <input
               type="text"
               name="surname"
-              className={`form-control ${
-                formErrors.surname ? "is-invalid" : ""
-              }`}
+              className={`form-control ${formErrors.surname ? "is-invalid" : ""
+                }`}
               value={formData.surname}
               onChange={handleInputChange}
               disabled={isSubmitting}
@@ -259,9 +257,8 @@ const CheckoutForm = ({
             <label className="form-label">Indirizzo di Fatturazione *</label>
             <textarea
               name="billing_address"
-              className={`form-control ${
-                formErrors.billing_address ? "is-invalid" : ""
-              }`}
+              className={`form-control ${formErrors.billing_address ? "is-invalid" : ""
+                }`}
               value={formData.billing_address}
               onChange={handleInputChange}
               disabled={isSubmitting}
@@ -296,9 +293,8 @@ const CheckoutForm = ({
               <label className="form-label">Indirizzo di Spedizione *</label>
               <textarea
                 name="shipping_address"
-                className={`form-control ${
-                  formErrors.shipping_address ? "is-invalid" : ""
-                }`}
+                className={`form-control ${formErrors.shipping_address ? "is-invalid" : ""
+                  }`}
                 value={formData.shipping_address}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
