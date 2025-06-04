@@ -99,14 +99,17 @@ const CheckoutForm = ({
           name: formData.name,
           surname: formData.surname,
           email: formData.email,
-          amount: formData.amount,
+          amount: totalAmount.toFixed(2),
           billing_address: formData.billing_address,
-          shipping_address: formData.shipping_address,
+          shipping_address: formData.same_address
+            ? formData.billing_address
+            : formData.shipping_address
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       .then((result) => {
         console.log("Email inviata con successo!", result.text);
+        console.log("BILLING", formData.billing_address, "SHIPPING", formData.shipping_address)
       })
       .catch((error) => {
         console.error("Errore nell'invio dell'email:", error);
