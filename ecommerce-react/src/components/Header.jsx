@@ -21,9 +21,8 @@ export default function Header() {
 
   return (
     <header
-      className={`header-sc py-3 w-100 ${
-        isHomepage ? "homepage-header" : "page-header"
-      }`}
+      className={`header-sc py-3 w-100 ${isHomepage ? "homepage-header" : "page-header"
+        }`}
       style={{ top: 0, zIndex: 999 }}
     >
       <div className="container">
@@ -42,7 +41,7 @@ export default function Header() {
 
           {/* Center */}
           <div className="col-4 text-center">
-            <img src="/img/logo.png" alt="URBN WAY" class width="150"/>
+            <img src="/img/logo.png" alt="URBN WAY" width="150" />
           </div>
 
           {/* Right */}
@@ -78,7 +77,7 @@ export default function Header() {
           </div>
 
           <div className="col-4 d-flex justify-content-center">
-           <img src="/img/logo-white.png" alt="URBN WAY" />
+            <img src="/img/logo-white.png" alt="URBN WAY" />
           </div>
 
           <div className="col-4 d-flex justify-content-end">
