@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "../style/SizeSelector.css"; // Importa il file CSS
+import "../style/SizeSelector.css";
 
 const SizeSelector = ({
   productId,
@@ -8,6 +8,7 @@ const SizeSelector = ({
   selectedSize,
   disabled = false,
   showStock = true,
+  outOfStockStyle = "diagonal", // "diagonal", "dotted", "dashed", "strikethrough"
 }) => {
   const [availability, setAvailability] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,8 +44,21 @@ const SizeSelector = ({
 
   const handleSizeClick = (size, isAvailable) => {
     if (!isAvailable || disabled) return;
-
     onSizeSelect(size);
+  };
+
+  const getOutOfStockClass = () => {
+    switch (outOfStockStyle) {
+      case "dotted":
+        return "dotted-pattern";
+      case "dashed":
+        return "dashed-border";
+      case "strikethrough":
+        return "strikethrough";
+      case "diagonal":
+      default:
+        return "";
+    }
   };
 
   if (loading) {
@@ -79,12 +93,13 @@ const SizeSelector = ({
           <button
             key={sizeInfo.size}
             type="button"
-            className={`btn size-btn ${selectedSize === sizeInfo.size
-              ? "btn-primary"
-              : sizeInfo.available
+            className={`btn size-btn ${
+              selectedSize === sizeInfo.size
+                ? "btn-primary"
+                : sizeInfo.available
                 ? "btn-outline-primary"
-                : "btn-outline-secondary"
-              }`}
+                : `btn-outline-secondary ${getOutOfStockClass()}`
+            }`}
             onClick={() => handleSizeClick(sizeInfo.size, sizeInfo.available)}
             disabled={!sizeInfo.available || disabled}
             title={
@@ -96,7 +111,6 @@ const SizeSelector = ({
             }
           >
             {sizeInfo.size}
-            {/* Rimosso il messaggio di allerta delle poche quantità */}
           </button>
         ))}
       </div>

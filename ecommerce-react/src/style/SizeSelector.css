@@ -1,4 +1,4 @@
-/* Size Selector Component Styles */
+/* Size Selector Component Styles - Versione migliorata */
 
 .size-selector {
     margin-bottom: 1rem;
@@ -44,6 +44,8 @@
     transition: all 0.2s ease;
     cursor: pointer;
     border: 1px solid;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Available size button (outline) */
@@ -66,18 +68,75 @@
     border-color: rgb(8, 132, 99);
 }
 
-/* Unavailable size button */
+/* Unavailable size button - STILE MIGLIORATO */
 .size-btn.btn-outline-secondary {
-    color: #6c757d;
-    border-color: #6c757d;
-    background-color: transparent;
-    opacity: 0.4;
+    color: #9ca3af;
+    border-color: #d1d5db;
+    background-color: #f9fafb;
+    opacity: 1;
+    /* Rimuoviamo l'opacity generale */
+    cursor: not-allowed;
+    position: relative;
+}
+
+/* Linea diagonale per taglie esaurite */
+.size-btn.btn-outline-secondary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 1.5px;
+    background-color: #9ca3af;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    transition: all 0.2s ease;
+}
+
+/* Alternativa: Pattern a punti per taglie esaurite */
+.size-btn.btn-outline-secondary.dotted-pattern {
+    background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
+    background-size: 8px 8px;
+    background-position: 0 0, 4px 4px;
+}
+
+.size-btn.btn-outline-secondary.dotted-pattern::before {
+    display: none;
+    /* Nasconde la linea se usiamo i punti */
+}
+
+/* Stile con bordo tratteggiato */
+.size-btn.btn-outline-secondary.dashed-border {
+    border-style: dashed;
+    border-width: 2px;
+}
+
+.size-btn.btn-outline-secondary.dashed-border::before {
+    display: none;
+    /* Nasconde la linea se usiamo il bordo tratteggiato */
+}
+
+/* Effetto strikethrough per il testo */
+.size-btn.btn-outline-secondary.strikethrough {
+    text-decoration: line-through;
+    text-decoration-color: #9ca3af;
+    text-decoration-thickness: 2px;
+}
+
+.size-btn.btn-outline-secondary.strikethrough::before {
+    display: none;
+    /* Nasconde la linea se usiamo lo strikethrough */
+}
+
+/* Stato disabled generale */
+.size-btn:disabled {
     cursor: not-allowed;
 }
 
-.size-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+/* Hover disabled per taglie esaurite */
+.size-btn.btn-outline-secondary:hover {
+    color: #9ca3af;
+    border-color: #d1d5db;
+    background-color: #f9fafb;
 }
 
 /* Stock indicator inside button */
@@ -150,4 +209,5 @@
 }
 
 .me-1 {
-    margin-right: 0.25rem; }
+    margin-right: 0.25rem;
+}
