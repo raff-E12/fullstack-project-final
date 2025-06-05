@@ -1,4 +1,4 @@
-// Header.jsx
+// Header.jsx - Modifica la sezione desktop
 import { NavLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import "../style/Header.css";
@@ -21,8 +21,9 @@ export default function Header() {
 
   return (
     <header
-      className={`header-sc py-3 w-100 ${isHomepage ? "homepage-header" : "page-header"
-        }`}
+      className={`header-sc py-3 w-100 ${
+        isHomepage ? "homepage-header" : "page-header"
+      }`}
       style={{ top: 0, zIndex: 999 }}
     >
       <div className="container">
@@ -30,7 +31,8 @@ export default function Header() {
         <div className="row align-items-center d-none d-md-flex">
           {/* Left */}
           <div className="col-4 d-flex align-items-center">
-            <NavLink to="/" className="nav-link">
+            {/* Homepage link - nascosto su tablet */}
+            <NavLink to="/" className="nav-link d-lg-inline d-md-none">
               Homepage
             </NavLink>
             <NavLink to="/products" className="nav-link">
@@ -39,9 +41,16 @@ export default function Header() {
             <CategoriesDropdown closeMenus={closeMenus} />
           </div>
 
-          {/* Center */}
+          {/* Center - Logo cliccabile */}
           <div className="col-4 text-center">
-            <img src="/img/logo.png" alt="URBN WAY" width="150" />
+            <NavLink to="/" onClick={closeMenus} className="logo-link">
+              <img
+                src="/img/logo.png"
+                alt="URBN WAY"
+                width="150"
+                className="logo-img"
+              />
+            </NavLink>
           </div>
 
           {/* Right */}
@@ -55,7 +64,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Header */}
+        {/* Mobile Header - Logo già cliccabile */}
         <div className="d-flex d-md-none justify-content-between align-items-center">
           <div className="col-4 d-flex justify-content-start">
             <button
@@ -77,7 +86,14 @@ export default function Header() {
           </div>
 
           <div className="col-4 d-flex justify-content-center">
-            <img src="/img/logo.png" alt="URBN WAY" width="150" />
+            <NavLink to="/" onClick={closeMenus} className="logo-link">
+              <img
+                src="/img/logo.png"
+                alt="URBN WAY"
+                width="150"
+                className="logo-img"
+              />
+            </NavLink>
           </div>
 
           <div className="col-4 d-flex justify-content-end">
@@ -85,7 +101,7 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Homepage rimane nel menu mobile */}
         {isMobileMenuOpen && (
           <div className="d-md-none mt-3 mobile-nav-menu ps-0">
             <NavLink
