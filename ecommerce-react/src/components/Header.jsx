@@ -41,7 +41,7 @@ export default function Header() {
 
           {/* Center */}
           <div className="col-4 text-center">
-            <img src="/img/logo.png" alt="URBN WAY" width="150" />
+            <img src="/img/logo.png" alt="URBN WAY" width="200" />
           </div>
 
           {/* Right */}
@@ -77,7 +77,7 @@ export default function Header() {
           </div>
 
           <div className="col-4 d-flex justify-content-center">
-            <img src="/img/logo.png" alt="URBN WAY" width="150" />
+            <img src="/img/logo.png" alt="URBN WAY" width="200" />
           </div>
 
           <div className="col-4 d-flex justify-content-end">

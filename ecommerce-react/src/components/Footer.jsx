@@ -126,6 +126,9 @@ export default function Footer() {
 
         <hr className="my-4 border-light" />
       </div>
+      <div className="d-flex justify-content-center">
+        <img className="text-center" src="/img/logo.png" alt="URBN WAY" width="300" />
+      </div>
     </footer>
   );
 }
