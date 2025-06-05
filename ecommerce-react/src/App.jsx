@@ -13,6 +13,7 @@ import SingleProductPage from "./pages/SingleProductPage";
 import { SearchProvider } from "./context/SearchContext";
 import { CartProvider } from "./context/CartContext";
 import ScrollToTop from "./components/ScrollToTop";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
 
                 <Route path="/checkout" element={<CheckOutPage />} />
                 <Route path="/cart" element={<CartPage />} />
+                <Route path="/*" element={<NotFound />} />
               </Route>
             </Routes>
           </BrowserRouter>
