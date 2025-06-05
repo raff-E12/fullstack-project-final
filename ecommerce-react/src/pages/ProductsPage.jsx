@@ -12,6 +12,7 @@ export default function ProductPage() {
   const {searchTerm, searchSubmitted} = useSearch();
   const [products, setProducts] = useState([]);
   const [defaultProducts, setDefaultProducts] = useState([]);
+  const [isLoading, setLoading] = useState(false);
 
   const location = useLocation();
   const endPoint = "http://localhost:3000/products";
@@ -36,6 +37,7 @@ export default function ProductPage() {
 
   function getProducts() {
     const params = buildApiParams();
+    setLoading(true);
     axios
       .get(endPoint, { params })
       .then((res) => {
@@ -44,7 +46,8 @@ export default function ProductPage() {
       .catch((err) => {
         console.error("Errore nel recupero dei prodotti:", err);
         setProducts([]);
-      });
+      })
+      .finally(()=>setLoading(false))
   }
 
   function getdefaultProducts() {
@@ -68,7 +71,7 @@ export default function ProductPage() {
 
   const currentSearchTerm = new URLSearchParams(location.search).get("search");
 
-  return (
+  return (!isLoading ?
     <div className="container-fluid py-5">
       <div className="container">
         {/* Passa i parametri di default */}
@@ -76,7 +79,7 @@ export default function ProductPage() {
         {currentSearchTerm && <div className="m-3 text-center fs-4">Prodotti Cercati: <span className="fw-bolder">{currentSearchTerm}</span></div>}
         {/* Products Grid */}
         <div className="row g-4 mt-3">
-          {products.length > 0 ? (
+          {(products.length > 0 && !isLoading) ? (
             products.map((product) => (
               <div
                 key={product.id}
@@ -100,6 +103,9 @@ export default function ProductPage() {
           )}
         </div>
       </div>
-    </div>
-  );
+    </div> 
+    : <div className="text-center m-5">
+      <h2>Caricamento Prodotti in Corso...</h2>
+      </div>
+  )
 }
