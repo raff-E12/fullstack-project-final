@@ -26,6 +26,7 @@ export default function FilterSection({ defaultProducts }) {
     const newQueryParams = new URLSearchParams(location.search);
 
     const currentSearchTerm = newQueryParams.get('search');
+    // Clear all existing filters except 'search' before applying new ones
     newQueryParams.forEach((value, key) => {
       if (key !== 'search') {
         newQueryParams.delete(key);
@@ -58,6 +59,7 @@ export default function FilterSection({ defaultProducts }) {
     navigate(`?${newQueryParams.toString()}`);
   };
 
+  // This useEffect will initialize the filter states from the URL
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     setOrder(queryParams.get('sort_by') || "");
@@ -66,8 +68,13 @@ export default function FilterSection({ defaultProducts }) {
     setDiscountChecked(queryParams.get('discount') === 'true');
     setMinPrice(queryParams.get('min_price') || "");
     setMaxPrice(queryParams.get('max_price') || "");
-  }, [location.search]);
+  }, [location.search]); // Depend on location.search so it updates if URL changes externally
 
+  // Remove or modify this useEffect
+  // The sorting change will now only apply on 'handleApplyFilters' click or if you wish to apply it immediately on sort selection
+  // If you want sorting to apply immediately on selection, you would call `updateUrlWithParams` directly in the `onChange` of the select.
+  // For consistency with other filters (which require "Applica"), it's better to make sort part of the 'Apply' flow.
+  /*
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     if (order !== (queryParams.get('sort_by') || "") || location.search === "") {
@@ -82,6 +89,7 @@ export default function FilterSection({ defaultProducts }) {
         updateUrlWithParams(currentFilters);
     }
   }, [order]);
+  */
 
   const handleApplyFilters = () => {
     const currentFilters = {
@@ -108,10 +116,27 @@ export default function FilterSection({ defaultProducts }) {
     setDiscountChecked(false);
     setMinPrice("");
     setMaxPrice("");
-    setOrder("");
+    setOrder(""); // Also reset the order state
 
     navigate(`?${paramsToKeep.toString()}`);
   };
+
+  // If you want sorting to apply immediately when selected, you can modify the onChange for the select:
+  const handleOrderChange = (e) => {
+    const newOrder = e.target.value;
+    setOrder(newOrder);
+    // If you want immediate application of sort, uncomment the following:
+    const currentFilters = {
+        order: newOrder, // Use the new order value
+        brand: brandFilter,
+        fabric: fabricFilter,
+        discount: discountChecked,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+    };
+    updateUrlWithParams(currentFilters);
+  };
+
 
   return (
     <div className="filter-wrapper">
@@ -129,7 +154,7 @@ export default function FilterSection({ defaultProducts }) {
             <select
               className="order-select"
               id="order-select"
-              onChange={(e) => setOrder(e.target.value)}
+              onChange={handleOrderChange} // Use the new handler
               value={order}
             >
               <option value="">Ordina per</option>
@@ -139,8 +164,8 @@ export default function FilterSection({ defaultProducts }) {
               <option value="price_desc">Prezzo ↓</option>
               <option value="latest">Novità</option>
             </select>
-            
-           
+
+
           </div>
         </div>
 
