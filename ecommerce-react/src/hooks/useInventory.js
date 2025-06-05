@@ -33,24 +33,31 @@ export const useInventory = () => {
     }
   };
 
-  const processOrder = async (cartItems, orderInfo) => {
+  // --- START OF REQUIRED CHANGE FOR processOrder ---
+  // Change the parameters to accept a single 'orderData' object
+  const processOrder = async (orderData) => { // <--- CHANGED THIS LINE
     try {
       setLoading(true);
 
-      const items = cartItems.map((item) => ({
-        productId: item.id,
-        size: item.selectedSize,
-        quantity: item.quantity,
-      }));
+      // No need to map cartItems here, they are ALREADY mapped and
+      // available as 'items' within the 'orderData' object
+      // const items = cartItems.map((item) => ({ ... })); // <-- REMOVE THIS BLOCK IF PRESENT
 
+      // The orderData object already contains 'items' and all other customer/order details
       const response = await axios.post(
         "http://localhost:3000/api/availability/process-order",
-        { items, orderInfo }
+        orderData // <--- SEND THE WHOLE orderData OBJECT DIRECTLY
       );
 
       return response.data;
     } catch (error) {
-      console.error("Errore processamento ordine:", error);
+      console.error("Errore processamento ordine (from useInventory):", error); // Added context to log
+      // Log more details about the error response for backend debugging
+      if (error.response) {
+        console.error("Backend error response data:", error.response.data);
+        console.error("Backend error status:", error.response.status);
+        console.error("Backend error headers:", error.response.headers);
+      }
       throw new Error(
         error.response?.data?.message || "Errore processamento ordine"
       );
@@ -58,6 +65,7 @@ export const useInventory = () => {
       setLoading(false);
     }
   };
+  // --- END OF REQUIRED CHANGE FOR processOrder ---
 
   return {
     checkCartAvailability,

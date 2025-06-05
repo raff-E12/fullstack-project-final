@@ -116,7 +116,7 @@ const CheckoutForm = ({
       });
   };
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -126,31 +126,54 @@ const CheckoutForm = ({
     setIsSubmitting(true);
 
     try {
-      // Prepara i dati dell'ordine
       sendConfirmationEmail();
-      const orderInfo = {
-        ...formData,
-        amount: totalAmount,
+
+      // **Prepare the 'items' array for the backend**
+      const formattedCartItems = cartItems.map((item) => ({
+        productId: item.id, // Ensure your cart item has an 'id' property
+        size: item.selectedSize, // Ensure your cart item has 'selectedSize'
+        quantity: item.quantity,
+        price: item.price // Ensure your cart item has 'quantity'
+      }));
+
+      // **Prepare the 'orderInfo' and customer details for the backend**
+      // These are merged directly into the top level of the payload
+      const orderPayload = {
+        items: formattedCartItems, // This is the 'items' array the backend expects
+        // All customer details and order summary details are at the root level of the payload
+        name: formData.name,
+        surname: formData.surname,
+        email: formData.email,
+        phone: formData.phone,
+        billing_address: formData.billing_address,
+        // Ensure shipping_address is correct based on 'same_address' checkbox
         shipping_address: formData.same_address
           ? formData.billing_address
           : formData.shipping_address,
+        country: formData.country,
+        // The total amount is also a top-level property
+        amount: totalAmount, // This matches the 'amount' expected in req.body.amount
+        // You can add other order summary details here if the backend expects them at the root
+        // For example, if you want discount_applied or discount_code to be stored with the order
+        // and not just passed for internal logic within the backend.
         discount_applied: discountInfo.validPromo
           ? discountInfo.appliedPromoPercentage
           : 0,
         discount_code: discountInfo.discountCode || null,
         items_count: cartItems.length,
         total_quantity: cartItems.reduce((sum, item) => sum + item.quantity, 0),
-        order_date: new Date().toISOString(),
+        order_date: new Date().toISOString(), // This might be handled by backend, but safe to send
       };
 
-      // Processa l'ordine (aggiorna inventory)
-      const result = await processOrder(cartItems, orderInfo);
+
+      // Call the processOrder function from useInventory hook.
+      // This function should internally make the axios.post call to your backend.
+      // It should receive the 'orderPayload' as its single argument.
+      console.log("Payload inviato a processOrder (frontend):", orderPayload);
+      const result = await processOrder(orderPayload); // <--- HERE'S THE CHANGE
 
       if (result.success) {
-        // Svuota il carrello
         clearCart();
-
-        // Notifica successo
         onOrderSuccess(result);
       } else {
         throw new Error(

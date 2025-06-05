@@ -5,7 +5,7 @@ import { useCart } from "../context/CartContext";
 
 export default function CartDropdown({ isMobile = false, closeMenus }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { cartItems } = useCart();
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
   const navigate = useNavigate();
   const cartRef = useRef(null);
 
@@ -61,7 +61,46 @@ export default function CartDropdown({ isMobile = false, closeMenus }) {
                 <span>x{item.quantity}</span>
                 <strong>{item.price} €</strong>
               </div>
+              
             </div>
+            <div className="quantity-controls">
+                              <button
+                                className="btn quantity-btn"
+                                onClick={() =>
+                                  updateQuantity(
+                                    item.id,
+                                    item.selectedSize,
+                                    item.quantity - 1
+                                  )
+                                }
+                                disabled={item.quantity <= 1}
+                                title="Diminuisci quantità"
+                              >
+                                −
+                              </button>
+                              <button
+                                className="btn quantity-btn"
+                                onClick={() =>
+                                  updateQuantity(
+                                    item.id,
+                                    item.selectedSize,
+                                    item.quantity + 1
+                                  )
+                                }
+                                title="Aumenta quantità"
+                              >
+                                +
+                              </button>
+                              <button
+                                className="btn quantity-btn remove-btn"
+                                onClick={() =>
+                                  removeFromCart(item.id, item.selectedSize)
+                                }
+                                title="Rimuovi dal carrello"
+                              >
+                                <i className="bi bi-trash3"></i>
+                              </button>
+                            </div>
           </div>
         ))}
       </div>
@@ -101,6 +140,7 @@ export default function CartDropdown({ isMobile = false, closeMenus }) {
             <span className="cart-badge position-relative ms-2 d-flex align-items-center justify-content-center fw-semibold">
               {cartItemCount}
             </span>
+            
           )}
         </button>
 
